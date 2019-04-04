@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @SpringBootApplication(scanBasePackages = "com.hns.learn")
-@MapperScan("com.hns.learn")
+@MapperScan("com.hns.learn.mapper*")
 public class App 
 {
     protected final static Logger logger = LoggerFactory.getLogger(App.class);

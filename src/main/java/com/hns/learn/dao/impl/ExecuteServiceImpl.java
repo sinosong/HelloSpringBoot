@@ -25,9 +25,10 @@ public class ExecuteServiceImpl implements IExecuteService {
         BizCanvas sel = new BizCanvas();
         sel.setId(1120992891767480321L);
         Wrapper<BizCanvas> queryWrapper = new QueryWrapper<>(sel);
-//        BizCanvas res =bizCanvasDao.getOne(queryWrapper);
         System.out.println("Mapper=="+bizCanvasMapper.selectOne(queryWrapper).toString());
         System.out.println("Dao=="+bizCanvasDao.getOne(queryWrapper).toString());
+        System.out.println("-----------------------");
+        System.out.println(bizCanvasMapper.getMaxWorkDate(""));
 
     }
 }
