@@ -12,6 +12,8 @@ import com.hns.learn.entity.BizCanvas;
 import com.hns.learn.entity.InfAfrlndtl;
 import com.hns.learn.mapper.BizCanvasMapper;
 import com.hns.learn.mapper.InfAfrlndtlMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ import java.util.List;
 @SpringBootTest(classes = App.class)
 @WebAppConfiguration
 public class AppTest {
+
+    protected static  final Logger logger = LogManager.getLogger();
 
     @Autowired
     private BizCanvasMapper bizCanvasMapper;
@@ -96,8 +100,10 @@ public class AppTest {
             UpdateWrapper updateWrapper = new UpdateWrapper();
             updateWrapper.eq("ID_","100");
             updateWrapper.set("ZONENO",today);
-            infAfrlndtlMapper.update(new InfAfrlndtl(),updateWrapper);
+            int row = infAfrlndtlMapper.update(new InfAfrlndtl(),updateWrapper);
+            logger.info("成功更新了没=="+row);
             if(true){
+                logger.error("测试能不能回滚！");
                 throw new RuntimeException("测试能不能回滚！");
             }
             txManager.commit(status);
@@ -105,7 +111,7 @@ public class AppTest {
             txManager.rollback(status);
             e.printStackTrace();
         } finally {
-            System.out.println("end......");
+            logger.info("end......");
         }
 
 

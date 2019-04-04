@@ -9,10 +9,14 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Service("defaultExecuteService")
 @Transactional
 public class ExecuteServiceImpl implements IExecuteService {
+
+    protected static  final Logger logger = LogManager.getLogger();
 
     @Autowired
     private PlatformTransactionManager txManager;
