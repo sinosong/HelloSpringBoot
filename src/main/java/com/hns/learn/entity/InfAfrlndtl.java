@@ -13,7 +13,7 @@ import java.util.Date;
  * @author hannasong
  * @version 1.0
  */
-@TableName("INF_AFRLNDTL")
+@TableName("INF_AFRLNDTL_TEST")
 public class InfAfrlndtl extends BaseModel implements Serializable {
 
     @TableField("ZONENO")

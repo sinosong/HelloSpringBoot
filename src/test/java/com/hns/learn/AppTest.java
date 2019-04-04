@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.hns.learn.common.Context;
 import com.hns.learn.dao.impl.StartState;
 import com.hns.learn.dao.impl.StopState;
@@ -17,7 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -29,6 +36,8 @@ public class AppTest {
     private BizCanvasMapper bizCanvasMapper;
     @Autowired
     private InfAfrlndtlMapper infAfrlndtlMapper;
+    @Autowired
+    private PlatformTransactionManager txManager;
 
     @Test
     public void selCanvas() {
@@ -67,12 +76,38 @@ public class AppTest {
     public void testInfAfrlndtl(){
         System.out.println("***********************");
 
-        QueryWrapper wrapper = new QueryWrapper<InfAfrlndtl>();
+        /*QueryWrapper wrapper = new QueryWrapper<InfAfrlndtl>();
         wrapper.ne("DRDOACTA","0.00");
-        wrapper.eq("PROTSENO","205000011020200000062508");
+        wrapper.eq("PROTSENO","100");
 
         System.out.println(wrapper.getSqlSelect());
         List<InfAfrlndtl> list = infAfrlndtlMapper.selectList(wrapper);
-        System.out.println("list=="+list);
+        System.out.println("list=="+list);*/
+
+
+
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
+        TransactionStatus status = txManager.getTransaction(def);
+
+        try {
+            String today = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
+            UpdateWrapper updateWrapper = new UpdateWrapper();
+            updateWrapper.eq("ID_","100");
+            updateWrapper.set("ZONENO",today);
+            infAfrlndtlMapper.update(new InfAfrlndtl(),updateWrapper);
+            if(true){
+                throw new RuntimeException("测试能不能回滚！");
+            }
+            txManager.commit(status);
+        } catch (Exception e) {
+            txManager.rollback(status);
+            e.printStackTrace();
+        } finally {
+            System.out.println("end......");
+        }
+
+
     }
 }
