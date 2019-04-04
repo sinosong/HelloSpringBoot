@@ -10,11 +10,15 @@ import com.hns.learn.dao.impl.StopState;
 import com.hns.learn.entity.BizCanvas;
 import com.hns.learn.mapper.BizCanvasMapper;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-/**
- * Unit test for simple App.
- */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = App.class)
+@WebAppConfiguration
 public class AppTest {
 
     @Autowired
@@ -23,12 +27,12 @@ public class AppTest {
     @Test
     public void selCanvas() {
 
+        System.out.println("selCanvas***********************");
         BizCanvas sel = new BizCanvas();
         sel.setId(1120992891767480321L);
         Wrapper<BizCanvas> queryWrapper = new QueryWrapper<>(sel);
-//        System.out.println(((QueryWrapper<BizCanvas>) queryWrapper).getParamNameValuePairs());
-//        BizCanvas res =bizCanvasMapper.selectOne(queryWrapper);
-//        System.out.println(res);
+        System.out.println("Mapper=="+bizCanvasMapper.selectOne(queryWrapper).toString());
+        System.out.println(bizCanvasMapper.getMaxWorkDate(""));
 
     }
 

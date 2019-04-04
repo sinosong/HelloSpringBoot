@@ -1,8 +1,12 @@
 package com.hns.learn.mapper;
 
 import com.hns.learn.entity.BizCanvas;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Mapper
+@Component(value = "BizCanvasMapper")
 public interface BizCanvasMapper extends BaseMapper<BizCanvas> {
 
     /**
