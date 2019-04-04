@@ -12,7 +12,8 @@ public class FirstController {
     @RequestMapping(value={"/hello","/hi"})
     public String say(){
         //http://localhost:10336/hi
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
+        return "当前时间是=="+date;
     }
 
 }
