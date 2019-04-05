@@ -10,6 +10,7 @@ import com.hns.learn.dao.impl.StartState;
 import com.hns.learn.dao.impl.StopState;
 import com.hns.learn.entity.BizCanvas;
 import com.hns.learn.entity.InfAfrlndtl;
+import com.hns.learn.entity.defineAuthor;
 import com.hns.learn.mapper.BizCanvasMapper;
 import com.hns.learn.mapper.InfAfrlndtlMapper;
 import org.apache.logging.log4j.LogManager;
@@ -42,16 +43,22 @@ public class AppTest {
     private InfAfrlndtlMapper infAfrlndtlMapper;
     @Autowired
     private PlatformTransactionManager txManager;
+    @Autowired
+    private defineAuthor author;
+
+    @Test
+    public void getProperties(){
+        System.out.println(author.toString());
+    }
 
     @Test
     public void selCanvas() {
 
         System.out.println("***********************");
         BizCanvas sel = new BizCanvas();
-        sel.setId(1120992891767480321L);
+        sel.setId(1L);
         Wrapper<BizCanvas> queryWrapper = new QueryWrapper<>(sel);
         System.out.println("Mapper=="+bizCanvasMapper.selectOne(queryWrapper).toString());
-        System.out.println(bizCanvasMapper.getMaxWorkDate(""));
 
     }
 
