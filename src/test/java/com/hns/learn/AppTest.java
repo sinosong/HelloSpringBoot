@@ -2,10 +2,10 @@ package com.hns.learn;
 
 import static org.junit.Assert.assertTrue;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.hns.learn.common.Context;
+import com.hns.learn.dao.BizCanvasService;
 import com.hns.learn.dao.impl.StartState;
 import com.hns.learn.dao.impl.StopState;
 import com.hns.learn.entity.BizCanvas;
@@ -40,6 +40,8 @@ public class AppTest {
     @Autowired
     private BizCanvasMapper bizCanvasMapper;
     @Autowired
+    private BizCanvasService bizCanvasService;
+    @Autowired
     private InfAfrlndtlMapper infAfrlndtlMapper;
     @Autowired
     private PlatformTransactionManager txManager;
@@ -56,9 +58,13 @@ public class AppTest {
 
         System.out.println("***********************");
         BizCanvas sel = new BizCanvas();
-        sel.setId(1L);
-        Wrapper<BizCanvas> queryWrapper = new QueryWrapper<>(sel);
-        System.out.println("Mapper=="+bizCanvasMapper.selectOne(queryWrapper).toString());
+        sel.setId(1120992891767480321L);
+        Wrapper<BizCanvas> queryWrapper = new EntityWrapper<>(sel);
+        System.out.println("Mapper=="+bizCanvasMapper.selectList(queryWrapper));
+
+        System.out.println("Service=="+bizCanvasService.selectList(queryWrapper));
+//        Wrapper<BizCanvas> queryWrapper = new QueryWrapper<>(sel);
+//        System.out.println("Mapper=="+bizCanvasMapper.selectOne(queryWrapper).toString());
 
     }
 
@@ -104,11 +110,11 @@ public class AppTest {
 
         try {
             String today = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
-            UpdateWrapper updateWrapper = new UpdateWrapper();
-            updateWrapper.eq("ID_","100");
-            updateWrapper.set("ZONENO",today);
-            int row = infAfrlndtlMapper.update(new InfAfrlndtl(),updateWrapper);
-            logger.info("成功更新了没=="+row);
+//            UpdateWrapper updateWrapper = new UpdateWrapper();
+//            updateWrapper.eq("ID_","100");
+//            updateWrapper.set("ZONENO",today);
+//            int row = infAfrlndtlMapper.update(new InfAfrlndtl(),updateWrapper);
+//            logger.info("成功更新了没=="+row);
             if(true){
                 logger.error("测试能不能回滚！");
                 throw new RuntimeException("测试能不能回滚！");
