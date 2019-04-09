@@ -56,7 +56,7 @@ public class AppTest {
 
         System.out.println("***********************");
         BizCanvas sel = new BizCanvas();
-        sel.setId(1L);
+        sel.setId(1120992891767480321L);
         Wrapper<BizCanvas> queryWrapper = new QueryWrapper<>(sel);
         System.out.println("Mapper=="+bizCanvasMapper.selectOne(queryWrapper).toString());
 
