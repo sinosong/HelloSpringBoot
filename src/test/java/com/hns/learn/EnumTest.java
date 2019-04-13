@@ -1,9 +1,11 @@
 package com.hns.learn;
 
 import com.hns.learn.entity.enums.AccrualEnum;
-import com.hns.learn.util.ExcelUtils;
+import com.hns.learn.entity.enums.FetchOccurredEnum;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.Test;
 
+import java.text.DateFormat;
 import java.util.*;
 
 public class EnumTest {
@@ -37,8 +39,27 @@ public class EnumTest {
             }
         }
 //        System.out.println(Arrays.asList(centerVal));
+        System.out.println(AccrualEnum.BLANK.getName());
+//        ExcelUtils.exportExcel(false,strs,centerVal,null,"枚举导出");
+        System.out.println(AccrualEnum.values());
 
-        ExcelUtils.exportExcel(false,strs,centerVal,null,"枚举导出");
+    }
+
+    @Test
+    public void name() {
+
+        /*for (int i = 0; i < FetchOccurredEnum.values().length; i++) {
+            System.out.println( FetchOccurredEnum.values()[i]);
+        }
+        System.out.println("--------------");
+        for (FetchOccurredEnum e :FetchOccurredEnum.values()) {
+            System.out.println(e);
+        }*/
+
+        String bal = "RLVIBAL";
+        if(FetchOccurredEnum.isBal(bal)){
+            System.out.println(DateFormatUtils.format(new Date(),"yyyy-MM-dd-HH-mm-ss"));
+        }
 
     }
 }

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.text.SimpleDateFormat;
 
 public class ExcelUtils {
 
@@ -77,6 +76,7 @@ public class ExcelUtils {
                         row = sheet.createRow(i + 1);
                         for (int j = 0; j < centerVal[centerNum].length; j++) {
                             XSSFCell cell = row.createCell(j);
+                            //装饰类 TODO
                             cell.setCellValue(centerVal[centerNum][j]);
                             cell.setCellStyle(centerStyle);
                         }
@@ -167,6 +167,22 @@ public class ExcelUtils {
                 }
                 Object obj = getValue(cell);
                 System.out.print(obj + "\t");
+
+                /*if(i==0){
+                    System.out.print(obj.toString().replace(".","_").replace("INF_","")+"(");
+                }else if(i==1){
+                    Double val = (Double) obj;
+                    System.out.print(val.intValue()+", ");
+
+                }else if(i==2){
+                    System.out.print("\""+obj+"\""+" ,\"");
+
+                }else if(i==3){
+                    System.out.print(obj+"\"),");
+
+                }else{
+                    System.out.print(obj + "\t");
+                }*/
             }
             System.out.println();
         }
