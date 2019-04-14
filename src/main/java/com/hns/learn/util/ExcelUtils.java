@@ -1,6 +1,8 @@
 package com.hns.learn.util;
 
+import com.hns.learn.entity.enums.AccrualExportEnum;
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,7 +18,7 @@ import java.io.*;
 
 public class ExcelUtils {
 
-    protected final static Logger logger = LoggerFactory.getLogger(ExcelUtils.class);
+    private final static Logger logger = LoggerFactory.getLogger(ExcelUtils.class);
 
     private static final String EXCEL_XLS = "xls";
     private static final String EXCEL_XLSX = "xlsx";
@@ -66,7 +68,7 @@ public class ExcelUtils {
                         cell.setCellStyle(titleStyle);
                     }
                     // 内容区域
-                    int iNum = 0;
+                    int iNum;
                     if (centerVal.length > mus * (sheetNum + 1)) {
                         iNum = (int) mus;
                     } else {
@@ -76,8 +78,15 @@ public class ExcelUtils {
                         row = sheet.createRow(i + 1);
                         for (int j = 0; j < centerVal[centerNum].length; j++) {
                             XSSFCell cell = row.createCell(j);
-                            //装饰类 TODO
-                            cell.setCellValue(centerVal[centerNum][j]);
+                            String type = AccrualExportEnum.getType(titleS[j]);
+                            if(StringUtils.isNotBlank(type) && "DOUBLE".equals(type)){
+                                String douVal = centerVal[centerNum][j];
+                                if(StringUtils.isNotBlank(douVal)){
+                                    cell.setCellValue(Double.parseDouble(douVal));
+                                }
+                            }else{
+                                cell.setCellValue(centerVal[centerNum][j]);
+                            }
                             cell.setCellStyle(centerStyle);
                         }
                         centerNum++;
@@ -108,8 +117,8 @@ public class ExcelUtils {
                     return null;
                 }
             }
-        } catch (Exception e) {
-            logger.error("export error...");
+        } catch (IOException e) {
+            logger.error("export error...+IOException...");
             logger.error(e.getMessage());
         } finally {
             if (bis != null) {
@@ -156,7 +165,7 @@ public class ExcelUtils {
                 continue;
             }
             // 如果当前行没有数据，跳出循环
-            if (row.getCell(0).toString().equals("")) {
+            if ("".equals(row.getCell(0).toString())) {
                 return;
             }
             int end = row.getLastCellNum();
@@ -188,16 +197,17 @@ public class ExcelUtils {
         }
     }
 
-    public static void checkExcelVaild(File file){
+    private static void checkExcelVaild(File file){
         if (!file.exists()) {
             throw new RuntimeException("文件不存在");
         }
-        if (!(file.isFile() && (file.getName().endsWith(EXCEL_XLS) || file.getName().endsWith(EXCEL_XLSX)))) {
+        boolean isExcel = file.isFile() && (file.getName().endsWith(EXCEL_XLS) || file.getName().endsWith(EXCEL_XLSX));
+        if (!isExcel) {
             throw new RuntimeException("文件不是Excel");
         }
     }
 
-    public static Workbook getWorkbok(InputStream in, File file){
+    private static Workbook getWorkbok(InputStream in, File file){
         Workbook wb = null;
         try {
             if (file.getName().endsWith(EXCEL_XLS)) {
