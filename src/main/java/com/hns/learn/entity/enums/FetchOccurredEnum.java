@@ -11,9 +11,10 @@ public enum FetchOccurredEnum {
     RLVIBAL(1, "RLVINT", "RLVIBAL", "展期利息余额"),
     OVRBAL(2, "OVRAMT", "OVRBAL", "逾期本金余额"),
     INCURBAL(3, "INAMT", "INCURBAL", "表内欠息当前余额"),
-    OFCURBAL(4, "OFAMT", "OFCURBAL", "表外欠息当前余额");
-//    TAXBAL(5, "TAXAMT", "TAXBAL", "非豁免印花税余额"),
-//    NTAXBAL(6, "NTAXAMT", "NTAXBAL", "豁免印花税余额");
+    OFCURBAL(4, "OFAMT", "OFCURBAL", "表外欠息当前余额"),
+    UPDBAL(5, "AMOUNT", "UPDBAL", "本金期末余额");
+//    TAXBAL(6, "TAXAMT", "TAXBAL", "非豁免印花税余额"),
+//    NTAXBAL(7, "NTAXAMT", "NTAXBAL", "豁免印花税余额");
 
     private int index;
     private String occ;

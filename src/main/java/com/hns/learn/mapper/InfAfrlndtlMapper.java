@@ -25,4 +25,19 @@ public interface InfAfrlndtlMapper extends BaseMapper<InfAfrlndtl> {
     List<Map>  getAccrualList(Page page, @Param("cm")Map<String,Object> param);
 
 
+    /**
+     * @Description: 租金保理流水基础信息查询
+     * @Param: [grantCode]
+     * @return: java.util.Map
+     */
+    Map getBaseMessageInfo(@Param("grantCode") String grantCode);
+
+    /**
+     * @Description: 起息日区间内有效的协议号和介质识别号集合
+     * @Param: [param] beginDate、endDate、grantCode（发放编号）、deptCode
+     * @return: List
+     */
+    List<Map> getComprehensiveProtsenos (Page page, @Param("cm") Map<String, Object> param);
+
+
 }

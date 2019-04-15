@@ -34,8 +34,9 @@ public class SQlTest {
 
         List bookList = new ArrayList();
 
-        page.setAsc("WORKDATE", "PROTSENO", "LISTNO");
-        System.out.println(infAfrlndtlMapper.getAccrualList(page,selMap));
+//        page.setAsc("WORKDATE", "PROTSENO", "LISTNO");
+//        System.out.println(infAfrlndtlMapper.getAccrualList(page,selMap));
+        System.out.println(infAfrlndtlMapper.getComprehensiveProtsenos(page,selMap));
 
 
         /*for(Map map : protsenosList){
@@ -57,7 +58,7 @@ public class SQlTest {
                 "承租人客户名称",
                 "项目名称",
                 "产品名称",
-                "发生日期",
+                "交易发生日期",
                 "操作类型",
                 "币种",
                 "本金发生额",
@@ -139,8 +140,12 @@ public class SQlTest {
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < strs.length; j++) {
                 Map<String,String> map = list.get(i);
+                String grantCode = map.get("GRANT_CODE");
+                Map baseMessageInfo = infAfrlndtlMapper.getBaseMessageInfo(grantCode);
+                map.putAll(baseMessageInfo);
+
                 String name_ = strs[j].toUpperCase();
-                String key = AccrualExportEnum.getFetchKey(name_);
+                String key = AccrualExportEnum.fetchEnum(name_).getName();
                 if(FetchOccurredEnum.isBal(key)){
                     String occ = FetchOccurredEnum.getOcc(key);
                     if(new BigDecimal(map.get(occ)).compareTo(BigDecimal.ZERO)!=0){

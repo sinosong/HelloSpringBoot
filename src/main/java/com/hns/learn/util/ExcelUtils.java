@@ -155,12 +155,12 @@ public class ExcelUtils {
         // Sheet的数量
         int sheetCount = workbook.getNumberOfSheets();
         // 遍历第一个Sheet
-        Sheet sheet = workbook.getSheetAt(0);
+        Sheet sheet = workbook.getSheetAt(5);
 
         int count = 0;
         for (Row row : sheet) {
             // 跳过第一行
-            if (count < 1) {
+            if (count < 0) {
                 count++;
                 continue;
             }
@@ -175,7 +175,9 @@ public class ExcelUtils {
                     continue;
                 }
                 Object obj = getValue(cell);
-                System.out.print(obj + "\t");
+//                System.out.print(obj+"=");
+                System.out.print(AccrualExportEnum.fetchEnum((String) obj)==null?null:AccrualExportEnum.fetchEnum((String) obj).getKey());
+//                System.out.print(obj + "\t");
 
                 /*if(i==0){
                     System.out.print(obj.toString().replace(".","_").replace("INF_","")+"(");
@@ -187,6 +189,9 @@ public class ExcelUtils {
                     System.out.print("\""+obj+"\""+" ,\"");
 
                 }else if(i==3){
+                    System.out.print(obj+"\""+" ,\"");
+
+                }else if(i==4){
                     System.out.print(obj+"\"),");
 
                 }else{

@@ -53,7 +53,12 @@
     </resultMap>
 
     <select id="getAccrualList" resultType="java.util.Map">
-        SELECT t.grant_code,
+        SELECT * FROM (
+        SELECT
+        null as AFWKLFE_CURRTYPE,
+        null as AFWKLFE_FEECLASS,
+        null as AFWKLFE_FEEAMT,
+        t.grant_code,
         t.institution_code,
         t.ident_number,
         dtl.*
@@ -75,7 +80,7 @@
         AND pts.objinr = renkey.id_
         AND pts.rol = 'CONE') cone
         ON (cone.debt_code = t.debt_code)
-        LEFT JOIN (select t1.id_,
+        INNER JOIN (select t1.id_,
         t1.zoneno,
         t1.protseno,
         t1.subserno,
@@ -184,10 +189,10 @@
         ON dtl.protseno = tmp.protseno
         AND t.enable_ = 1
         <if test="cm.deptCode != null and cm.deptCode != ''">
-            AND gt.institution_code = #{cm.deptCode}
+            AND t.institution_code = #{cm.deptCode}
         </if>
         <if test="cm.grantCode != null and cm.grantCode != ''">
-            AND gt.grant_code LIKE '%'||#{cm.grantCode}||'%'
+            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
         </if>
         <if test="cm.proposer != null and cm.proposer != ''">
             AND cone.cust_no LIKE '%'||#{cm.proposer}||'%'
@@ -199,8 +204,441 @@
             AND dtl.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD HH24:MI:SS')
         </if>
 
-        ORDER BY dtl.workdate, dtl.protseno, dtl.listno
+        UNION ALL
+
+        SELECT lfe.CURRTYPE as AFWKLFE_CURRTYPE,
+        LFE.FEECLASS as AFWKLFE_FEECLASS,
+        LFE.FEEAMT as AFWKLFE_FEEAMT,
+        t.grant_code,
+        t.institution_code,
+        t.ident_number,
+        lfe.id_,
+        lfe.zoneno,
+        lfe.protseno,
+        null as subserno,
+        lfe.Workdate,
+        'fee' as listno,
+        null as prinflag,
+        null as cmprflag,
+        null as lglockno,
+        null as trxdate,
+        null as trxtime,
+        null as timestmp,
+        null as postndat,
+        null as postsdat,
+        null as posttime,
+        null as trxsqnb,
+        null as ptrxsqnb,
+        null as trxsqns,
+        null as trxcode,
+        null as valuedat,
+        null as currtype,
+        null as cashexf,
+        null as catrflag,
+        null as drcrf,
+        null as amount,
+        null as updbal,
+        null as notetype,
+        null as notes,
+        null as revtranf,
+        null as updtranf,
+        null as posttype,
+        null as listtype,
+        null as recipbkn,
+        null as recipbka,
+        null as recipact,
+        null as recipacs,
+        null as recipacn,
+        null as exchrat,
+        null as forecurr,
+        null as foreamt,
+        null as vouhtype,
+        null as vouhno,
+        null as mediumid,
+        null as mediumno,
+        null as medseno,
+        null as chnltype,
+        null as chnlno,
+        null as prodcode,
+        null as prodno,
+        null as prodgpno,
+        null as trxzno,
+        null as tphybrno,
+        null as phybrno,
+        null as tellerno,
+        null as authtlno,
+        null as authno,
+        null as termid,
+        null as trxplcs,
+        null as statcode,
+        lfe.create_time,
+        lfe.update_time,
+        lfe.create_by,
+        lfe.update_by,
+        lfe.enable_,
+        lfe.remark_,
+        null as termnum,
+        null as intrate,
+        null as rlvrate,
+        null as ovrrate,
+        null as incirate,
+        null as ofcirate,
+        null as taxrate,
+        null as currint,
+        null as rlvint,
+        null as rlvibal,
+        null as ovramt,
+        null as ovrbal,
+        null as ovramtit,
+        null as inamt,
+        null as incurbal,
+        null as inamtit,
+        null as ofamt,
+        null as ofcurbal,
+        null as ofamtit,
+        null as taxsum,
+        null as taxamt,
+        null as taxbal,
+        null as ntaxamt,
+        null as ntaxbal,
+        null as drdoactn,
+        null as drdoacsn,
+        null as drdoacta,
+        null as payactn,
+        null as payacsn,
+        null as payacta
+        FROM BIZ_DEBT_GRANT t
+        INNER JOIN (SELECT DISTINCT m.protseno, m.mediumid
+        FROM BIZ_DEBT_GRANT t, INF_AFPCMEM m
+        WHERE t.ident_number = m.mediumid
+        <if test="cm.deptCode != null and cm.deptCode != ''">
+            AND t.institution_code = #{cm.deptCode}
+        </if>
+        <if test="cm.grantCode != null and cm.grantCode != ''">
+            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
+        </if>
+        ) tmp
+        on t.ident_number = tmp.mediumid
+        LEFT JOIN (SELECT pts.cust_no, pts.cust_name_cn, renkey.debt_code
+        FROM BIZ_RENTAL_FACTORING_KEY renkey, BIZ_PTS pts
+        WHERE pts.objtyp = 'BIZ_RENTAL_FACTORING_KEY'
+        AND pts.objinr = renkey.id_
+        AND pts.rol = 'CONE') cone
+        ON (cone.debt_code = t.debt_code)
+        INNER JOIN INF_AFWKLFE lfe
+        ON lfe.protseno = tmp.protseno
+        AND t.enable_ = 1
+        <if test="cm.deptCode != null and cm.deptCode != ''">
+            AND t.institution_code = #{cm.deptCode}
+        </if>
+        <if test="cm.grantCode != null and cm.grantCode != ''">
+            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
+        </if>
+        <if test="cm.proposer != null and cm.proposer != ''">
+            AND cone.cust_no LIKE '%'||#{cm.proposer}||'%'
+        </if>
+        <if test="cm.beginDate != null and cm.beginDate != ''">
+            AND lfe.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="cm.endDate != null and cm.endDate != ''">
+            AND lfe.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD HH24:MI:SS')
+        </if>
+
+        )
+        ORDER BY workdate, protseno, listno
 
     </select>
+    <select id="getBaseMessageInfo" resultType="java.util.Map">
+        SELECT
+        rownum rownum_,
+        gt.id_ grantid,
+        gt.debt_code,
+        gt.grant_code,
+        gt.iou_code,
+        gt.currency,
+        gt.business_types,
+        CASE gt.business_types
+        WHEN 'PT0501000000' THEN
+        '有追索权'
+        WHEN 'PT0502000000' THEN
+        '无追索权'
+        END recourse,
+        m.m_currency,
+        m.solution_amt,
+        m.project_name,
+        user_.account_,
+        user_.user_name,
+        protype_.name_ product_name,
+        dept.dept_name,
+        dept.code_ DEPT_CODE,
+        cone.cust_no coneno,
+        cone.cust_name_cn conecn,
+        CASE cone.finance_platform
+        WHEN '1' THEN
+        '是'
+        WHEN '0' THEN
+        '否'
+        END finance_platform,
+        cone.cust_scale conescale,
+        cone.organization_code coneorgnum,
+        cone.credit_rating conerat,
+        prop.cust_no propno,
+        prop.cust_name_cn propcn,
+        prop.cust_scale propscale,
+        prop.organization_code proporgnum,
+        prop.credit_rating proprat,
+        CASE interest.trade_finance_business
+        WHEN 1 THEN
+        '政策性贷款项下贸金业务'
+        WHEN 2 THEN
+        '与政策性贷款支持方向相同的贸金业务'
+        WHEN 3 THEN
+        '非政策性业务'
+        END trade_finance_business,
+        CASE interest.policy_attributre_classify
+        WHEN '1' THEN
+        '一带一路'
+        WHEN '2' THEN
+        '国际产能和装备制造合作'
+        WHEN '3' THEN
+        '重大装备出口和高新技术出口'
+        WHEN '4' THEN
+        '对外承包工程和境外投资'
+        WHEN '5' THEN
+        '能源、资源类'
+        WHEN '6' THEN
+        '中国制造2025'
+        END policy_attributre_classify,
+        CASE interest.syndicated_status
+        WHEN 1 THEN
+        '牵头行'
+        WHEN 2 THEN
+        '参与行'
+        END syndicated_status,
+        '是否与他行银团放款' AS syndicateLoan,
+        rental.biz_rental_factoring_code,
+        rental.leasehold
+        FROM BIZ_DEBT_GRANT gt
+        LEFT JOIN BIZ_DEBT_MAIN m
+        ON (m.enable_ = 1 AND m.debt_code = gt.debt_code)
+        LEFT JOIN SYS_DEPT dept
+        ON gt.institution_code = dept.CODE_
+        LEFT JOIN SYS_USER user_
+        ON user_.id_ = m.bank_tell_id
+        LEFT JOIN BIZ_PRODUCT_TYPES protype_
+        ON gt.business_types = protype_.CODE_
+        LEFT JOIN BIZ_INTEREST_RATE interest
+        ON (interest.enable_ = 1 AND interest.debt_code = gt.debt_code AND
+        interest.grant_code = gt.grant_code)
+        LEFT JOIN BIZ_RENTAL_FACTORING rental
+        ON (rental.enable_ = 1 AND rental.debt_code = gt.debt_code AND
+        interest.grant_code = gt.grant_code)
+        LEFT JOIN (SELECT pts.cust_no,
+        pts.cust_name_cn,
+        renkey.debt_code,
+        renkey.finance_platform,
+        cust.cust_scale,
+        cust.organization_code,
+        cust.credit_rating
+        FROM BIZ_RENTAL_FACTORING_KEY renkey,
+        BIZ_PTS                  pts,
+        BIZ_CUST                 cust
+        WHERE pts.objtyp = 'BIZ_RENTAL_FACTORING_KEY'
+        AND pts.objinr = renkey.id_
+        AND pts.rol = 'CONE'
+        AND pts.ptyinr = cust.id_) cone
+        ON (cone.debt_code = gt.debt_code)
+        LEFT JOIN (SELECT pts.objinr,
+        pts.cust_no,
+        pts.cust_name_cn,
+        cust.cust_scale,
+        cust.organization_code,
+        cust.credit_rating
+        FROM BIZ_PTS pts, BIZ_CUST cust
+        WHERE pts.objtyp = 'BIZ_DEBT_MAIN'
+        AND pts.rol = 'APPT'
+        AND pts.ptyinr = cust.id_) prop
+        ON (prop.objinr = m.id_)
+        WHERE gt.enable_ = 1
+
+        <if test="grantCode != null and grantCode != ''">
+            AND gt.grant_code = #{grantCode}
+        </if>
+
+    </select>
+
+    <resultMap id="BaseMessageInfoMap" type="java.util.HashMap" >
+        <result column="GRANTID" property="grantId" jdbcType="VARCHAR" />
+        <result column="DEBT_CODE" property="debtCode" jdbcType="VARCHAR" />
+        <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
+        <result column="GRANT_CODE" property="grantCode" jdbcType="VARCHAR" />
+        <result column="ACCOUNT_" property="account_" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="banktellName" jdbcType="VARCHAR" />
+        <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR" />
+        <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+        <result column="BIZ_RENTAL_FACTORING_CODE" property="bizRentalFactoringCode" jdbcType="VARCHAR" />
+        <result column="PROPOSER_NUM" property="proposerNum" jdbcType="VARCHAR" />
+        <result column="PROPOSER" property="proposer" jdbcType="VARCHAR" />
+        <result column="CURRENCY" property="currency" jdbcType="VARCHAR" />
+        <result column="PAYMENT_AMT" property="paymentAmt" jdbcType="DOUBLE" />
+        <result column="AMT" property="amt" jdbcType="DOUBLE" />
+        <result column="AMTBALANCE" property="amtBalance" jdbcType="DOUBLE" />
+        <result column="MAIN_BUSINESS" property="mainBusiness" jdbcType="VARCHAR" />
+        <result column="CUST_SCALE" property="custScale" jdbcType="VARCHAR" />
+        <result column="ORGANIZATION_CODE" property="organizationCode" jdbcType="BIGINT" />
+        <result column="CREDIT_RATING" property="creditRating" jdbcType="VARCHAR" />
+        <result column="FINANCE_PLATFORM" property="financePlatform" jdbcType="VARCHAR" />
+        <result column="BUSINESS_TYPE" property="businessType" jdbcType="VARCHAR" />
+        <result column="INNOVATIVE_BUSINESS_TYPE" property="innovativeBusinessType" jdbcType="VARCHAR" />
+        <result column="BACKGROUND_NATIONALITY" property="backgroundNationality" jdbcType="VARCHAR" />
+        <result column="LOAN_DOMAIN" property="loanDomain" jdbcType="VARCHAR" />
+        <result column="IMPOERT_EXPORT_GOODS_SERVICE" property="impoertExportGoodsService" jdbcType="VARCHAR" />
+        <result column="TYOES_INDUSTRIAL" property="tyoesIndustrial" jdbcType="VARCHAR" />
+        <result column="BUSINESS_CONTRACT_CODE" property="businessContractCode" jdbcType="VARCHAR" />
+        <result column="BUSINESS_CONTRACT_DATE" property="businessContractDate" jdbcType="DATE" />
+        <result column="BUSINESS_CONTRACT_AMOUNT" property="businessContractAmount" jdbcType="DOUBLE" />
+        <result column="LOAN_CKASSIFICATION" property="loanCkassification" jdbcType="VARCHAR" />
+        <result column="INDUSTRIAL_TRANSFORMATION" property="industrialTransformation" jdbcType="VARCHAR" />
+        <result column="CURTURAL_PRODUCT" property="curturalProduct" jdbcType="VARCHAR" />
+        <result column="ALLEVIATION_LOAN" property="alleviationLoan" jdbcType="VARCHAR" />
+        <result column="TRADE_FINANCE_BUSINESS" property="traneFinanceBusiness" jdbcType="INTEGER" />
+        <result column="INDUSTRY_INVESTMENT" property="industryInvestment" jdbcType="VARCHAR" />
+        <result column="COMPARE" property="compare" jdbcType="VARCHAR" />
+        <result column="IS_SYNDICATED" property="isSyndicated" jdbcType="VARCHAR" />
+        <result column="IS_SYNDICATED_AGENCY" property="isSyndicatedAgency" jdbcType="VARCHAR" />
+        <result column="SYNDICATED_STATUS" property="syndicatedStatus" jdbcType="VARCHAR" />
+        <result column="IS_421" property="is421" jdbcType="VARCHAR" />
+        <result column="GRANT_STATUS" property="grantStatus" jdbcType="INTEGER" />
+        <result column="GRANT_STATUS_STRING" property="grantStatusString" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="DATE"/>
+        <result column="BUSINESS_TYPES" property="businessTypes" jdbcType="VARCHAR"/>
+        <result column="NAME_" property="productName" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="bankTellName" jdbcType="VARCHAR" />
+        <result column="CREDIT_RATIO" property="creditRatio" jdbcType="DOUBLE" />
+        <result column="CREDIT_LINE_NAME" property="creditLineName" jdbcType="VARCHAR" />
+        <result column="CUST_NAME_CN" property="custNameCn" jdbcType="VARCHAR" />
+        <result column="DEPT_CODE" property="deptCode" jdbcType="VARCHAR" />
+        <result column="CUR" property="cur" jdbcType="VARCHAR" />
+        <result column="SCOPE_BUSIN_PERIOD" property="scopeBusinPeriod" jdbcType="INTEGER" />
+        <result column="GRACE_PERIOD" property="gracePeriod" jdbcType="INTEGER" />
+        <result column="TOIERANCE_PERIOD" property="toierancePeriod" jdbcType="INTEGER" />
+        <result column="BANK_TELL_ID" property="bankTellId" jdbcType="BIGINT" />
+        <result column="BUSINCODE" property="busincode" jdbcType="VARCHAR" />
+        <result column="CBTSTRING" property="cbtString" jdbcType="VARCHAR" />
+        <result column="GRANTID" property="grantId" jdbcType="VARCHAR" />
+        <result column="DATE_OF_LOAN" property="dateOfLoan" jdbcType="DATE"/>
+        <result column="VALUE_DATE" property="valueDate" jdbcType="DATE"/>
+        <result column="DUE_DATE" property="dueDate" jdbcType="DATE"/>
+        <result column="BUSINESS_TYPE_NAME" property="businessTypeString" jdbcType="VARCHAR" />
+        <result column="CODE_TEXT" property="codeText" jdbcType="VARCHAR" />
+        <result column="IDENT_NUMBER" property="identNumber" jdbcType="VARCHAR" />
+        <result column="EMERGING_INDUSTRY_CLASSIFY" property="emergingIndustryClassify" jdbcType="VARCHAR" />
+        <result column="TRADE_FINANCE_BUSINESS" property="tradeFinanceBusiness" jdbcType="VARCHAR" />
+        <result column="GUARANTEE_TYPE_TOTAL" property="guaranteeTypeTotal" jdbcType="VARCHAR" />
+        <result column="POLICY_ATTRIBUTRE_CLASSIFY" property="policyAttributreClassify" jdbcType="VARCHAR" />
+        <result column="BUSINESS_NAME" property="businessName" jdbcType="VARCHAR" />
+        <result column="GRANT_AMT" property="grantAmt" jdbcType="VARCHAR" />
+        <result column="CODE_NAME" property="codeName" jdbcType="VARCHAR" />
+
+
+        <result column="IOU_CODE" property="iouCode" jdbcType="VARCHAR" />
+        <result column="PROTSENO" property="protseno" jdbcType="VARCHAR" />
+        <result column="WORKDATE" property="workdate" jdbcType="DATE" />
+        <result column="PAYACTA" property="payacta" jdbcType="VARCHAR" />
+        <result column="TOTFFAMT" property="totffamt" jdbcType="VARCHAR" />
+        <result column="TOTHKAMT" property="tothkamt" jdbcType="VARCHAR" />
+        <result column="FEE" property="fee" jdbcType="VARCHAR" />
+        <result column="OVRAMT" property="ovramt" jdbcType="VARCHAR" />
+        <result column="OVRBAL" property="ovrbal" jdbcType="VARCHAR" />
+        <result column="INAMT" property="inamt" jdbcType="VARCHAR" />
+        <result column="INCURBAL" property="incurbal" jdbcType="VARCHAR" />
+        <result column="OFAMT" property="ofamt" jdbcType="VARCHAR" />
+        <result column="OFCURBAL" property="ofcurbal" jdbcType="VARCHAR" />
+        <result column="INTRATE" property="intrate" jdbcType="VARCHAR" />
+        <result column="RLVRATE" property="rlvrate" jdbcType="VARCHAR" />
+        <result column="OVRRATE" property="ovrrate" jdbcType="VARCHAR" />
+        <result column="INCIRATE" property="incirate" jdbcType="VARCHAR" />
+        <result column="OFCIRATE" property="ofcirate" jdbcType="VARCHAR" />
+        <result column="AMOUNT" property="amount" jdbcType="VARCHAR" />
+        <result column="CUST_NO" property="custNo" jdbcType="VARCHAR" />
+        <result column="RECAMT" property="recamt" jdbcType="DOUBLE" />
+        <result column="DEPTCODE" property="deptCode" jdbcType="VARCHAR" />
+
+        <result column="ROWNUM" property="rownum" jdbcType="VARCHAR" />
+        <result column="ISSUEDATE" property="issuedate" jdbcType="VARCHAR" />
+        <result column="PROPNO" property="propno" jdbcType="VARCHAR" />
+        <result column="PROPCN" property="propcn" jdbcType="VARCHAR" />
+        <result column="PROPSCALE" property="propscale" jdbcType="VARCHAR" />
+        <result column="PROPORGNUM" property="proporgnum" jdbcType="VARCHAR" />
+        <result column="PROPRAT" property="proprat" jdbcType="VARCHAR" />
+        <result column="CONENO" property="coneno" jdbcType="VARCHAR" />
+        <result column="CONECN" property="conecn" jdbcType="VARCHAR" />
+        <result column="CONESCALE" property="conescale" jdbcType="VARCHAR" />
+        <result column="CONEORGNUM" property="coneorgnum" jdbcType="VARCHAR" />
+        <result column="CONERAT" property="conerat" jdbcType="VARCHAR" />
+        <result column="RECOURSE" property="recourse" jdbcType="VARCHAR" />
+        <result column="LEASEHOLD" property="leasehold" jdbcType="VARCHAR" />
+        <result column="VALUEDAY" property="valueday" jdbcType="VARCHAR" />
+        <result column="MATUDATE" property="matudate" jdbcType="VARCHAR" />
+        <result column="LOANTERM" property="loanterm" jdbcType="VARCHAR" />
+        <result column="NLONSUR" property="nlonsur" jdbcType="VARCHAR" />
+        <result column="RATEINCM1" property="rateincm1" jdbcType="VARCHAR" />
+        <result column="INT1" property="int1" jdbcType="VARCHAR" />
+        <result column="M_CURRENCY" property="mCurrency" jdbcType="VARCHAR" />
+        <result column="SOLUTION_AMT" property="solutionAmt" jdbcType="DOUBLE" />
+
+        <result column="OVERDUEDAYS" property="overdueDays" jdbcType="VARCHAR" />
+        <result column="SYNDICATELOAN" property="syndicateLoan" jdbcType="VARCHAR" />
+        <result column="GUARANTEEMODE" property="guaranteeMode" jdbcType="VARCHAR" />
+        <result column="ISSUEDATE" property="issueDate" jdbcType="VARCHAR" />
+        <result column="JOINTTENANT" property="jointTenant" jdbcType="VARCHAR" />
+
+
+    </resultMap>
+
+    <select id="getComprehensiveProtsenos"  resultMap="ProtsenosMap">
+
+        SELECT
+        t.ident_number,
+        tmp.protseno,
+        t.debt_code,
+        t.grant_code
+        FROM BIZ_DEBT_GRANT t
+        INNER JOIN (SELECT DISTINCT m.protseno, m.mediumid
+        FROM BIZ_DEBT_GRANT t, INF_AFPCMEM m
+        WHERE t.ident_number = m.mediumid
+        <if test="cm.deptCode != null and cm.deptCode != ''">
+            AND t.institution_code = #{cm.deptCode}
+        </if>
+        <if test="cm.grantCode != null and cm.grantCode != ''">
+            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
+        </if>
+        ) tmp
+        on t.ident_number = tmp.mediumid
+        WHERE EXISTS (SELECT 1 FROM INF_AFRLNDTL lndtl WHERE lndtl.protseno = tmp.protseno
+        <if test="cm.beginDate != null and cm.beginDate != ''">
+            AND lndtl.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="cm.endDate != null and cm.endDate != ''">
+            AND lndtl.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD HH24:MI:SS')
+        </if>
+
+        )
+        AND t.enable_ = 1
+        <if test="cm.deptCode != null and cm.deptCode != ''">
+            AND t.institution_code = #{cm.deptCode}
+        </if>
+        <if test="cm.grantCode != null and cm.grantCode != ''">
+            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
+        </if>
+
+    </select>
+
+    <!--<resultMap id="ProtsenosMap" type="java.util.HashMap" >
+        <result column="MEDIUMID" property="mediumid" jdbcType="VARCHAR" />
+        <result column="PROTSENO" property="protseno" jdbcType="VARCHAR" />
+        <result column="DEBT_CODE" property="debtCode" jdbcType="VARCHAR" />
+        <result column="GRANT_CODE" property="grantCode" jdbcType="VARCHAR" />
+    </resultMap>-->
 
 </mapper>

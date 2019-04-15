@@ -15,7 +15,7 @@ public enum AccrualExportEnum implements Serializable {
     AFRLNDTL_ZONENO(2, "帐户所属地区号", "ZONENO","STRING"),
     AFRLNDTL_PROTSENO(3, "协议编号", "PROTSENO","STRING"),
     AFRLNDTL_SUBSERNO(4, "子协议序号", "SUBSERNO","STRING"),
-    AFRLNDTL_WORKDATE(5, "交易发生日期（系统工作日期）", "WORKDATE","STRING"),
+    AFRLNDTL_WORKDATE(5, "交易发生日期", "WORKDATE","DATE"),
     AFRLNDTL_LISTNO(6, "明细序号", "LISTNO","STRING"),
     AFRLNDTL_LGLOCKNO(7, "逻辑锁记录序号", "LGLOCKNO","STRING"),
     AFRLNDTL_CURRTYPE(8, "币种", "CURRTYPE","STRING"),
@@ -51,26 +51,26 @@ public enum AccrualExportEnum implements Serializable {
     AFRLNDTL_PAYACSN(38, "还款账号序号", "PAYACSN","STRING"),
     AFRLNDTL_PAYACTA(39, "还款账号发生额", "PAYACTA","DOUBLE"),
     AFRLNDTL_CREATE_TIME(40, "创建人", "CREATE_TIME","STRING"),
-    AFRLNDTL_UPDATE_TIME(41, "创建时间", "UPDATE_TIME","STRING"),
+    AFRLNDTL_UPDATE_TIME(41, "创建时间", "UPDATE_TIME","DATE"),
     AFRLNDTL_CREATE_BY(42, "更新人", "CREATE_BY","STRING"),
-    AFRLNDTL_UPDATE_BY(43, "更新时间", "UPDATE_BY","STRING"),
-    AFRLNDTL_ENABLE_(44, "有效性（1有效；0无效）", "ENABLE_","STRING"),
+    AFRLNDTL_UPDATE_BY(43, "更新时间", "UPDATE_BY","DATE"),
+    AFRLNDTL_ENABLE_(44, "有效性(1有效；0无效)", "ENABLE_","STRING"),
     AFRLNDTL_REMARK_(45, "备注", "REMARK_","STRING"),
 
     AFRCDTL_ID_(46, "主键", "ID_","STRING"),
     AFRCDTL_ZONENO(47, "帐户所属地区号", "ZONENO","STRING"),
     AFRCDTL_PROTSENO(48, "协议编号", "PROTSENO","STRING"),
     AFRCDTL_SUBSERNO(49, "子协议序号", "SUBSERNO","STRING"),
-    AFRCDTL_WORKDATE(50, "交易发生日期（系统工作日期）", "WORKDATE","STRING"),
+    AFRCDTL_WORKDATE(50, "交易发生日期", "WORKDATE","STRING"),
     AFRCDTL_LISTNO(51, "明细序号", "LISTNO","STRING"),
     AFRCDTL_PRINFLAG(52, "是否内部明细", "PRINFLAG","STRING"),
     AFRCDTL_CMPRFLAG(53, "明细压缩标志", "CMPRFLAG","STRING"),
     AFRCDTL_LGLOCKNO(54, "逻辑锁记录序号", "LGLOCKNO","STRING"),
-    AFRCDTL_TRXDATE(55, "交易发生日期（自然日）", "TRXDATE","STRING"),
+    AFRCDTL_TRXDATE(55, "交易发生日期(自然日)", "TRXDATE","STRING"),
     AFRCDTL_TRXTIME(56, "交易发生时间", "TRXTIME","STRING"),
     AFRCDTL_TIMESTMP(57, "入账时间戳", "TIMESTMP","STRING"),
-    AFRCDTL_POSTNDAT(58, "入帐日期（自然日）", "POSTNDAT","STRING"),
-    AFRCDTL_POSTSDAT(59, "入帐日期（系统工作日）", "POSTSDAT","STRING"),
+    AFRCDTL_POSTNDAT(58, "入帐日期(自然日)", "POSTNDAT","STRING"),
+    AFRCDTL_POSTSDAT(59, "入帐日期(系统工作日)", "POSTSDAT","STRING"),
     AFRCDTL_POSTTIME(60, "入帐时间", "POSTTIME","STRING"),
     AFRCDTL_TRXSQNB(61, "大交易序号", "TRXSQNB","STRING"),
     AFRCDTL_PTRXSQNB(62, "原大交易序号", "PTRXSQNB","STRING"),
@@ -81,8 +81,8 @@ public enum AccrualExportEnum implements Serializable {
     AFRCDTL_CASHEXF(67, "钞汇标志", "CASHEXF","STRING"),
     AFRCDTL_CATRFLAG(68, "现转标志", "CATRFLAG","STRING"),
     AFRCDTL_DRCRF(69, "借贷标志", "DRCRF","STRING"),
-    AFRCDTL_AMOUNT(70, "发生额", "AMOUNT","DOUBLE"),
-    AFRCDTL_UPDBAL(71, "更新后余额", "UPDBAL","DOUBLE"),
+    AFRCDTL_AMOUNT(70, "本金发生额", "AMOUNT","DOUBLE"),
+    AFRCDTL_UPDBAL(71, "本金期末余额(原币)", "UPDBAL","DOUBLE"),
     AFRCDTL_NOTETYPE(72, "简要注释", "NOTETYPE","STRING"),
     AFRCDTL_NOTES(73, "附言", "NOTES","STRING"),
     AFRCDTL_REVTRANF(74, "反交易标志", "REVTRANF","STRING"),
@@ -108,7 +108,7 @@ public enum AccrualExportEnum implements Serializable {
     AFRCDTL_PRODNO(94, "产品序号", "PRODNO","STRING"),
     AFRCDTL_PRODGPNO(95, "产品组编号", "PRODGPNO","STRING"),
     AFRCDTL_TRXZNO(96, "交易地区号", "TRXZNO","STRING"),
-    AFRCDTL_TPHYBRNO(97, "交易（物理）网点号", "TPHYBRNO","STRING"),
+    AFRCDTL_TPHYBRNO(97, "交易(物理)网点号", "TPHYBRNO","STRING"),
     AFRCDTL_PHYBRNO(98, "帐户物理网点号", "PHYBRNO","STRING"),
     AFRCDTL_TELLERNO(99, "操作柜员号", "TELLERNO","STRING"),
     AFRCDTL_AUTHTLNO(100, "授权柜员号", "AUTHTLNO","STRING"),
@@ -117,11 +117,78 @@ public enum AccrualExportEnum implements Serializable {
     AFRCDTL_TRXPLCS(103, "交易场所简称", "TRXPLCS","STRING"),
     AFRCDTL_STATCODE(104, "外汇统计代码", "STATCODE","STRING"),
     AFRCDTL_CREATE_TIME(105, "创建人", "CREATE_TIME","STRING"),
-    AFRCDTL_UPDATE_TIME(106, "创建时间", "UPDATE_TIME","STRING"),
+    AFRCDTL_UPDATE_TIME(106, "创建时间", "UPDATE_TIME","DATE"),
     AFRCDTL_CREATE_BY(107, "更新人", "CREATE_BY","STRING"),
-    AFRCDTL_UPDATE_BY(108, "更新时间", "UPDATE_BY","STRING"),
-    AFRCDTL_ENABLE_(109, "有效性（1有效；0无效）", "ENABLE_","STRING"),
-    AFRCDTL_REMARK_(110, "备注", "REMARK_","STRING");
+    AFRCDTL_UPDATE_BY(108, "更新时间", "UPDATE_BY","DATE"),
+    AFRCDTL_ENABLE_(109, "有效性(1有效；0无效)", "ENABLE_","STRING"),
+    AFRCDTL_REMARK_(110, "备注", "REMARK_","STRING"),
+
+    BASEINFO_DEBT_CODE(111, "债项方案编号" ,"DEBT_CODE" ,"STRING"),
+    BASEINFO_GRANT_CODE(112, "发放条件编号" ,"GRANT_CODE" ,"STRING"),
+    BASEINFO_IOU_CODE(113, "借据编号" ,"IOU_CODE" ,"STRING"),
+    BASEINFO_CURRENCY(114, "发放条件币种" ,"CURRENCY" ,"STRING"),
+    BASEINFO_BUSINESS_TYPES(115, "产品种类二级分类" ,"BUSINESS_TYPES" ,"STRING"),
+    BASEINFO_RECOURSE(116, "追索权" ,"RECOURSE" ,"STRING"),
+    BASEINFO_M_CURRENCY(117, "方案主币种" ,"M_CURRENCY" ,"STRING"),
+    BASEINFO_SOLUTION_AMT(118, "方案金额" ,"SOLUTION_AMT" ,"DOUBLE"),
+    BASEINFO_PROJECT_NAME(119, "项目名称" ,"PROJECT_NAME" ,"STRING"),
+    BASEINFO_ACCOUNT_(120, "信贷员账户" ,"ACCOUNT_" ,"STRING"),
+    BASEINFO_USER_NAME(121, "信贷员姓名" ,"USER_NAME" ,"STRING"),
+    BASEINFO_PRODUCT_NAME(122, "产品名称" ,"PRODUCT_NAME" ,"STRING"),
+    BASEINFO_DEPT_NAME(123, "所属机构" ,"DEPT_NAME" ,"STRING"),
+    BASEINFO_DEPT_CODE(124, "所属机构编号" ,"DEPT_CODE" ,"STRING"),
+    BASEINFO_CONENO(125, "承租人客户编号" ,"CONENO" ,"STRING"),
+    BASEINFO_CONECN(126, "承租人客户名称" ,"CONECN" ,"STRING"),
+    BASEINFO_FINANCE_PLATFORM(127, "承租人是否地方政府融资平台" ,"FINANCE_PLATFORM" ,"STRING"),
+    BASEINFO_CONESCALE(128, "承租人企业规模" ,"CONESCALE" ,"STRING"),
+    BASEINFO_CONEORGNUM(129, "承租人组织机构代码" ,"CONEORGNUM" ,"STRING"),
+    BASEINFO_CONERAT(130, "承租人客户信用等级" ,"CONERAT" ,"STRING"),
+    BASEINFO_PROPNO(131, "出租人客户编号" ,"PROPNO" ,"STRING"),
+    BASEINFO_PROPCN(132, "出租人客户名称" ,"PROPCN" ,"STRING"),
+    BASEINFO_PROPSCALE(133, "出租人企业规模" ,"PROPSCALE" ,"STRING"),
+    BASEINFO_PROPORGNUM(134, "出租人组织机构代码" ,"PROPORGNUM" ,"STRING"),
+    BASEINFO_PROPRAT(135, "出租人客户信用等级" ,"PROPRAT" ,"STRING"),
+    BASEINFO_TRADE_FINANCE_BUSINESS(136, "贸金业务政策性属性" ,"TRADE_FINANCE_BUSINESS" ,"STRING"),
+    BASEINFO_POLICY_ATTRIBUTRE_CLASSIFY(137, "政策性属性分类" ,"POLICY_ATTRIBUTRE_CLASSIFY" ,"STRING"),
+    BASEINFO_SYNDICATED_STATUS(138, "我行银团地位" ,"SYNDICATED_STATUS" ,"STRING"),
+    BASEINFO_SYNDICATELOAN(139, "是否与他行银团放款" ,"SYNDICATELOAN" ,"STRING"),
+    BASEINFO_BIZ_RENTAL_FACTORING_CODE(140, "租金保理合同编号" ,"BIZ_RENTAL_FACTORING_CODE" ,"STRING"),
+    BASEINFO_LEASEHOLD(141, "租赁物名称" ,"LEASEHOLD" ,"STRING"),
+
+    AFPAEXO_UPDBALCNY(142, "本金期末余额(折人民币)", "UPDBALCNY","DOUBLE"),
+    AFPAEXO_UPDBALUSD(143, "本金期末余额(折美元)", "UPDBALUSD","DOUBLE"),
+
+    AFWKLFE_CURRTYPE(144, "费用币种", "AFWKLFE_CURRTYPE","STRING"),
+    AFWKLFE_FEECLASS(145, "费用类型", "AFWKLFE_FEECLASS","STRING"),
+    AFWKLFE_FEEAMT(146, "费用发生额", "AFWKLFE_FEEAMT","DOUBLE"),
+    AFPCMEM_NGBSQ(147,"NGBSQ","正常扣款顺序","STRING"),
+    AFPCMEM_OGBSQ(148,"OGBSQ","逾期扣款顺序","STRING"),
+    AFPCMEM_CALINTF(149,"CALINTF","正常计息标志","STRING"),
+    AFPCMEM_OVCALINF(150,"OVCALINF","逾期计息标志","STRING"),
+    AFPCMEM_INCALINF(151,"INCALINF","表内欠息计息标志","STRING"),
+    AFPCMEM_OCALINF(152,"OCALINF","表外欠息计息标志","STRING"),
+
+    COMPRE_GUARANTEEMODE(154, "担保方式(总)" ,"guaranteeMode" ,"STRING"),
+    COMPRE_VALUEDAY(155, "起息日" ,"valueday" ,"STRING"),
+    COMPRE_MATUDATE(156, "到期日" ,"matudate" ,"STRING"),
+    COMPRE_LOANTERM(157, "业务期限" ,"scopeBusinPeriod" ,"STRING"),
+    COMPRE_NLONCURRTYPE(158, "借据币种" ,"nloncurrtype" ,"STRING"),
+    COMPRE_TOTFFAMT(159, "发放金额(原币)" ,"totffamt" ,"DOUBLE"),
+    COMPRE_TOTFFAMTCNY(160, "发放金额(折人民币)" ,"totffamtCNY" ,"DOUBLE"),
+    COMPRE_TOTFFAMTUSD(161, "发放金额(折美元)" ,"totffamtUSD" ,"DOUBLE"),
+    COMPRE_UPDBAL(162, "本金期末余额(原币)" ,"UPDBAL" ,"DOUBLE"),
+    COMPRE_UPDBALCNY(163, "本金期末余额(折人民币)" ,"UPDBALCNY" ,"DOUBLE"),
+    COMPRE_UPDBALUSD(164, "本金期末余额(折美元)" ,"UPDBALUSD" ,"DOUBLE"),
+    COMPRE_TOTHKAMT(165, "累计回收本金金额(原币)" ,"tothkamt" ,"DOUBLE"),
+    COMPRE_TOTHKAMTCNY(166, "累计回收本金金额(人民币)" ,"tothkamtCNY" ,"DOUBLE"),
+    COMPRE_TOTHKAMTUSD(167, "累计回收本金金额(美元)" ,"tothkamtUSD" ,"DOUBLE"),
+    COMPRE_OVRBAL(168, "逾期本金余额(原币)" ,"ovrbal" ,"DOUBLE"),
+    COMPRE_OVRBALCNY(169, "逾期本金余额(人民币)" ,"ovrbalCNY" ,"DOUBLE"),
+    COMPRE_OVRBALUSD(170, "逾期本金余额(美元)" ,"ovrbalUSD" ,"DOUBLE"),
+    COMPRE_PRIDAYS(171, "本金逾期天数" ,"PRIDAYS" ,"STRING"),
+    COMPRE_RATEINCM1(172, "利率方式" ,"rateincm1" ,"STRING"),
+    COMPRE_NRATE(173, "利率" ,"NRATE" ,"DOUBLE");
+
 
     private int index;
     private String name;
@@ -177,19 +244,19 @@ public enum AccrualExportEnum implements Serializable {
                 .toString();
     }
 
-    public static String getFetchKey(String name) {
+    public static AccrualExportEnum fetchEnum(String name) {
         for (AccrualExportEnum c : AccrualExportEnum.values()) {
             if (c.getName().equals(name)) {
-                return c.key;
+                return c;
             }
         }
         return null;
     }
 
-    public static String getFetchKey(String name, String prefixName) {
+    public static AccrualExportEnum fetchEnum(String name, String prefixName) {
         for (AccrualExportEnum c : AccrualExportEnum.values()) {
             if (c.getName().equals(name) && c.name.startsWith(prefixName)) {
-                return c.key;
+                return c;
             }
         }
         return null;
