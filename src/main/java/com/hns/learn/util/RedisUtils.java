@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisUtils {
@@ -25,6 +26,17 @@ public class RedisUtils {
         boolean result = false;
         try {
             redisTemplate.boundValueOps(key).set(value);
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public boolean set(final String key, String value, Long ttl, TimeUnit unit) {
+        boolean result = false;
+        try {
+            redisTemplate.boundValueOps(key).set(value,ttl,unit);
             result = true;
         } catch (Exception e) {
             e.printStackTrace();

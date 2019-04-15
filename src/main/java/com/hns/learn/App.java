@@ -9,12 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 @EnableTransactionManagement
 @SpringBootApplication(scanBasePackages = "com.hns.learn")
 @MapperScan("com.hns.learn.mapper")
+@EnableCaching
 public class App 
 {
     protected final static Logger logger = LoggerFactory.getLogger(App.class);

@@ -1,6 +1,8 @@
 package com.hns.learn.web;
 
+import com.hns.learn.util.CacheUtils;
 import com.hns.learn.util.ExcelUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,11 +13,15 @@ import java.util.Date;
 @RestController
 public class FirstController {
 
+    @Autowired
+    private CacheUtils cacheUtil;
+
     @RequestMapping(value={"/hello","/hi"})
     public String say(){
         //http://localhost:10336/hi
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
-        return "当前时间是=="+date;
+        String cache = cacheUtil.getCodeLabel("demo","key0");
+        return "当前时间是=="+date +",cache="+cache;
     }
 
     @RequestMapping(value={"/exp"})

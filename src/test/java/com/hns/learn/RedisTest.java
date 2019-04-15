@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -18,6 +19,7 @@ public class RedisTest {
     @Test
     public void set() {
         redisUtils.set("redis_key", "hello world");
+        redisUtils.set("redis_key_ttl", "hello ttl",5L, TimeUnit.SECONDS);
     }
 
     @Test
