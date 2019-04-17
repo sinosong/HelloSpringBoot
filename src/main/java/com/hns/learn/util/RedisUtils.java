@@ -16,13 +16,13 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils {
 
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
-    public String get(final String key) {
+    public Object get(final String key) {
         return redisTemplate.boundValueOps(key).get();
     }
 
-    public boolean set(final String key, String value) {
+    public boolean set(final String key, Object value) {
         boolean result = false;
         try {
             redisTemplate.boundValueOps(key).set(value);
@@ -33,7 +33,7 @@ public class RedisUtils {
         return result;
     }
 
-    public boolean set(final String key, String value, Long ttl, TimeUnit unit) {
+    public boolean set(final String key, Object value, Long ttl, TimeUnit unit) {
         boolean result = false;
         try {
             redisTemplate.boundValueOps(key).set(value,ttl,unit);
@@ -44,7 +44,7 @@ public class RedisUtils {
         return result;
     }
 
-    public boolean getAndSet(final String key, String value) {
+    public boolean getAndSet(final String key, Object value) {
         boolean result = false;
         try {
             redisTemplate.boundValueOps(key).getAndSet(value);
@@ -66,7 +66,7 @@ public class RedisUtils {
         return result;
     }
 
-    public final Long zadd(final String key, Set<ZSetOperations.TypedTuple<String>> tuples) {
+    public final Long zadd(final String key, Set<ZSetOperations.TypedTuple<Object>> tuples) {
         return redisTemplate.opsForZSet().add(key,tuples);
     }
 
@@ -74,21 +74,21 @@ public class RedisUtils {
         return redisTemplate.opsForZSet().add(key,value,score);
     }
 
-    public final Set<String> zget(final String key,Long Smin,Long Smax,int offset,int count) {
+    public final Set<Object> zget(final String key,Long Smin,Long Smax,int offset,int count) {
         return redisTemplate.opsForZSet().rangeByScore(key,Smin,Smax,offset,count);
     }
-    public final Set<String> zgetDesc(final String key,Long Smin,Long Smax,int offset,int count) {
+    public final Set<Object> zgetDesc(final String key,Long Smin,Long Smax,int offset,int count) {
         return redisTemplate.opsForZSet().reverseRangeByScore(key,Smin,Smax,offset,count);
     }
 
     public final List zgetAll(final String key) {
-        Cursor<ZSetOperations.TypedTuple<String>> cursor = redisTemplate.opsForZSet().scan(key, ScanOptions.NONE);
+        Cursor<ZSetOperations.TypedTuple<Object>> cursor = redisTemplate.opsForZSet().scan(key, ScanOptions.NONE);
         Long size = redisTemplate.opsForZSet().size("key");
         List entityList = null;
         if(null != size && size > 0){
             entityList = new ArrayList(size.intValue());
             while (cursor.hasNext()){
-                ZSetOperations.TypedTuple<String> item = cursor.next();
+                ZSetOperations.TypedTuple<Object> item = cursor.next();
                 entityList.add(item.getValue());
             }
         }

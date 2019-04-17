@@ -8,6 +8,24 @@ import java.util.*;
 
 public class CommonTest {
 
+    @Test
+    public void dealWithStrs() {
+
+        String [] noteTypeKeys = {"0","1","10","11","12","13","14","15","16","17","18","19","2","20","21","22","23","24","25","26","27",
+                "28","29","3","30","32","33","34","35","36","37","38","39","4","40","41","42","43","44","5","6","7","8","9","997","998","999"};
+
+        for(String str : noteTypeKeys){
+
+            System.out.println(String.format("%03d", Integer.parseInt(str)));
+        }
+
+
+    }
+
+    @Test
+    public void temp() {
+        System.out.println(String.format("%0123d",10));
+    }
 
     @Test
     public void getNextDate(){

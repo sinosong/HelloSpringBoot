@@ -2,13 +2,13 @@ package com.hns.learn.util;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @Component
 public class CacheUtils {
+
 
     public JSONObject initCodeList(){
         JSONObject jo = new JSONObject();
@@ -28,7 +28,7 @@ public class CacheUtils {
         return jo;
     }
 
-    @Cacheable("chaChe")
+    /*@Cacheable("chaChe")
     public String getCodeLabel(String tableName,String key){
         System.out.println("...........getCodeLabel sleep init..."+ DateFormatUtils.format(new Date(),"yyyy-MM-dd hh:mm:ss"));
         try {
@@ -38,9 +38,7 @@ public class CacheUtils {
         }
         System.out.println("getCodeLabel wake init..."+ DateFormatUtils.format(new Date(),"yyyy-MM-dd hh:mm:ss"));
         return this.initCodeList().getJSONObject(tableName).getString(key);
-    }
-
-
+    }*/
 
 
 

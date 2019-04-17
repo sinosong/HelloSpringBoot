@@ -20,8 +20,9 @@ public class FirstController {
     public String say(){
         //http://localhost:10336/hi
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
-        String cache = cacheUtil.getCodeLabel("demo","key0");
-        return "当前时间是=="+date +",cache="+cache;
+//        String cache = cacheUtil.getCodeLabel("demo","key0");
+//        return "当前时间是=="+date +",cache="+cache;
+        return "当前时间是=="+date;
     }
 
     @RequestMapping(value={"/exp"})

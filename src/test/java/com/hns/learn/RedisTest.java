@@ -1,5 +1,6 @@
 package com.hns.learn;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hns.learn.util.RedisUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,13 +19,17 @@ public class RedisTest {
 
     @Test
     public void set() {
-        redisUtils.set("redis_key", "hello world");
-        redisUtils.set("redis_key_ttl", "hello ttl",5L, TimeUnit.SECONDS);
+        redisUtils.set("redis_key:demo", "hello world");
+        JSONObject testJO = new JSONObject();
+        testJO.put("jo","按周期按周期按周期按周期按周期按周期按周期按周期按周期");
+        testJO.put("j1","红红火火恍恍惚惚或或或或或");
+        redisUtils.set("redis_key:testJO", testJO);
+//        redisUtils.set("redis_key_ttl", "hello ttl",5L, TimeUnit.SECONDS);
     }
 
     @Test
     public void get() {
-        String value = redisUtils.get("redis_key");
+        String value = (String)redisUtils.get("redis_key");
         System.out.println(value);
     }
 
