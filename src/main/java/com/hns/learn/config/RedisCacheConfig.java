@@ -3,6 +3,8 @@ package com.hns.learn.config;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.support.spring.GenericFastJsonRedisSerializer;
 import org.apache.commons.lang3.ArrayUtils;
+import org.redisson.api.RedissonClient;
+import org.redisson.spring.cache.RedissonSpringCacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.*;
@@ -29,8 +31,8 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
-//    @Autowired
-//    private JedisConnectionFactory jedisConnectionFactory;
+    @Autowired
+    private RedissonClient redissonClient;
 
     String prefix = "BC:";
 
@@ -86,7 +88,10 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     @Bean
     @Override
     public CacheManager cacheManager() {
-        //初始化一个RedisCacheWriter
+
+        //使用Redis作为CacheManager
+
+      /*  //初始化一个RedisCacheWriter
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);
         //设置CacheManager的值序列化方式为json序列化
         // GenericFastJsonRedisSerializer 替换默认序列化
@@ -97,5 +102,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         defaultCacheConfig = defaultCacheConfig.entryTtl(Duration.ofMinutes(30));
         //初始化RedisCacheManager
         return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
+*/
+
+//      Map<String, CacheConfig> config = Maps.newHashMap();
+//      创建一个名称为"testMap"的缓存，过期时间ttl为24分钟，同时最长空闲时maxIdleTime为12分钟。
+//      config.put(CACHE_ENTERPRISE, new CacheConfig(24*60*60*1000, 12*60*1000));
+        return new RedissonSpringCacheManager(redissonClient);
+
+
     }
 }
