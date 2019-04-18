@@ -25,14 +25,14 @@ public class RedissonConfig {
         config.useSingleServer()
                 .setAddress("redis://" + host + ":" + port)
                 .setPassword(password)
-//                .setConnectTimeout(100)
-//                .setTimeout(200)
-//                .setConnectionPoolSize(8)
-//                .setConnectionMinimumIdleSize(5)
-//                .setTcpNoDelay(true)
-//                .setPingConnectionInterval(30000)
-//                .setPingTimeout(100)
-//                .setKeepAlive(true)
+                .setConnectTimeout(100)
+                .setTimeout(200)
+                .setConnectionPoolSize(8)
+                .setConnectionMinimumIdleSize(5)
+                .setTcpNoDelay(true)
+                .setPingConnectionInterval(30000)
+                .setPingTimeout(100)
+                .setKeepAlive(true)
                 .setRetryInterval(50);
         RedissonClient redissonClient =  Redisson.create(config);
         return redissonClient;

@@ -1,5 +1,6 @@
 package com.hns.learn;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hns.learn.entity.enums.AccrualExportEnum;
 import com.hns.learn.entity.enums.FetchOccurredEnum;
@@ -27,7 +28,7 @@ public class SQlTest {
     @Test
     public void SqlTest() {
 
-        Page page = new Page(1,10);
+        Page page = new Page(1,5);
         Map selMap = new HashMap();
 
 //        List<Map> protsenosList =  infAfrlndtlMapper.getEffectiveProtsenos(selMap);
@@ -36,7 +37,7 @@ public class SQlTest {
 
 //        page.setAsc("WORKDATE", "PROTSENO", "LISTNO");
 //        System.out.println(infAfrlndtlMapper.getAccrualList(page,selMap));
-        System.out.println(infAfrlndtlMapper.getComprehensiveProtsenos(page,selMap));
+//        System.out.println(infAfrlndtlMapper.getComprehensiveProtsenos(page,selMap));
 
 
         /*for(Map map : protsenosList){
@@ -46,6 +47,18 @@ public class SQlTest {
 
         }
 */
+        List list = infAfrlndtlMapper.getAccrualList(page,selMap);
+        page.setRecords(list);
+        System.out.println(JSON.toJSONString(page));
+        System.out.println("--------------------");
+        System.out.println("当前页数：" + page.getCurrent());
+        System.out.println("每页条数：" + page.getSize());
+        System.out.println("总条数：" + page.getTotal());
+        System.out.println("查询数据：" + page.getRecords().size());
+
+        System.out.println(JSON.toJSONString(page.getRecords()));
+
+
 
 
     }
