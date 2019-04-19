@@ -46,6 +46,15 @@ public class BizFile extends BaseModel implements Serializable {
     @TableField("EXT_")
     private String ext;
 
+    public BizFile() {
+    }
+
+    public BizFile(String bizCode, String bizType, String product) {
+        this.bizCode = bizCode;
+        this.bizType = bizType;
+        this.product = product;
+    }
+
     public String getBizCode() {
         return bizCode == "" ? null : bizCode;
     }
@@ -163,14 +172,6 @@ public class BizFile extends BaseModel implements Serializable {
                 .add("bizCode", bizCode)
                 .add("bizType", bizType)
                 .add("product", product)
-                .add("fieldName", fieldName)
-                .add("fileName", fileName)
-                .add("realName", realName)
-                .add("fileType", fileType)
-                .add("issueDate", issueDate)
-                .add("URL", URL)
-                .add("size_", size_)
-                .add("ext", ext)
                 .toString();
     }
 }
