@@ -4,10 +4,13 @@ package com.hns.learn.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.google.common.base.MoreObjects;
-
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
+import java.util.Date;
 
 @TableName("BIZ_CANVAS")
+@XmlRootElement(name = "BizCanvas")
 public class BizCanvas extends BaseModel implements Serializable {
 
     //查询编号
@@ -36,8 +39,21 @@ public class BizCanvas extends BaseModel implements Serializable {
     @TableField("VERNUM_")
     private Integer verNum;
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date cdate;
+
+    public BizCanvas() {
+    }
+
+    public BizCanvas(String bizCode, String type, String extra, Date cdate) {
+        this.bizCode = bizCode;
+        this.type = type;
+        this.extra = extra;
+        this.cdate = cdate;
+    }
+
     public String getBizCode() {
-        return bizCode == "" ? null : bizCode;
+        return bizCode;
     }
 
     public void setBizCode(String bizCode) {
@@ -45,7 +61,7 @@ public class BizCanvas extends BaseModel implements Serializable {
     }
 
     public String getType() {
-        return type == "" ? null : type;
+        return type;
     }
 
     public void setType(String type) {
@@ -53,7 +69,7 @@ public class BizCanvas extends BaseModel implements Serializable {
     }
 
     public String getExtra() {
-        return extra == "" ? null : extra;
+        return extra;
     }
 
     public void setExtra(String extra) {
@@ -69,7 +85,7 @@ public class BizCanvas extends BaseModel implements Serializable {
     }
 
     public String getFilename() {
-        return filename == "" ? null : filename;
+        return filename;
     }
 
     public void setFilename(String filename) {
@@ -84,16 +100,24 @@ public class BizCanvas extends BaseModel implements Serializable {
         this.verNum = verNum;
     }
 
+    public Date getCdate() {
+        return cdate;
+    }
+
+    public void setCdate(Date cdate) {
+        this.cdate = cdate;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("id", super.getId_())
                 .add("bizCode", bizCode)
                 .add("type", type)
                 .add("extra", extra)
                 .add("num", num)
                 .add("filename", filename)
                 .add("verNum", verNum)
+                .add("cdate", cdate)
                 .toString();
     }
 }

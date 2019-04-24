@@ -189,7 +189,9 @@ public enum AccrualExportEnum implements Serializable {
     COMPRE_RATEINCM1(172, "利率方式" ,"rateincm1" ,"STRING"),
     COMPRE_NRATE(173, "利率" ,"NRATE" ,"DOUBLE"),
     COMPRE_FEE(174, "费用收入" ,"FEE" ,"DOUBLE"),
-    COMPRE_ISSUEDATE(175, "审批日期" ,"issueDate" ,"STRING");
+    COMPRE_ISSUEDATE(175, "审批日期" ,"issueDate" ,"STRING"),
+
+    COMPRE_JOINTTENANT(176, "是否联合承租" ,"jointTenant" ,"STRING");
 
 
     private int index;
@@ -249,6 +251,14 @@ public enum AccrualExportEnum implements Serializable {
     public static AccrualExportEnum fetchEnum(String name) {
         for (AccrualExportEnum c : AccrualExportEnum.values()) {
             if (c.getName().equals(name)) {
+                return c;
+            }
+        }
+        return null;
+    }
+    public static AccrualExportEnum fetchEnumByKey(String key) {
+        for (AccrualExportEnum c : AccrualExportEnum.values()) {
+            if (c.getKey().equals(key)) {
                 return c;
             }
         }

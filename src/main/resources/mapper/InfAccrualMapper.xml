@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hns.learn.mapper.InfAccrualMapper">
+
+
+    <select id="getAll" resultType="com.hns.learn.entity.InfAccrual">
+
+        select * from INF_ACCRUAL
+
+    </select>
+
+    <select id="getAllMap" resultType="java.util.Map">
+
+        select * from INF_ACCRUAL
+
+    </select>
+
+
+</mapper>
