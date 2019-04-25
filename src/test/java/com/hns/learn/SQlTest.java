@@ -268,6 +268,7 @@ public class SQlTest {
 
         InfComprehensive si = JSON.parseObject(js,InfComprehensive.class);
 
+        infComprehensiveMapper.insert(si);
         System.out.println(si.toString());
     }
 

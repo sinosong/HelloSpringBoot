@@ -79,7 +79,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     private String ogbsq;
     @TableField("OVCALINF")
     private String ovcalinf;
-    @TableField("POLICYATTRIBUTRECLASSIFY")
+    @TableField("POLICY_ATTRIBUTRE_CLASSIFY")
     private String policyAttributreClassify;
     @TableField("PRODUCTNAME")
     private String productName;

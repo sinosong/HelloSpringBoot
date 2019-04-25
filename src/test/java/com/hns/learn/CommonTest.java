@@ -39,7 +39,7 @@ public class CommonTest {
         char a = '1';
         System.out.println(String.valueOf(a));
 
-        String padEndResult = Strings.padStart("123", 20, '0');
+        String padEndResult = Strings.padStart("123", 4, '0');
         System.out.println(padEndResult);
     }
 
