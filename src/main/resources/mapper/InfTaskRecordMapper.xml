@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hns.learn.mapper.InfTaskRecordMapper">
+
+
+    <select id="getAccrualList" resultType="java.util.Map">
+
+        SELECT * FROM (
+        SELECT
+        null as AFWKLFE_CURRTYPE,
+        null as AFWKLFE_FEECLASS,
+        null as AFWKLFE_FEEAMT,
+        t.grant_code,
+        t.institution_code,
+        t.ident_number,
+        dtl.*
+        FROM BIZ_DEBT_GRANT t
+        INNER JOIN (SELECT DISTINCT m.protseno, m.mediumid
+        FROM BIZ_DEBT_GRANT t, INF_AFPCMEM m
+        WHERE t.ident_number = m.mediumid
+        <if test="cm.deptCode != null and cm.deptCode != ''">
+            AND t.institution_code = #{cm.deptCode}
+        </if>
+        <if test="cm.grantCode != null and cm.grantCode != ''">
+            AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.iou_code LIKE '%'||#{cm.grantCode}||'%')
+        </if>
+        ) tmp
+        on t.ident_number = tmp.mediumid
+        LEFT JOIN (SELECT pts.cust_no, pts.cust_name_cn, renkey.debt_code
+        FROM BIZ_RENTAL_FACTORING_KEY renkey, BIZ_PTS pts
+        WHERE pts.objtyp = 'BIZ_RENTAL_FACTORING_KEY'
+        AND pts.objinr = renkey.id_
+        AND pts.rol = 'CONE') cone
+        ON (cone.debt_code = t.debt_code)
+        INNER JOIN (select t1.id_,
+        t1.zoneno,
+        t1.protseno,
+        t1.subserno,
+        t1.workdate,
+        t1.listno,
+        t1.prinflag,
+        t1.cmprflag,
+        t1.lglockno,
+        t1.trxdate,
+        t1.trxtime,
+        t1.timestmp,
+        t1.postndat,
+        t1.postsdat,
+        t1.posttime,
+        t1.trxsqnb,
+        t1.ptrxsqnb,
+        t1.trxsqns,
+        t1.trxcode,
+        t1.valuedat,
+        t1.currtype,
+        t1.cashexf,
+        t1.catrflag,
+        t1.drcrf,
+        t1.amount,
+        t1.updbal,
+        t1.notetype,
+        t1.notes,
+        t1.revtranf,
+        t1.updtranf,
+        t1.posttype,
+        t1.listtype,
+        t1.recipbkn,
+        t1.recipbka,
+        t1.recipact,
+        t1.recipacs,
+        t1.recipacn,
+        t1.exchrat,
+        t1.forecurr,
+        t1.foreamt,
+        t1.vouhtype,
+        t1.vouhno,
+        t1.mediumid,
+        t1.mediumno,
+        t1.medseno,
+        t1.chnltype,
+        t1.chnlno,
+        t1.prodcode,
+        t1.prodno,
+        t1.prodgpno,
+        t1.trxzno,
+        t1.tphybrno,
+        t1.phybrno,
+        t1.tellerno,
+        t1.authtlno,
+        t1.authno,
+        t1.termid,
+        t1.trxplcs,
+        t1.statcode,
+        t1.create_time,
+        t1.update_time,
+        t1.create_by,
+        t1.update_by,
+        t1.enable_,
+        t1.remark_,
+        t2.termnum,
+        t2.intrate,
+        t2.rlvrate,
+        t2.ovrrate,
+        t2.incirate,
+        t2.ofcirate,
+        t2.taxrate,
+        t2.currint,
+        t2.rlvint,
+        t2.rlvibal,
+        t2.ovramt,
+        t2.ovrbal,
+        t2.ovramtit,
+        t2.inamt,
+        t2.incurbal,
+        t2.inamtit,
+        t2.ofamt,
+        t2.ofcurbal,
+        t2.ofamtit,
+        t2.taxsum,
+        t2.taxamt,
+        t2.taxbal,
+        t2.ntaxamt,
+        t2.ntaxbal,
+        t2.drdoactn,
+        t2.drdoacsn,
+        t2.drdoacta,
+        t2.payactn,
+        t2.payacsn,
+        t2.payacta
+        FROM INF_AFRLNDTL t2, INF_AFRCDTL t1
+        WHERE t1.protseno = t2.protseno
+        AND t1.workdate = t2.workdate
+        AND t1.listno = t2.listno
+        <if test="cm.beginDate != null and cm.beginDate != ''">
+            AND t1.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="cm.endDate != null and cm.endDate != ''">
+            AND t1.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        ) dtl
+        ON dtl.protseno = tmp.protseno
+        AND t.enable_ = 1
+        <if test="cm.deptCode != null and cm.deptCode != ''">
+            AND t.institution_code = #{cm.deptCode}
+        </if>
+        <if test="cm.grantCode != null and cm.grantCode != ''">
+            AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.iou_code LIKE '%'||#{cm.grantCode}||'%')
+        </if>
+        <if test="cm.proposer != null and cm.proposer != ''">
+            AND cone.cust_no LIKE '%'||#{cm.proposer}||'%'
+        </if>
+        <if test="cm.beginDate != null and cm.beginDate != ''">
+            AND dtl.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="cm.endDate != null and cm.endDate != ''">
+            AND dtl.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD HH24:MI:SS')
+        </if>
+
+        UNION ALL
+
+        SELECT lfe.CURRTYPE as AFWKLFE_CURRTYPE,
+        LFE.FEECLASS as AFWKLFE_FEECLASS,
+        LFE.FEEAMT as AFWKLFE_FEEAMT,
+        t.grant_code,
+        t.institution_code,
+        t.ident_number,
+        lfe.id_,
+        lfe.zoneno,
+        lfe.protseno,
+        null as subserno,
+        lfe.Workdate,
+        'fee' as listno,
+        null as prinflag,
+        null as cmprflag,
+        null as lglockno,
+        null as trxdate,
+        null as trxtime,
+        null as timestmp,
+        null as postndat,
+        null as postsdat,
+        null as posttime,
+        null as trxsqnb,
+        null as ptrxsqnb,
+        null as trxsqns,
+        null as trxcode,
+        null as valuedat,
+        null as currtype,
+        null as cashexf,
+        null as catrflag,
+        null as drcrf,
+        null as amount,
+        null as updbal,
+        null as notetype,
+        null as notes,
+        null as revtranf,
+        null as updtranf,
+        null as posttype,
+        null as listtype,
+        null as recipbkn,
+        null as recipbka,
+        null as recipact,
+        null as recipacs,
+        null as recipacn,
+        null as exchrat,
+        null as forecurr,
+        null as foreamt,
+        null as vouhtype,
+        null as vouhno,
+        null as mediumid,
+        null as mediumno,
+        null as medseno,
+        null as chnltype,
+        null as chnlno,
+        null as prodcode,
+        null as prodno,
+        null as prodgpno,
+        null as trxzno,
+        null as tphybrno,
+        null as phybrno,
+        null as tellerno,
+        null as authtlno,
+        null as authno,
+        null as termid,
+        null as trxplcs,
+        null as statcode,
+        lfe.create_time,
+        lfe.update_time,
+        lfe.create_by,
+        lfe.update_by,
+        lfe.enable_,
+        lfe.remark_,
+        null as termnum,
+        null as intrate,
+        null as rlvrate,
+        null as ovrrate,
+        null as incirate,
+        null as ofcirate,
+        null as taxrate,
+        null as currint,
+        null as rlvint,
+        null as rlvibal,
+        null as ovramt,
+        null as ovrbal,
+        null as ovramtit,
+        null as inamt,
+        null as incurbal,
+        null as inamtit,
+        null as ofamt,
+        null as ofcurbal,
+        null as ofamtit,
+        null as taxsum,
+        null as taxamt,
+        null as taxbal,
+        null as ntaxamt,
+        null as ntaxbal,
+        null as drdoactn,
+        null as drdoacsn,
+        null as drdoacta,
+        null as payactn,
+        null as payacsn,
+        null as payacta
+        FROM BIZ_DEBT_GRANT t
+        INNER JOIN (SELECT DISTINCT m.protseno, m.mediumid
+        FROM BIZ_DEBT_GRANT t, INF_AFPCMEM m
+        WHERE t.ident_number = m.mediumid
+        <if test="cm.deptCode != null and cm.deptCode != ''">
+            AND t.institution_code = #{cm.deptCode}
+        </if>
+        <if test="cm.grantCode != null and cm.grantCode != ''">
+            AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.iou_code LIKE '%'||#{cm.grantCode}||'%')
+        </if>
+        ) tmp
+        on t.ident_number = tmp.mediumid
+        LEFT JOIN (SELECT pts.cust_no, pts.cust_name_cn, renkey.debt_code
+        FROM BIZ_RENTAL_FACTORING_KEY renkey, BIZ_PTS pts
+        WHERE pts.objtyp = 'BIZ_RENTAL_FACTORING_KEY'
+        AND pts.objinr = renkey.id_
+        AND pts.rol = 'CONE') cone
+        ON (cone.debt_code = t.debt_code)
+        INNER JOIN INF_AFWKLFE lfe
+        ON lfe.protseno = tmp.protseno
+        AND t.enable_ = 1
+        <if test="cm.deptCode != null and cm.deptCode != ''">
+            AND t.institution_code = #{cm.deptCode}
+        </if>
+        <if test="cm.grantCode != null and cm.grantCode != ''">
+            AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.iou_code LIKE '%'||#{cm.grantCode}||'%')
+        </if>
+        <if test="cm.proposer != null and cm.proposer != ''">
+            AND cone.cust_no LIKE '%'||#{cm.proposer}||'%'
+        </if>
+        <if test="cm.beginDate != null and cm.beginDate != ''">
+            AND lfe.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD HH24:MI:SS')
+        </if>
+        <if test="cm.endDate != null and cm.endDate != ''">
+            AND lfe.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD HH24:MI:SS')
+        </if>
+
+        )
+
+    </select>
+
+</mapper>
