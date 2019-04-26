@@ -3,7 +3,7 @@ package com.hns.learn.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.google.common.base.MoreObjects;
-
+import com.google.common.base.Objects;
 import java.io.Serializable;
 
 /**
@@ -13,7 +13,6 @@ import java.io.Serializable;
  */
 @TableName("INF_COMPREHENSIVE")
 public class InfComprehensive extends BaseModel implements Serializable {
-
 
     @TableField("ACCOUNT_")
     private String account;
@@ -49,7 +48,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     private String fee;
     @TableField("FINANCE_PLATFORM")
     private String financePlatform;
-    @TableField("GRANTCODE")
+    @TableField("GRANT_CODE")
     private String grantCode;
     @TableField("GRANTID")
     private String grantId;
@@ -131,6 +130,19 @@ public class InfComprehensive extends BaseModel implements Serializable {
     private String updbalusd;
     @TableField("VALUEDAY")
     private String valueday;
+
+    @TableField("MATUDATE")
+    private String matudate;
+    @TableField("NRATE")
+    private String nrate;
+    @TableField("OVRBAL")
+    private String ovrbal;
+    @TableField("OVRBALCNY")
+    private String ovrbalcny;
+    @TableField("OVRBALUSD")
+    private String ovrbalusd;
+    @TableField("PRIDAYS")
+    private String pridays;
 
     public InfComprehensive() {
     }
@@ -599,6 +611,130 @@ public class InfComprehensive extends BaseModel implements Serializable {
         this.valueday = valueday;
     }
 
+    public String getMatudate() {
+        return matudate;
+    }
+
+    public void setMatudate(String matudate) {
+        this.matudate = matudate;
+    }
+
+    public String getNrate() {
+        return nrate;
+    }
+
+    public void setNrate(String nrate) {
+        this.nrate = nrate;
+    }
+
+    public String getOvrbal() {
+        return ovrbal;
+    }
+
+    public void setOvrbal(String ovrbal) {
+        this.ovrbal = ovrbal;
+    }
+
+    public String getOvrbalcny() {
+        return ovrbalcny;
+    }
+
+    public void setOvrbalcny(String ovrbalcny) {
+        this.ovrbalcny = ovrbalcny;
+    }
+
+    public String getOvrbalusd() {
+        return ovrbalusd;
+    }
+
+    public void setOvrbalusd(String ovrbalusd) {
+        this.ovrbalusd = ovrbalusd;
+    }
+
+    public String getPridays() {
+        return pridays;
+    }
+
+    public void setPridays(String pridays) {
+        this.pridays = pridays;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof InfComprehensive)) return false;
+        InfComprehensive that = (InfComprehensive) o;
+        return Objects.equal(getAccount(), that.getAccount()) &&
+                Objects.equal(getBankTellName(), that.getBankTellName()) &&
+                Objects.equal(getBizRentalFactoringCode(), that.getBizRentalFactoringCode()) &&
+                Objects.equal(getBusinessTypes(), that.getBusinessTypes()) &&
+                Objects.equal(getCalintf(), that.getCalintf()) &&
+                Objects.equal(getConecn(), that.getConecn()) &&
+                Objects.equal(getConeno(), that.getConeno()) &&
+                Objects.equal(getConeorgnum(), that.getConeorgnum()) &&
+                Objects.equal(getConerat(), that.getConerat()) &&
+                Objects.equal(getConescale(), that.getConescale()) &&
+                Objects.equal(getCurrency(), that.getCurrency()) &&
+                Objects.equal(getDebtCode(), that.getDebtCode()) &&
+                Objects.equal(getDeptCode(), that.getDeptCode()) &&
+                Objects.equal(getDeptName(), that.getDeptName()) &&
+                Objects.equal(getDueDate(), that.getDueDate()) &&
+                Objects.equal(getFee(), that.getFee()) &&
+                Objects.equal(getFinancePlatform(), that.getFinancePlatform()) &&
+                Objects.equal(getGrantCode(), that.getGrantCode()) &&
+                Objects.equal(getGrantId(), that.getGrantId()) &&
+                Objects.equal(getGuaranteeMode(), that.getGuaranteeMode()) &&
+                Objects.equal(getIncalinf(), that.getIncalinf()) &&
+                Objects.equal(getIouCode(), that.getIouCode()) &&
+                Objects.equal(getIssueDate(), that.getIssueDate()) &&
+                Objects.equal(getJointTenant(), that.getJointTenant()) &&
+                Objects.equal(getLeasehold(), that.getLeasehold()) &&
+                Objects.equal(getmCurrency(), that.getmCurrency()) &&
+                Objects.equal(getMediumid(), that.getMediumid()) &&
+                Objects.equal(getNgbsq(), that.getNgbsq()) &&
+                Objects.equal(getNloncurrtype(), that.getNloncurrtype()) &&
+                Objects.equal(getOcalinf(), that.getOcalinf()) &&
+                Objects.equal(getOgbsq(), that.getOgbsq()) &&
+                Objects.equal(getOvcalinf(), that.getOvcalinf()) &&
+                Objects.equal(getPolicyAttributreClassify(), that.getPolicyAttributreClassify()) &&
+                Objects.equal(getProductName(), that.getProductName()) &&
+                Objects.equal(getProjectName(), that.getProjectName()) &&
+                Objects.equal(getPropcn(), that.getPropcn()) &&
+                Objects.equal(getPropno(), that.getPropno()) &&
+                Objects.equal(getProporgnum(), that.getProporgnum()) &&
+                Objects.equal(getProprat(), that.getProprat()) &&
+                Objects.equal(getPropscale(), that.getPropscale()) &&
+                Objects.equal(getProtseno(), that.getProtseno()) &&
+                Objects.equal(getRateincm1(), that.getRateincm1()) &&
+                Objects.equal(getRecourse(), that.getRecourse()) &&
+                Objects.equal(getScopeBusinPeriod(), that.getScopeBusinPeriod()) &&
+                Objects.equal(getSolutionAmt(), that.getSolutionAmt()) &&
+                Objects.equal(getSyndicateLoan(), that.getSyndicateLoan()) &&
+                Objects.equal(getSyndicatedStatus(), that.getSyndicatedStatus()) &&
+                Objects.equal(getTotffamt(), that.getTotffamt()) &&
+                Objects.equal(getTotffamtCNY(), that.getTotffamtCNY()) &&
+                Objects.equal(getTotffamtUSD(), that.getTotffamtUSD()) &&
+                Objects.equal(getTothkamt(), that.getTothkamt()) &&
+                Objects.equal(getTothkamtCNY(), that.getTothkamtCNY()) &&
+                Objects.equal(getTothkamtUSD(), that.getTothkamtUSD()) &&
+                Objects.equal(getTraneFinanceBusiness(), that.getTraneFinanceBusiness()) &&
+                Objects.equal(getUpdbal(), that.getUpdbal()) &&
+                Objects.equal(getUpdbalcny(), that.getUpdbalcny()) &&
+                Objects.equal(getUpdbalusd(), that.getUpdbalusd()) &&
+                Objects.equal(getValueday(), that.getValueday()) &&
+                Objects.equal(getMatudate(), that.getMatudate()) &&
+                Objects.equal(getNrate(), that.getNrate()) &&
+                Objects.equal(getOvrbal(), that.getOvrbal()) &&
+                Objects.equal(getOvrbalcny(), that.getOvrbalcny()) &&
+                Objects.equal(getOvrbalusd(), that.getOvrbalusd()) &&
+                Objects.equal(getPridays(), that.getPridays());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getAccount(), getBankTellName(), getBizRentalFactoringCode(), getBusinessTypes(), getCalintf(), getConecn(), getConeno(), getConeorgnum(), getConerat(), getConescale(), getCurrency(), getDebtCode(), getDeptCode(), getDeptName(), getDueDate(), getFee(), getFinancePlatform(), getGrantCode(), getGrantId(), getGuaranteeMode(), getIncalinf(), getIouCode(), getIssueDate(), getJointTenant(), getLeasehold(), getmCurrency(), getMediumid(), getNgbsq(), getNloncurrtype(), getOcalinf(), getOgbsq(), getOvcalinf(), getPolicyAttributreClassify(), getProductName(), getProjectName(), getPropcn(), getPropno(), getProporgnum(), getProprat(), getPropscale(), getProtseno(), getRateincm1(), getRecourse(), getScopeBusinPeriod(), getSolutionAmt(), getSyndicateLoan(), getSyndicatedStatus(), getTotffamt(), getTotffamtCNY(), getTotffamtUSD(), getTothkamt(), getTothkamtCNY(), getTothkamtUSD(), getTraneFinanceBusiness(), getUpdbal(), getUpdbalcny(), getUpdbalusd(), getValueday(), getMatudate(), getNrate(), getOvrbal(), getOvrbalcny(), getOvrbalusd(), getPridays());
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -660,6 +796,13 @@ public class InfComprehensive extends BaseModel implements Serializable {
                 .add("updbalcny", updbalcny)
                 .add("updbalusd", updbalusd)
                 .add("valueday", valueday)
+                .add("matudate", matudate)
+                .add("nrate", nrate)
+                .add("ovrbal", ovrbal)
+                .add("ovrbalcny", ovrbalcny)
+                .add("ovrbalusd", ovrbalusd)
+                .add("pridays", pridays)
                 .toString();
     }
+
 }

@@ -11,6 +11,7 @@ import com.hns.learn.mapper.InfAccrualMapper;
 import com.hns.learn.mapper.InfAfrlndtlMapper;
 import com.hns.learn.mapper.InfComprehensiveMapper;
 import com.hns.learn.util.ExcelUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.util.*;
@@ -189,14 +191,29 @@ public class SQlTest {
     @Test
     public void AccSqlTest() {
 
-        List<InfAccrual> list = infAccrualMapper.selectList(new QueryWrapper<InfAccrual>());
+        List<InfAccrual> list = infAccrualMapper.selectList(new QueryWrapper<InfAccrual>().eq("ID_",2019031813122986L));
 //        System.out.println(list.get(0));
 //        InfAccrual al = list.get(0);
 //        System.out.println(al.getZoneno());
 //        System.out.println("--------------------------");
 //        System.out.println(al.toString());
-        System.out.println(infAccrualMapper.getAll());
-        System.out.println(infAccrualMapper.getAllMap());
+//        System.out.println(infAccrualMapper.getAll());
+//        System.out.println(infAccrualMapper.getAllMap());
+
+        for(InfAccrual obj : list){
+            try {
+                Map entityMap = BeanUtils.describe(obj);
+                System.out.println("--------------------------");
+                System.out.println(entityMap);
+                System.out.println("--------------------------");
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 

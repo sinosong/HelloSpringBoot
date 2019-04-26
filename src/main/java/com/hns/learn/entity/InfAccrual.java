@@ -1,5 +1,4 @@
 package com.hns.learn.entity;
-
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.google.common.base.MoreObjects;
@@ -8,7 +7,9 @@ import com.google.common.base.Objects;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * @author hannasong
+ */
 @TableName("INF_ACCRUAL")
 public class InfAccrual extends BaseModel implements Serializable{
 
@@ -264,6 +265,9 @@ public class InfAccrual extends BaseModel implements Serializable{
     private String propno;
     @TableField("WORKDATE")
     private Date workdate;
+
+    public InfAccrual() {
+    }
 
     public String getDeptName() {
         return deptName == "" ? null : deptName;
@@ -1542,5 +1546,5 @@ public class InfAccrual extends BaseModel implements Serializable{
                 .add("workdate", workdate)
                 .toString();
     }
-}
 
+}
