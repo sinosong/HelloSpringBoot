@@ -84,7 +84,7 @@
         t1.zoneno,
         t1.protseno,
         t1.subserno,
-        t1.workdate,
+        to_char(t1.workdate,'YYYY-MM-DD') workdate,
         t1.listno,
         t1.prinflag,
         t1.cmprflag,
@@ -180,10 +180,10 @@
         AND t1.workdate = t2.workdate
         AND t1.listno = t2.listno
         <if test="cm.beginDate != null and cm.beginDate != ''">
-            AND t1.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD HH24:MI:SS')
+            AND t1.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD')
         </if>
         <if test="cm.endDate != null and cm.endDate != ''">
-            AND t1.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD HH24:MI:SS')
+            AND t1.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD')
         </if>
         ) dtl
         ON dtl.protseno = tmp.protseno
@@ -198,10 +198,10 @@
             AND cone.cust_no LIKE '%'||#{cm.proposer}||'%'
         </if>
         <if test="cm.beginDate != null and cm.beginDate != ''">
-            AND dtl.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD HH24:MI:SS')
+            AND TO_DATE(dtl.workdate,'YYYY-MM-DD') &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD')
         </if>
         <if test="cm.endDate != null and cm.endDate != ''">
-            AND dtl.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD HH24:MI:SS')
+            AND TO_DATE(dtl.workdate,'YYYY-MM-DD') &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD')
         </if>
 
         UNION ALL
@@ -216,7 +216,7 @@
         lfe.zoneno,
         lfe.protseno,
         null as subserno,
-        lfe.Workdate,
+        to_char(lfe.workdate,'YYYY-MM-DD') workdate,
         'fee' as listno,
         null as prinflag,
         null as cmprflag,
@@ -338,17 +338,17 @@
             AND cone.cust_no LIKE '%'||#{cm.proposer}||'%'
         </if>
         <if test="cm.beginDate != null and cm.beginDate != ''">
-            AND lfe.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD HH24:MI:SS')
+            AND lfe.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD')
         </if>
         <if test="cm.endDate != null and cm.endDate != ''">
-            AND lfe.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD HH24:MI:SS')
+            AND lfe.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD')
         </if>
 
         )
         ORDER BY workdate, protseno, listno
 
     </select>
-    <select id="getBaseMessageInfo" resultType="java.util.Map">
+    <select id="getBaseMessageInfo" resultMap="BaseMessageInfoMap">
         SELECT
         rownum rownum_,
         gt.id_ grantid,

@@ -100,7 +100,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     private String rateincm1;
     @TableField("RECOURSE")
     private String recourse;
-    @TableField("LOANTERM")
+    @TableField("SCOPE_BUSIN_PERIOD")
     private String scopeBusinPeriod;
     @TableField("SOLUTIONAMT")
     private String solutionAmt;
