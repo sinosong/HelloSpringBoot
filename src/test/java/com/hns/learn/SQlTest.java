@@ -39,6 +39,15 @@ public class SQlTest {
     private InfComprehensiveMapper infComprehensiveMapper;
 
     @Test
+    public void NoRecComp() {
+        Map<String, Object> param = new HashMap<>(1);
+        param.put("dueDate","2019-05-06");
+
+        List<Map> protsenosList = infAfrlndtlMapper.getComprehensiveProtsenos(new Page(1,9999),param);
+        System.out.println(protsenosList);
+    }
+
+    @Test
     public void toObj() {
 
         String jStr = "{\n" +
