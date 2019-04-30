@@ -17,182 +17,270 @@ import java.util.Date;
 @TableName("INF_AFPCMEM")
 public class InfAfpcmem extends BaseModel implements Serializable {
 
-    @TableField("CRZONENO")
-    private String  crzoneno;
-    @TableField("MEDIUMID")
-    private String  mediumid;
-    @TableField("PROTSENO")
-    private String  protseno;
-    @TableField("STATUS")
-    private String  status;
-    @TableField("SCURFLAG")
-    private String  scurflag;
-    @TableField("CURRTYPE")
-    private String  currtype;
-    @TableField("PROALIAS")
-    private String  proalias;
-    @TableField("PRTYCODE")
-    private String  prtycode;
-    @TableField("PRSERNO")
-    private String  prserno;
-    @TableField("XDMEMNO")
-    private String  xdmemno;
-    @TableField("ASSPFLAG")
-    private String  asspflag;
-    @TableField("CEUSEF")
-    private String  ceusef;
-    @TableField("CORPERF")
-    private String  corperf;
-    @TableField("LOANNATU")
-    private String  loannatu;
-    @TableField("ASSUREMD")
-    private String  assuremd;
-    @TableField("GRLNFLAG")
-    private String  grlnflag;
-    @TableField("LNTYPE")
-    private String  lntype;
-    @TableField("LOANNAME")
-    private String  loanname;
-    @TableField("SBJCODE1")
-    private String  sbjcode1;
-    @TableField("SBJCODE2")
-    private String  sbjcode2;
-    @TableField("SBJCODE3")
-    private String  sbjcode3;
-    @TableField("SBJCODE4")
-    private String  sbjcode4;
-    @TableField("SBJCODE5")
-    private String  sbjcode5;
-    @TableField("SBJCODE6")
-    private String  sbjcode6;
-    @TableField("SBJCODE7")
-    private String  sbjcode7;
-    @TableField("SBJCODE8")
-    private String  sbjcode8;
-    @TableField("GRPACCF")
-    private String  grpaccf;
-    @TableField("GRPMODE")
-    private String  grpmode;
-    @TableField("AUTDEPF")
-    private String  autdepf;
-    @TableField("AUTWITHF")
-    private String  autwithf;
-    @TableField("OLPRFLAG")
-    private String  olprflag;
-    @TableField("TATPRF")
-    private String  tatprf;
-    @TableField("LNCOLLF")
-    private String  lncollf;
-    @TableField("CRDATE")
-    private String  crdate;
-    @TableField("PRAMOUNT")
-    private String  pramount;
-    @TableField("CURLNAMT")
-    private String  curlnamt;
-    @TableField("TOTHKAMT")
-    private String  tothkamt;
-    @TableField("TOTFFAMT")
-    private String  totffamt;
-    @TableField("TOTFFNUM")
-    private String  totffnum;
-    @TableField("PROEDATE")
-    private String  proedate;
-    @TableField("PRMADATE")
-    private String  prmadate;
-    @TableField("PRAFLAG")
-    private String  praflag;
-    @TableField("PRACCF")
-    private String  praccf;
-    @TableField("PROACCNO")
-    private String  proaccno;
-    @TableField("PRACCSN")
-    private String  praccsn;
-    @TableField("GAGENO")
-    private String  gageno;
-    @TableField("GAGESUM")
-    private String  gagesum;
-    @TableField("EXPDATE")
-    private String  expdate;
-    @TableField("EXFLAG")
-    private String  exflag;
-    @TableField("EXQUOTA")
-    private String  exquota;
-    @TableField("ADZONENO")
-    private String  adzoneno;
-    @TableField("PRCRDATE")
-    private String  prcrdate;
-    @TableField("CRBRNO")
-    private String  crbrno;
-    @TableField("CTELLERN")
-    private String  ctellern;
-    @TableField("PRENDATE")
-    private String  prendate;
-    @TableField("ENDZONENO")
-    private String  endzoneno;
-    @TableField("ENDBRNO")
-    private String  endbrno;
-    @TableField("ETELLERN")
-    private String  etellern;
-    @TableField("LADJDATE")
-    private String  ladjdate;
-    @TableField("LTITDATE")
-    private String  ltitdate;
-    @TableField("LTRDDATE")
-    private String  ltrddate;
-    @TableField("LCTRDDAT")
-    private String  lctrddat;
-    @TableField("PHYBRNO")
-    private String  phybrno;
-    @TableField("ACTBRNO")
-    private String  actbrno;
-    @TableField("LGLOCKNO")
-    private String  lglockno;
-    @TableField("CMFLAG")
-    private String  cmflag;
-    @TableField("MAXSERNO")
-    private String  maxserno;
-    @TableField("USETYPE")
-    private String  usetype;
-    @TableField("FXCODE1")
-    private String  fxcode1;
-    @TableField("FXCODE2")
-    private String  fxcode2;
-    @TableField("FXCODE3")
-    private String  fxcode3;
-    @TableField("INTPRIF")
-    private String  intprif;
-    @TableField("NGBSQ")
-    private String  ngbsq;
-    @TableField("OGBSQ")
-    private String  ogbsq;
-    @TableField("CALINTF")
-    private String  calintf;
-    @TableField("OVCALINF")
-    private String  ovcalinf;
-    @TableField("INCALINF")
-    private String  incalinf;
-    @TableField("OCALINF")
-    private String  ocalinf;
-    @TableField("FXCODE4")
-    private String  fxcode4;
-    @TableField("FXCODE5")
-    private String  fxcode5;
-    @TableField("FXCODE6")
-    private String  fxcode6;
-    @TableField("GBTYPE")
-    private String  gbtype;
-    @TableField("DEFLAG")
-    private String  deflag;
-    @TableField("DEACCF")
-    private String  deaccf;
-    @TableField("DEACCNO")
-    private String  deaccno;
-    @TableField("DEACCSN")
-    private String  deaccsn;
-    @TableField("TOLRDAYS")
-    private String  tolrdays;
+    /** 核心工作日期 */
     @TableField("WORKDATE")
     private Date workdate;
+    /** 协议签订地区号 */
+    @TableField("CRZONENO")
+    private String crzoneno;
+    /** 账号 */
+    @TableField("MEDIUMID")
+    private String mediumid;
+    /** 协议编号 */
+    @TableField("PROTSENO")
+    private String protseno;
+    /** 合同状态 */
+    @TableField("STATUS")
+    private String status;
+    /** 是否同币种借据 */
+    @TableField("SCURFLAG")
+    private String scurflag;
+    /** 币种 */
+    @TableField("CURRTYPE")
+    private String currtype;
+    /** 协议名 */
+    @TableField("PROALIAS")
+    private String proalias;
+    /** 产品种类代码 */
+    @TableField("PRTYCODE")
+    private String prtycode;
+    /** 产品序号 */
+    @TableField("PRSERNO")
+    private String prserno;
+    /** 台帐借据编号 */
+    @TableField("XDMEMNO")
+    private String xdmemno;
+    /** 关联其他协议控制 */
+    @TableField("ASSPFLAG")
+    private String asspflag;
+    /** 合同类型 */
+    @TableField("CEUSEF")
+    private String ceusef;
+    /** 公司/个人标识 */
+    @TableField("CORPERF")
+    private String corperf;
+    /** 贷款性质 */
+    @TableField("LOANNATU")
+    private String loannatu;
+    /** 担保方式 */
+    @TableField("ASSUREMD")
+    private String assuremd;
+    /** 银团贷款标志 */
+    @TableField("GRLNFLAG")
+    private String grlnflag;
+    /** 贷款类型 */
+    @TableField("LNTYPE")
+    private String lntype;
+    /** 贷款名称 */
+    @TableField("LOANNAME")
+    private String loanname;
+    /** 正常本金科目 */
+    @TableField("SBJCODE1")
+    private String sbjcode1;
+    /** 逾期本金科目 */
+    @TableField("SBJCODE2")
+    private String sbjcode2;
+    /** 表内欠息科目 */
+    @TableField("SBJCODE3")
+    private String sbjcode3;
+    /** 表外欠息科目 */
+    @TableField("SBJCODE4")
+    private String sbjcode4;
+    /** 减值贷款本金科目 */
+    @TableField("SBJCODE5")
+    private String sbjcode5;
+    /** 减值应收未收利息科目 */
+    @TableField("SBJCODE6")
+    private String sbjcode6;
+    /** 备用 */
+    @TableField("SBJCODE7")
+    private String sbjcode7;
+    /** 备用 */
+    @TableField("SBJCODE8")
+    private String sbjcode8;
+    /** 联名帐户标志 */
+    @TableField("GRPACCF")
+    private String grpaccf;
+    /** 联名办理方式 */
+    @TableField("GRPMODE")
+    private String grpmode;
+    /** 通存标志 */
+    @TableField("AUTDEPF")
+    private String autdepf;
+    /** 通兑标志 */
+    @TableField("AUTWITHF")
+    private String autwithf;
+    /** 是否联机发放标志 */
+    @TableField("OLPRFLAG")
+    private String olprflag;
+    /** 是否允许分次发放标志 */
+    @TableField("TATPRF")
+    private String tatprf;
+    /** 借据集中标志 */
+    @TableField("LNCOLLF")
+    private String lncollf;
+    /** 合同生效日期 */
+    @TableField("CRDATE")
+    private String crdate;
+    /** 合同约定贷款总额 */
+    @TableField("PRAMOUNT")
+    private String pramount;
+    /** 当前可贷金额 */
+    @TableField("CURLNAMT")
+    private String curlnamt;
+    /** 当前累计已归还贷款金额 */
+    @TableField("TOTHKAMT")
+    private String tothkamt;
+    /** 当前累计已发放贷款金额 */
+    @TableField("TOTFFAMT")
+    private String totffamt;
+    /** 当前累计已发放贷款笔数 */
+    @TableField("TOTFFNUM")
+    private String totffnum;
+    /** 发放截止日期 */
+    @TableField("PROEDATE")
+    private String proedate;
+    /** 合同约定贷款到期日期 */
+    @TableField("PRMADATE")
+    private String prmadate;
+    /** 存款账户标志 */
+    @TableField("PRAFLAG")
+    private String praflag;
+    /** 存款账户区分 */
+    @TableField("PRACCF")
+    private String praccf;
+    /** 存款账号 */
+    @TableField("PROACCNO")
+    private String proaccno;
+    /** 存款账户序号 */
+    @TableField("PRACCSN")
+    private String praccsn;
+    /** 质押存单数 */
+    @TableField("GAGENO")
+    private String gageno;
+    /** 质押存单总金额 */
+    @TableField("GAGESUM")
+    private String gagesum;
+    /** 质押存单到期日期 */
+    @TableField("EXPDATE")
+    private String expdate;
+    /** 印花税是否豁免 */
+    @TableField("EXFLAG")
+    private String exflag;
+    /** 印花税豁免限额 */
+    @TableField("EXQUOTA")
+    private String exquota;
+    /** 归属地区号 */
+    @TableField("ADZONENO")
+    private String adzoneno;
+    /** 协议签订日期 */
+    @TableField("PRCRDATE")
+    private String prcrdate;
+    /** 协议签订网点号 */
+    @TableField("CRBRNO")
+    private String crbrno;
+    /** 协议签订柜员号 */
+    @TableField("CTELLERN")
+    private String ctellern;
+    /** 协议最后修改日期 */
+    @TableField("PRENDATE")
+    private String prendate;
+    /** 协议最后修改地区号 */
+    @TableField("ENDZONENO")
+    private String endzoneno;
+    /** 协议最后修改网点号 */
+    @TableField("ENDBRNO")
+    private String endbrno;
+    /** 协议最后修改柜员号 */
+    @TableField("ETELLERN")
+    private String etellern;
+    /** 协议最后调整日 */
+    @TableField("LADJDATE")
+    private String ladjdate;
+    /** 上次初笔日期 */
+    @TableField("LTITDATE")
+    private String ltitdate;
+    /** 最后交易日 */
+    @TableField("LTRDDATE")
+    private String ltrddate;
+    /** 最后客户金融交易日 */
+    @TableField("LCTRDDAT")
+    private String lctrddat;
+    /** 物理网点号 */
+    @TableField("PHYBRNO")
+    private String phybrno;
+    /** 核算网点号 */
+    @TableField("ACTBRNO")
+    private String actbrno;
+    /** 逻辑锁 */
+    @TableField("LGLOCKNO")
+    private String lglockno;
+    /** 是否台账创建 */
+    @TableField("CMFLAG")
+    private String cmflag;
+    /** 已发放最大借据序号 */
+    @TableField("MAXSERNO")
+    private String maxserno;
+    /** 贷款用途 */
+    @TableField("USETYPE")
+    private String usetype;
+    /** 分析代码1 */
+    @TableField("FXCODE1")
+    private String fxcode1;
+    /** 分析代码2 */
+    @TableField("FXCODE2")
+    private String fxcode2;
+    /** 分析代码3 */
+    @TableField("FXCODE3")
+    private String fxcode3;
+    /** 利息费用本金化处理 */
+    @TableField("INTPRIF")
+    private String intprif;
+    /** 正常扣款顺序 */
+    @TableField("NGBSQ")
+    private String ngbsq;
+    /** 逾期扣款顺序 */
+    @TableField("OGBSQ")
+    private String ogbsq;
+    /** 正常计息标志 */
+    @TableField("CALINTF")
+    private String calintf;
+    /** 逾期计息标志 */
+    @TableField("OVCALINF")
+    private String ovcalinf;
+    /** 表内欠息计息标志 */
+    @TableField("INCALINF")
+    private String incalinf;
+    /** 表外欠息计息标志 */
+    @TableField("OCALINF")
+    private String ocalinf;
+    /** 分析代码4 */
+    @TableField("FXCODE4")
+    private String fxcode4;
+    /** 分析代码5 */
+    @TableField("FXCODE5")
+    private String fxcode5;
+    /** 分析代码6 */
+    @TableField("FXCODE6")
+    private String fxcode6;
+    /** 扣款方式 */
+    @TableField("GBTYPE")
+    private String gbtype;
+    /** 减值标志 */
+    @TableField("DEFLAG")
+    private String deflag;
+    /** 减值准备账户区分 */
+    @TableField("DEACCF")
+    private String deaccf;
+    /** 减值准备账号 */
+    @TableField("DEACCNO")
+    private String deaccno;
+    /** 减值准备账户序号 */
+    @TableField("DEACCSN")
+    private String deaccsn;
+    /** 容忍期天数 */
+    @TableField("TOLRDAYS")
+    private String tolrdays;
 
     public InfAfpcmem() {
     }
@@ -1004,7 +1092,6 @@ public class InfAfpcmem extends BaseModel implements Serializable {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("super", super.toString())
                 .add("crzoneno", crzoneno)
                 .add("mediumid", mediumid)
                 .add("protseno", protseno)

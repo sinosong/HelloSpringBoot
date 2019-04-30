@@ -16,84 +16,124 @@ import java.util.Date;
 @TableName("INF_AFLNRAT")
 public class InfAflnrat extends BaseModel implements Serializable {
 
+    /** 核心工作日期 */
     @TableField("WORKDATE")
     private Date workdate;
+    /** 地区号 */
     @TableField("ZONENO")
     private String zoneno;
+    /** 贷款账号 */
     @TableField("MEDIUMID")
     private String mediumid;
+    /** 协议编号 */
     @TableField("PROTSENO")
     private String protseno;
+    /** 协议序号 */
     @TableField("SUBSERNO")
     private String subserno;
+    /** 币种 */
     @TableField("CURRTYPE")
     private String currtype;
+    /** 正常计息标志 */
     @TableField("CALINTF")
     private String calintf;
+    /** 正常利率种类 */
     @TableField("NINTTYPE")
     private String ninttype;
+    /** 正常利率序号 */
     @TableField("NISERNO")
     private String niserno;
+    /** 正常利率使用方式 */
     @TableField("NINTSELMO")
     private String nintselmo;
+    /** 正常利率浮动方式 */
     @TableField("NFLTYPE")
     private String nfltype;
+    /** 正常利率浮动率 */
     @TableField("NINFLRAT")
     private String ninflrat;
+    /** 正常协定利率 */
     @TableField("NAGTRATE")
     private String nagtrate;
+    /** 正常基准利率代码 */
     @TableField("NRATCOD")
     private String nratcod;
+    /** 正常利率上限 */
     @TableField("NUPPLMT")
     private String nupplmt;
+    /** 正常利率下限 */
     @TableField("NLOWLMT")
     private String nlowlmt;
+    /** 正常利率转换天数 */
     @TableField("NRATEXD")
     private String nratexd;
+    /** 正常计息天数计算方式 */
     @TableField("NINTDAY")
     private String nintday;
+    /** 正常利率变动周期单位 */
     @TableField("NUPERIOD")
     private String nuperiod;
+    /** 正常利率变动周期数量 */
     @TableField("NPENUM")
     private String npenum;
+    /** 正常利率获取天数 */
     @TableField("NPREDAY")
     private String npreday;
+    /** 正常变动利率计算开始日 */
     @TableField("NLCRDDAT")
     private String nlcrddat;
+    /** 正常利率值 */
     @TableField("NRATE")
     private String nrate;
+    /** 逾期计息标志 */
     @TableField("OVCALINF")
     private String ovcalinf;
+    /** 逾期利率种类 */
     @TableField("OVITYPE")
     private String ovitype;
+    /** 逾期利率序号 */
     @TableField("OVISERNO")
     private String oviserno;
+    /** 逾期利率使用方式 */
     @TableField("OINTSELMO")
     private String ointselmo;
+    /** 逾期利率浮动方式 */
     @TableField("OFLTYPE")
     private String ofltype;
+    /** 逾期利率浮动率 */
     @TableField("OINFLRAT")
     private String oinflrat;
+    /** 逾期协定利率 */
     @TableField("OAGTRATE")
     private String oagtrate;
+    /** 逾期基准利率代码 */
     @TableField("ORATCOD")
     private String oratcod;
+    /** 逾期利率上限 */
     @TableField("OUPPLMT")
     private String oupplmt;
+    /** 逾期利率下限 */
     @TableField("OLOWLMT")
     private String olowlmt;
+    /** 逾期利率转换天数 */
     @TableField("ORATEXD")
     private String oratexd;
+    /** 逾期计息天数计算方式 */
     @TableField("OINTDAY")
     private String ointday;
+    /** 逾期利率变动周期单位 */
     @TableField("OUPERIOD")
     private String ouperiod;
+    /** 逾期利率变动周期数量 */
     @TableField("OPENUM")
     private String openum;
+    /** 逾期利率获取天数 */
     @TableField("OPREDAY")
     private String opreday;
+    /** 逾期变动利率计算开始日 */
     @TableField("OLCRDDAT")
     private String olcrddat;
+    /** 逾期利率值 */
     @TableField("ORATE")
     private String orate;
 

@@ -13,122 +13,126 @@ import java.util.Date;
  * @author hannasong
  * @version 1.0
  */
-@TableName("INF_AFRLNDTL_TEST")
+@TableName("INF_AFRLNDTL")
 public class InfAfrlndtl extends BaseModel implements Serializable {
 
+    /** 帐户所属地区号 */
     @TableField("ZONENO")
     private String zoneno;
-
+    /** 协议编号 */
     @TableField("PROTSENO")
     private String protseno;
-
+    /** 子协议序号 */
     @TableField("SUBSERNO")
     private String subserno;
-
+    /** 交易发生日期（系统工作日期）*/
     @TableField("WORKDATE")
     private Date workdate;
-
+    /** 明细序号 */
     @TableField("LISTNO")
     private String listno;
-
+    /** 逻辑锁记录序号 */
     @TableField("LGLOCKNO")
     private String lglockno;
-
+    /** 币种 */
     @TableField("CURRTYPE")
     private String currtype;
-
+    /** 钞汇标志 */
     @TableField("CASHEXF")
     private String cashexf;
-
+    /** 期数 */
     @TableField("TERMNUM")
     private String termnum;
-
+    /** 正常利率 */
     @TableField("INTRATE")
     private String intrate;
-
+    /** 展期利率 */
     @TableField("RLVRATE")
     private String rlvrate;
-
+    /** 逾期利率 */
     @TableField("OVRRATE")
     private String ovrrate;
-
+    /** 表内欠息复息利率 */
     @TableField("INCIRATE")
     private String incirate;
-
+    /** 表外欠息复息利率 */
     @TableField("OFCIRATE")
     private String ofcirate;
-
+    /** 印花税率 */
     @TableField("TAXRATE")
     private String taxrate;
-
+    /** 正常本金利息发生额 */
     @TableField("CURRINT")
     private String currint;
-
+    /** 展期利息发生额 */
     @TableField("RLVINT")
     private String rlvint;
-
+    /** 展期利息余额 */
     @TableField("RLVIBAL")
     private String rlvibal;
-
+    /** 逾期本金发生额 */
     @TableField("OVRAMT")
     private String ovramt;
-
+    /** 逾期本金余额 */
     @TableField("OVRBAL")
     private String ovrbal;
-
+    /** 逾期本金利息发生额 */
     @TableField("OVRAMTIT")
     private String ovramtit;
-
+    /** 表内欠息发生额 */
     @TableField("INAMT")
     private String inamt;
-
+    /** 表内欠息当前余额 */
     @TableField("INCURBAL")
     private String incurbal;
-
+    /** 表内欠息利息发生额 */
     @TableField("INAMTIT")
     private String inamtit;
-
+    /** 表外欠息发生额 */
     @TableField("OFAMT")
     private String ofamt;
-
+    /** 表外欠息当前余额 */
     @TableField("OFCURBAL")
     private String ofcurbal;
-
+    /** 表外欠息利息发生额 */
     @TableField("OFAMTIT")
     private String ofamtit;
-
+    /** 印花税 */
     @TableField("TAXSUM")
     private String taxsum;
-
+    /** 非豁免印花税发生额 */
     @TableField("TAXAMT")
     private String taxamt;
-
+    /** 非豁免印花税余额 */
     @TableField("TAXBAL")
     private String taxbal;
-
+    /** 豁免印花税发生额 */
     @TableField("NTAXAMT")
     private String ntaxamt;
-
+    /** 豁免印花税余额 */
     @TableField("NTAXBAL")
     private String ntaxbal;
-
+    /** 放款帐号 */
     @TableField("DRDOACTN")
     private String drdoactn;
-
+    /** 放款帐号序号 */
     @TableField("DRDOACSN")
     private String drdoacsn;
-
+    /** 放款帐号发生额 */
     @TableField("DRDOACTA")
     private String drdoacta;
-
+    /** 还款账号 */
     @TableField("PAYACTN")
     private String payactn;
-
+    /** 还款账号序号 */
     @TableField("PAYACSN")
     private String payacsn;
-
+    /** 还款账号发生额 */
     @TableField("PAYACTA")
     private String payacta;
+
+    public InfAfrlndtl() {
+    }
 
     public String getZoneno() {
         return zoneno == "" ? null : zoneno;

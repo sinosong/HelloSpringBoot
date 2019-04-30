@@ -13,6 +13,29 @@ public class commTest {
 
 
     @Test
+    public void testChar() {
+
+        String col = "USER_NAME";
+        col = col.toLowerCase();
+        boolean mark = false;
+        StringBuffer b = new StringBuffer();
+        for(char c : col.toCharArray()){
+            if(c==95){
+                mark = true;
+                continue;
+            }
+            if(mark){
+                c-=32;
+                mark = false;
+                System.out.println(c);
+            }
+            b.append(c);
+        }
+        System.out.println(b);
+
+    }
+
+    @Test
     public void testSec() {
 
         Date lastCurrDate = null;

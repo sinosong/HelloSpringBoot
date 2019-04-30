@@ -16,50 +16,73 @@ import java.util.Date;
 @TableName("INF_AFWKLFE")
 public class InfAfwklfe extends BaseModel implements Serializable {
 
+    /** 地区号 */
     @TableField("ZONENO")
     private String zoneno;
+    /** 协议编号 */
     @TableField("PROTSENO")
     private String protseno;
+    /** 借据序号 */
     @TableField("SUBSERNO")
     private String subserno;
+    /** 贷款账号 */
     @TableField("ACCNO")
     private String accno;
+    /** 贷款账号序号 */
     @TableField("ACCNOSEQ")
     private String accnoseq;
+    /** 顺序号 */
     @TableField("TERMNUM")
     private String termnum;
+    /** 贷款费用序号 */
     @TableField("LNFEENO")
     private String lnfeeno;
+    /** 费用币种 */
     @TableField("CURRTYPE")
     private String currtype;
+    /** 费用类型 */
     @TableField("FEECLASS")
     private String feeclass;
+    /** 收费日期 */
     @TableField("FEEDATE")
     private String feedate;
+    /** 费用状态 */
     @TableField("STATUS")
     private String status;
+    /** 费用总额 */
     @TableField("FEEAMT")
     private String feeamt;
+    /** 费用余额 */
     @TableField("FEEBAL")
     private String feebal;
+    /** 滞纳金总额 */
     @TableField("LATEAMT")
     private String lateamt;
+    /** 滞纳金余额 */
     @TableField("LATEBAL")
     private String latebal;
+    /** 上次扣款日期 */
     @TableField("LSGBDATE")
     private String lsgbdate;
+    /** 最后修改日期 */
     @TableField("LSTMDATE")
     private String lstmdate;
+    /** 最后修改柜员 */
     @TableField("LSTMTELR")
     private String lstmtelr;
+    /** 记录产生时间 */
     @TableField("RECCRDAT")
     private String reccrdat;
+    /** 是否已转表外 */
     @TableField("OFTRNFLG")
     private String oftrnflg;
+    /** 我行余额 */
     @TableField("ICBCAMT")
     private String icbcamt;
+    /** 他行余额 */
     @TableField("OTHERAMT")
     private String otheramt;
+    /** 交易发生日期 */
     @TableField("WORKDATE")
     private Date workdate;
 

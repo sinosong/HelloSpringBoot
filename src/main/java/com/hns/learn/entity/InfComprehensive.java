@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+
 import java.io.Serializable;
 
 /**
@@ -14,373 +15,262 @@ import java.io.Serializable;
 @TableName("INF_COMPREHENSIVE")
 public class InfComprehensive extends BaseModel implements Serializable {
 
-    @TableField("ACCOUNT_")
-    private String account;
-    @TableField("BANK_TELL_NAME")
-    private String bankTellName;
-    @TableField("BIZ_RENTAL_FACTORING_CODE")
-    private String bizRentalFactoringCode;
-    @TableField("BUSINESS_TYPES")
-    private String businessTypes;
-    @TableField("CALINTF")
-    private String calintf;
-    @TableField("CONECN")
-    private String conecn;
-    @TableField("CONENO")
-    private String coneno;
-    @TableField("CONEORGNUM")
-    private String coneorgnum;
-    @TableField("CONERAT")
-    private String conerat;
-    @TableField("CONESCALE")
-    private String conescale;
-    @TableField("CURRENCY")
-    private String currency;
-    @TableField("DEBTCODE")
-    private String debtCode;
-    @TableField("DEPTCODE")
-    private String deptCode;
-    @TableField("DEPTNAME")
-    private String deptName;
+    /** 统计截止日期 */
     @TableField("DUEDATE")
     private String dueDate;
+    /** 正常计息标志 */
+    @TableField("CALINTF")
+    private String calintf;
+    /** 费用收入 */
     @TableField("FEE")
     private String fee;
-    @TableField("FINANCE_PLATFORM")
-    private String financePlatform;
-    @TableField("GRANT_CODE")
-    private String grantCode;
-    @TableField("GRANTID")
-    private String grantId;
-    @TableField("GUARANTEEMODE")
-    private String guaranteeMode;
+    /** 表内欠息计息标志 */
     @TableField("INCALINF")
     private String incalinf;
-    @TableField("IOUCODE")
-    private String iouCode;
-    @TableField("ISSUEDATE")
-    private String issueDate;
-    @TableField("JOINTTENANT")
-    private String jointTenant;
-    @TableField("LEASEHOLD")
-    private String leasehold;
-    @TableField("MCURRENCY")
-    private String mCurrency;
-    @TableField("MEDIUMID")
-    private String mediumid;
+    /** 正常扣款顺序 */
     @TableField("NGBSQ")
     private String ngbsq;
-    @TableField("NLONCURRTYPE")
-    private String nloncurrtype;
+    /** 表外欠息计息标志 */
     @TableField("OCALINF")
     private String ocalinf;
+    /** 逾期扣款顺序 */
     @TableField("OGBSQ")
     private String ogbsq;
+    /** 逾期计息标志 */
     @TableField("OVCALINF")
     private String ovcalinf;
-    @TableField("POLICY_ATTRIBUTRE_CLASSIFY")
-    private String policyAttributreClassify;
-    @TableField("PRODUCTNAME")
-    private String productName;
-    @TableField("PROJECTNAME")
-    private String projectName;
-    @TableField("PROPCN")
-    private String propcn;
-    @TableField("PROPNO")
-    private String propno;
-    @TableField("PROPORGNUM")
-    private String proporgnum;
-    @TableField("PROPRAT")
-    private String proprat;
-    @TableField("PROPSCALE")
-    private String propscale;
-    @TableField("PROTSENO")
-    private String protseno;
-    @TableField("RATEINCM1")
-    private String rateincm1;
-    @TableField("RECOURSE")
-    private String recourse;
-    @TableField("SCOPE_BUSIN_PERIOD")
-    private String scopeBusinPeriod;
-    @TableField("SOLUTIONAMT")
-    private String solutionAmt;
-    @TableField("SYNDICATELOAN")
-    private String syndicateLoan;
-    @TableField("SYNDICATED_STATUS")
-    private String syndicatedStatus;
-    @TableField("TOTFFAMT")
-    private String totffamt;
-    @TableField("TOTFFAMTCNY")
-    private String totffamtCNY;
-    @TableField("TOTFFAMTUSD")
-    private String totffamtUSD;
-    @TableField("TOTHKAMT")
-    private String tothkamt;
-    @TableField("TOTHKAMTCNY")
-    private String tothkamtCNY;
-    @TableField("TOTHKAMTUSD")
-    private String tothkamtUSD;
-    @TableField("TRADE_FINANCE_BUSINESS")
-    private String traneFinanceBusiness;
+    /** 本金期末余额(原币) */
     @TableField("UPDBAL")
     private String updbal;
+    /** 本金期末余额(折人民币) */
     @TableField("UPDBALCNY")
-    private String updbalcny;
+    private String updbalCNY;
+    /** 本金期末余额(折美元) */
     @TableField("UPDBALUSD")
-    private String updbalusd;
+    private String updbalUSD;
+    /** 信贷员账户 */
+    @TableField("ACCOUNT_")
+    private String account;
+    /** 信贷员姓名 */
+    @TableField("BANK_TELL_NAME")
+    private String bankTellName;
+    /** 租金保理合同编号 */
+    @TableField("BIZ_RENTAL_FACTORING_CODE")
+    private String bizRentalFactoringCode;
+    /** 产品种类二级分类 */
+    @TableField("BUSINESS_TYPES")
+    private String businessTypes;
+    /** 承租人客户名称 */
+    @TableField("CONECN")
+    private String conecn;
+    /** 承租人客户编号 */
+    @TableField("CONENO")
+    private String coneno;
+    /** 承租人组织机构代码 */
+    @TableField("CONEORGNUM")
+    private String coneorgnum;
+    /** 承租人客户信用等级 */
+    @TableField("CONERAT")
+    private String conerat;
+    /** 承租人企业规模 */
+    @TableField("CONESCALE")
+    private String conescale;
+    /** 发放条件币种 */
+    @TableField("CURRENCY")
+    private String currency;
+    /** 债项方案编号 */
+    @TableField("DEBTCODE")
+    private String debtCode;
+    /** 所属机构编号 */
+    @TableField("DEPTCODE")
+    private String deptCode;
+    /** 所属机构 */
+    @TableField("DEPTNAME")
+    private String deptName;
+    /** 承租人是否地方政府融资平台 */
+    @TableField("FINANCE_PLATFORM")
+    private String financePlatform;
+    /** 发放条件编号 */
+    @TableField("GRANT_CODE")
+    private String grantCode;
+    /** 发放条件ID */
+    @TableField("GRANTID")
+    private String grantId;
+    /** 担保方式(总) */
+    @TableField("GUARANTEEMODE")
+    private String guaranteeMode;
+    /** 借据编号 */
+    @TableField("IOUCODE")
+    private String iouCode;
+    /** 审批日期 */
+    @TableField("ISSUEDATE")
+    private String issueDate;
+    /** 是否联合承租 */
+    @TableField("JOINTTENANT")
+    private String jointTenant;
+    /** 租赁物名称 */
+    @TableField("LEASEHOLD")
+    private String leasehold;
+    /** 方案主币种 */
+    @TableField("MCURRENCY")
+    private String mCurrency;
+    /** 介质识别号 */
+    @TableField("MEDIUMID")
+    private String mediumid;
+    /** 借据币种 */
+    @TableField("NLONCURRTYPE")
+    private String nloncurrtype;
+    /** 政策性属性分类 已过时 */
+    @TableField("POLICY_ATTRIBUTRE_CLASSIFY")
+    private String policyAttributreClassify;
+    /** 是否一带一路 */
+    @TableField("POLICY_ATTRIBUTRE_CLASSIFY1")
+    private String policyAttributreClassify1;
+    /** 是否国际产能和装备制造合作 */
+    @TableField("POLICY_ATTRIBUTRE_CLASSIFY2")
+    private String policyAttributreClassify2;
+    /** 是否重大装备出口和高新技术出口 */
+    @TableField("POLICY_ATTRIBUTRE_CLASSIFY3")
+    private String policyAttributreClassify3;
+    /** 是否对外承包工程和境外投资 */
+    @TableField("POLICY_ATTRIBUTRE_CLASSIFY4")
+    private String policyAttributreClassify4;
+    /** 是否能源、资源类 */
+    @TableField("POLICY_ATTRIBUTRE_CLASSIFY5")
+    private String policyAttributreClassify5;
+    /** 是否中国制造2025 */
+    @TableField("POLICY_ATTRIBUTRE_CLASSIFY6")
+    private String policyAttributreClassify6;
+    /** 产品名称 */
+    @TableField("PRODUCTNAME")
+    private String productName;
+    /** 项目名称 */
+    @TableField("PROJECTNAME")
+    private String projectName;
+    /** 出租人客户名称 */
+    @TableField("PROPCN")
+    private String propcn;
+    /** 出租人客户编号 */
+    @TableField("PROPNO")
+    private String propno;
+    /** 出租人组织机构代码 */
+    @TableField("PROPORGNUM")
+    private String proporgnum;
+    /** 出租人客户信用等级 */
+    @TableField("PROPRAT")
+    private String proprat;
+    /** 出租人企业规模 */
+    @TableField("PROPSCALE")
+    private String propscale;
+    /** 协议编号 */
+    @TableField("PROTSENO")
+    private String protseno;
+    /** 利率方式 */
+    @TableField("RATEINCM1")
+    private String rateincm1;
+    /** 追索权 */
+    @TableField("RECOURSE")
+    private String recourse;
+    /** 业务期限(天) */
+    @TableField("SCOPE_BUSIN_PERIOD")
+    private String scopeBusinPeriod;
+    /** 方案金额 */
+    @TableField("SOLUTIONAMT")
+    private String solutionAmt;
+    /** 是否与他行银团放款 */
+    @TableField("SYNDICATELOAN")
+    private String syndicateLoan;
+    /** 我行银团地位 */
+    @TableField("SYNDICATED_STATUS")
+    private String syndicatedStatus;
+    /** 发放金额(原币) */
+    @TableField("TOTFFAMT")
+    private String totffamt;
+    /** 发放金额(折人民币) */
+    @TableField("TOTFFAMTCNY")
+    private String totffamtCNY;
+    /** 发放金额(折美元) */
+    @TableField("TOTFFAMTUSD")
+    private String totffamtUSD;
+    /** 累计回收本金金额(原币) */
+    @TableField("TOTHKAMT")
+    private String tothkamt;
+    /** 累计回收本金金额(人民币) */
+    @TableField("TOTHKAMTCNY")
+    private String tothkamtCNY;
+    /** 累计回收本金金额(美元) */
+    @TableField("TOTHKAMTUSD")
+    private String tothkamtUSD;
+    /** 贸金业务政策性属性 */
+    @TableField("TRADE_FINANCE_BUSINESS")
+    private String traneFinanceBusiness;
+    /** 起息日 */
     @TableField("VALUEDAY")
     private String valueday;
-
+    /** 到期日 */
     @TableField("MATUDATE")
     private String matudate;
+    /** 利率 */
     @TableField("NRATE")
     private String nrate;
+    /** 逾期本金余额(原币) */
     @TableField("OVRBAL")
     private String ovrbal;
+    /** 逾期本金余额(人民币) */
     @TableField("OVRBALCNY")
-    private String ovrbalcny;
+    private String ovrbalCNY;
+    /** 逾期本金余额(美元) */
     @TableField("OVRBALUSD")
-    private String ovrbalusd;
+    private String ovrbalUSD;
+    /** 本金逾期天数 */
     @TableField("PRIDAYS")
     private String pridays;
 
     public InfComprehensive() {
     }
 
-    public String getAccount() {
-        return account == "" ? null : account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getBankTellName() {
-        return bankTellName == "" ? null : bankTellName;
-    }
-
-    public void setBankTellName(String bankTellName) {
-        this.bankTellName = bankTellName;
-    }
-
-    public String getBizRentalFactoringCode() {
-        return bizRentalFactoringCode == "" ? null : bizRentalFactoringCode;
-    }
-
-    public void setBizRentalFactoringCode(String bizRentalFactoringCode) {
-        this.bizRentalFactoringCode = bizRentalFactoringCode;
-    }
-
-    public String getBusinessTypes() {
-        return businessTypes == "" ? null : businessTypes;
-    }
-
-    public void setBusinessTypes(String businessTypes) {
-        this.businessTypes = businessTypes;
-    }
-
-    public String getCalintf() {
-        return calintf == "" ? null : calintf;
-    }
-
-    public void setCalintf(String calintf) {
-        this.calintf = calintf;
-    }
-
-    public String getConecn() {
-        return conecn == "" ? null : conecn;
-    }
-
-    public void setConecn(String conecn) {
-        this.conecn = conecn;
-    }
-
-    public String getConeno() {
-        return coneno == "" ? null : coneno;
-    }
-
-    public void setConeno(String coneno) {
-        this.coneno = coneno;
-    }
-
-    public String getConeorgnum() {
-        return coneorgnum == "" ? null : coneorgnum;
-    }
-
-    public void setConeorgnum(String coneorgnum) {
-        this.coneorgnum = coneorgnum;
-    }
-
-    public String getConerat() {
-        return conerat == "" ? null : conerat;
-    }
-
-    public void setConerat(String conerat) {
-        this.conerat = conerat;
-    }
-
-    public String getConescale() {
-        return conescale == "" ? null : conescale;
-    }
-
-    public void setConescale(String conescale) {
-        this.conescale = conescale;
-    }
-
-    public String getCurrency() {
-        return currency == "" ? null : currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public String getDebtCode() {
-        return debtCode == "" ? null : debtCode;
-    }
-
-    public void setDebtCode(String debtCode) {
-        this.debtCode = debtCode;
-    }
-
-    public String getDeptCode() {
-        return deptCode == "" ? null : deptCode;
-    }
-
-    public void setDeptCode(String deptCode) {
-        this.deptCode = deptCode;
-    }
-
-    public String getDeptName() {
-        return deptName == "" ? null : deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
     public String getDueDate() {
-        return dueDate == "" ? null : dueDate;
+        return dueDate;
     }
 
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 
+    public String getCalintf() {
+        return calintf;
+    }
+
+    public void setCalintf(String calintf) {
+        this.calintf = calintf;
+    }
+
     public String getFee() {
-        return fee == "" ? null : fee;
+        return fee;
     }
 
     public void setFee(String fee) {
         this.fee = fee;
     }
 
-    public String getFinancePlatform() {
-        return financePlatform == "" ? null : financePlatform;
-    }
-
-    public void setFinancePlatform(String financePlatform) {
-        this.financePlatform = financePlatform;
-    }
-
-    public String getGrantCode() {
-        return grantCode == "" ? null : grantCode;
-    }
-
-    public void setGrantCode(String grantCode) {
-        this.grantCode = grantCode;
-    }
-
-    public String getGrantId() {
-        return grantId == "" ? null : grantId;
-    }
-
-    public void setGrantId(String grantId) {
-        this.grantId = grantId;
-    }
-
-    public String getGuaranteeMode() {
-        return guaranteeMode == "" ? null : guaranteeMode;
-    }
-
-    public void setGuaranteeMode(String guaranteeMode) {
-        this.guaranteeMode = guaranteeMode;
-    }
-
     public String getIncalinf() {
-        return incalinf == "" ? null : incalinf;
+        return incalinf;
     }
 
     public void setIncalinf(String incalinf) {
         this.incalinf = incalinf;
     }
 
-    public String getIouCode() {
-        return iouCode == "" ? null : iouCode;
-    }
-
-    public void setIouCode(String iouCode) {
-        this.iouCode = iouCode;
-    }
-
-    public String getIssueDate() {
-        return issueDate == "" ? null : issueDate;
-    }
-
-    public void setIssueDate(String issueDate) {
-        this.issueDate = issueDate;
-    }
-
-    public String getJointTenant() {
-        return jointTenant == "" ? null : jointTenant;
-    }
-
-    public void setJointTenant(String jointTenant) {
-        this.jointTenant = jointTenant;
-    }
-
-    public String getLeasehold() {
-        return leasehold == "" ? null : leasehold;
-    }
-
-    public void setLeasehold(String leasehold) {
-        this.leasehold = leasehold;
-    }
-
-    public String getmCurrency() {
-        return mCurrency == "" ? null : mCurrency;
-    }
-
-    public void setmCurrency(String mCurrency) {
-        this.mCurrency = mCurrency;
-    }
-
-    public String getMediumid() {
-        return mediumid == "" ? null : mediumid;
-    }
-
-    public void setMediumid(String mediumid) {
-        this.mediumid = mediumid;
-    }
-
     public String getNgbsq() {
-        return ngbsq == "" ? null : ngbsq;
+        return ngbsq;
     }
 
     public void setNgbsq(String ngbsq) {
         this.ngbsq = ngbsq;
     }
 
-    public String getNloncurrtype() {
-        return nloncurrtype == "" ? null : nloncurrtype;
-    }
-
-    public void setNloncurrtype(String nloncurrtype) {
-        this.nloncurrtype = nloncurrtype;
-    }
-
     public String getOcalinf() {
-        return ocalinf == "" ? null : ocalinf;
+        return ocalinf;
     }
 
     public void setOcalinf(String ocalinf) {
@@ -388,7 +278,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getOgbsq() {
-        return ogbsq == "" ? null : ogbsq;
+        return ogbsq;
     }
 
     public void setOgbsq(String ogbsq) {
@@ -396,23 +286,287 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getOvcalinf() {
-        return ovcalinf == "" ? null : ovcalinf;
+        return ovcalinf;
     }
 
     public void setOvcalinf(String ovcalinf) {
         this.ovcalinf = ovcalinf;
     }
 
+    public String getUpdbal() {
+        return updbal;
+    }
+
+    public void setUpdbal(String updbal) {
+        this.updbal = updbal;
+    }
+
+    public String getUpdbalCNY() {
+        return updbalCNY;
+    }
+
+    public void setUpdbalCNY(String updbalCNY) {
+        this.updbalCNY = updbalCNY;
+    }
+
+    public String getUpdbalUSD() {
+        return updbalUSD;
+    }
+
+    public void setUpdbalUSD(String updbalUSD) {
+        this.updbalUSD = updbalUSD;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getBankTellName() {
+        return bankTellName;
+    }
+
+    public void setBankTellName(String bankTellName) {
+        this.bankTellName = bankTellName;
+    }
+
+    public String getBizRentalFactoringCode() {
+        return bizRentalFactoringCode;
+    }
+
+    public void setBizRentalFactoringCode(String bizRentalFactoringCode) {
+        this.bizRentalFactoringCode = bizRentalFactoringCode;
+    }
+
+    public String getBusinessTypes() {
+        return businessTypes;
+    }
+
+    public void setBusinessTypes(String businessTypes) {
+        this.businessTypes = businessTypes;
+    }
+
+    public String getConecn() {
+        return conecn;
+    }
+
+    public void setConecn(String conecn) {
+        this.conecn = conecn;
+    }
+
+    public String getConeno() {
+        return coneno;
+    }
+
+    public void setConeno(String coneno) {
+        this.coneno = coneno;
+    }
+
+    public String getConeorgnum() {
+        return coneorgnum;
+    }
+
+    public void setConeorgnum(String coneorgnum) {
+        this.coneorgnum = coneorgnum;
+    }
+
+    public String getConerat() {
+        return conerat;
+    }
+
+    public void setConerat(String conerat) {
+        this.conerat = conerat;
+    }
+
+    public String getConescale() {
+        return conescale;
+    }
+
+    public void setConescale(String conescale) {
+        this.conescale = conescale;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getDebtCode() {
+        return debtCode;
+    }
+
+    public void setDebtCode(String debtCode) {
+        this.debtCode = debtCode;
+    }
+
+    public String getDeptCode() {
+        return deptCode;
+    }
+
+    public void setDeptCode(String deptCode) {
+        this.deptCode = deptCode;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
+    }
+
+    public String getFinancePlatform() {
+        return financePlatform;
+    }
+
+    public void setFinancePlatform(String financePlatform) {
+        this.financePlatform = financePlatform;
+    }
+
+    public String getGrantCode() {
+        return grantCode;
+    }
+
+    public void setGrantCode(String grantCode) {
+        this.grantCode = grantCode;
+    }
+
+    public String getGrantId() {
+        return grantId;
+    }
+
+    public void setGrantId(String grantId) {
+        this.grantId = grantId;
+    }
+
+    public String getGuaranteeMode() {
+        return guaranteeMode;
+    }
+
+    public void setGuaranteeMode(String guaranteeMode) {
+        this.guaranteeMode = guaranteeMode;
+    }
+
+    public String getIouCode() {
+        return iouCode;
+    }
+
+    public void setIouCode(String iouCode) {
+        this.iouCode = iouCode;
+    }
+
+    public String getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(String issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public String getJointTenant() {
+        return jointTenant;
+    }
+
+    public void setJointTenant(String jointTenant) {
+        this.jointTenant = jointTenant;
+    }
+
+    public String getLeasehold() {
+        return leasehold;
+    }
+
+    public void setLeasehold(String leasehold) {
+        this.leasehold = leasehold;
+    }
+
+    public String getmCurrency() {
+        return mCurrency;
+    }
+
+    public void setmCurrency(String mCurrency) {
+        this.mCurrency = mCurrency;
+    }
+
+    public String getMediumid() {
+        return mediumid;
+    }
+
+    public void setMediumid(String mediumid) {
+        this.mediumid = mediumid;
+    }
+
+    public String getNloncurrtype() {
+        return nloncurrtype;
+    }
+
+    public void setNloncurrtype(String nloncurrtype) {
+        this.nloncurrtype = nloncurrtype;
+    }
+
     public String getPolicyAttributreClassify() {
-        return policyAttributreClassify == "" ? null : policyAttributreClassify;
+        return policyAttributreClassify;
     }
 
     public void setPolicyAttributreClassify(String policyAttributreClassify) {
         this.policyAttributreClassify = policyAttributreClassify;
     }
 
+    public String getPolicyAttributreClassify1() {
+        return policyAttributreClassify1;
+    }
+
+    public void setPolicyAttributreClassify1(String policyAttributreClassify1) {
+        this.policyAttributreClassify1 = policyAttributreClassify1;
+    }
+
+    public String getPolicyAttributreClassify2() {
+        return policyAttributreClassify2;
+    }
+
+    public void setPolicyAttributreClassify2(String policyAttributreClassify2) {
+        this.policyAttributreClassify2 = policyAttributreClassify2;
+    }
+
+    public String getPolicyAttributreClassify3() {
+        return policyAttributreClassify3;
+    }
+
+    public void setPolicyAttributreClassify3(String policyAttributreClassify3) {
+        this.policyAttributreClassify3 = policyAttributreClassify3;
+    }
+
+    public String getPolicyAttributreClassify4() {
+        return policyAttributreClassify4;
+    }
+
+    public void setPolicyAttributreClassify4(String policyAttributreClassify4) {
+        this.policyAttributreClassify4 = policyAttributreClassify4;
+    }
+
+    public String getPolicyAttributreClassify5() {
+        return policyAttributreClassify5;
+    }
+
+    public void setPolicyAttributreClassify5(String policyAttributreClassify5) {
+        this.policyAttributreClassify5 = policyAttributreClassify5;
+    }
+
+    public String getPolicyAttributreClassify6() {
+        return policyAttributreClassify6;
+    }
+
+    public void setPolicyAttributreClassify6(String policyAttributreClassify6) {
+        this.policyAttributreClassify6 = policyAttributreClassify6;
+    }
+
     public String getProductName() {
-        return productName == "" ? null : productName;
+        return productName;
     }
 
     public void setProductName(String productName) {
@@ -420,7 +574,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getProjectName() {
-        return projectName == "" ? null : projectName;
+        return projectName;
     }
 
     public void setProjectName(String projectName) {
@@ -428,7 +582,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getPropcn() {
-        return propcn == "" ? null : propcn;
+        return propcn;
     }
 
     public void setPropcn(String propcn) {
@@ -436,7 +590,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getPropno() {
-        return propno == "" ? null : propno;
+        return propno;
     }
 
     public void setPropno(String propno) {
@@ -444,7 +598,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getProporgnum() {
-        return proporgnum == "" ? null : proporgnum;
+        return proporgnum;
     }
 
     public void setProporgnum(String proporgnum) {
@@ -452,7 +606,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getProprat() {
-        return proprat == "" ? null : proprat;
+        return proprat;
     }
 
     public void setProprat(String proprat) {
@@ -460,7 +614,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getPropscale() {
-        return propscale == "" ? null : propscale;
+        return propscale;
     }
 
     public void setPropscale(String propscale) {
@@ -468,7 +622,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getProtseno() {
-        return protseno == "" ? null : protseno;
+        return protseno;
     }
 
     public void setProtseno(String protseno) {
@@ -476,7 +630,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getRateincm1() {
-        return rateincm1 == "" ? null : rateincm1;
+        return rateincm1;
     }
 
     public void setRateincm1(String rateincm1) {
@@ -484,7 +638,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getRecourse() {
-        return recourse == "" ? null : recourse;
+        return recourse;
     }
 
     public void setRecourse(String recourse) {
@@ -492,7 +646,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getScopeBusinPeriod() {
-        return scopeBusinPeriod == "" ? null : scopeBusinPeriod;
+        return scopeBusinPeriod;
     }
 
     public void setScopeBusinPeriod(String scopeBusinPeriod) {
@@ -500,7 +654,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getSolutionAmt() {
-        return solutionAmt == "" ? null : solutionAmt;
+        return solutionAmt;
     }
 
     public void setSolutionAmt(String solutionAmt) {
@@ -508,7 +662,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getSyndicateLoan() {
-        return syndicateLoan == "" ? null : syndicateLoan;
+        return syndicateLoan;
     }
 
     public void setSyndicateLoan(String syndicateLoan) {
@@ -516,7 +670,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getSyndicatedStatus() {
-        return syndicatedStatus == "" ? null : syndicatedStatus;
+        return syndicatedStatus;
     }
 
     public void setSyndicatedStatus(String syndicatedStatus) {
@@ -524,7 +678,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getTotffamt() {
-        return totffamt == "" ? null : totffamt;
+        return totffamt;
     }
 
     public void setTotffamt(String totffamt) {
@@ -532,7 +686,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getTotffamtCNY() {
-        return totffamtCNY == "" ? null : totffamtCNY;
+        return totffamtCNY;
     }
 
     public void setTotffamtCNY(String totffamtCNY) {
@@ -540,7 +694,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getTotffamtUSD() {
-        return totffamtUSD == "" ? null : totffamtUSD;
+        return totffamtUSD;
     }
 
     public void setTotffamtUSD(String totffamtUSD) {
@@ -548,7 +702,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getTothkamt() {
-        return tothkamt == "" ? null : tothkamt;
+        return tothkamt;
     }
 
     public void setTothkamt(String tothkamt) {
@@ -556,7 +710,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getTothkamtCNY() {
-        return tothkamtCNY == "" ? null : tothkamtCNY;
+        return tothkamtCNY;
     }
 
     public void setTothkamtCNY(String tothkamtCNY) {
@@ -564,7 +718,7 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getTothkamtUSD() {
-        return tothkamtUSD == "" ? null : tothkamtUSD;
+        return tothkamtUSD;
     }
 
     public void setTothkamtUSD(String tothkamtUSD) {
@@ -572,39 +726,15 @@ public class InfComprehensive extends BaseModel implements Serializable {
     }
 
     public String getTraneFinanceBusiness() {
-        return traneFinanceBusiness == "" ? null : traneFinanceBusiness;
+        return traneFinanceBusiness;
     }
 
     public void setTraneFinanceBusiness(String traneFinanceBusiness) {
         this.traneFinanceBusiness = traneFinanceBusiness;
     }
 
-    public String getUpdbal() {
-        return updbal == "" ? null : updbal;
-    }
-
-    public void setUpdbal(String updbal) {
-        this.updbal = updbal;
-    }
-
-    public String getUpdbalcny() {
-        return updbalcny == "" ? null : updbalcny;
-    }
-
-    public void setUpdbalcny(String updbalcny) {
-        this.updbalcny = updbalcny;
-    }
-
-    public String getUpdbalusd() {
-        return updbalusd == "" ? null : updbalusd;
-    }
-
-    public void setUpdbalusd(String updbalusd) {
-        this.updbalusd = updbalusd;
-    }
-
     public String getValueday() {
-        return valueday == "" ? null : valueday;
+        return valueday;
     }
 
     public void setValueday(String valueday) {
@@ -635,20 +765,20 @@ public class InfComprehensive extends BaseModel implements Serializable {
         this.ovrbal = ovrbal;
     }
 
-    public String getOvrbalcny() {
-        return ovrbalcny;
+    public String getOvrbalCNY() {
+        return ovrbalCNY;
     }
 
-    public void setOvrbalcny(String ovrbalcny) {
-        this.ovrbalcny = ovrbalcny;
+    public void setOvrbalCNY(String ovrbalCNY) {
+        this.ovrbalCNY = ovrbalCNY;
     }
 
-    public String getOvrbalusd() {
-        return ovrbalusd;
+    public String getOvrbalUSD() {
+        return ovrbalUSD;
     }
 
-    public void setOvrbalusd(String ovrbalusd) {
-        this.ovrbalusd = ovrbalusd;
+    public void setOvrbalUSD(String ovrbalUSD) {
+        this.ovrbalUSD = ovrbalUSD;
     }
 
     public String getPridays() {
@@ -664,11 +794,21 @@ public class InfComprehensive extends BaseModel implements Serializable {
         if (this == o) return true;
         if (!(o instanceof InfComprehensive)) return false;
         InfComprehensive that = (InfComprehensive) o;
-        return Objects.equal(getAccount(), that.getAccount()) &&
+        return Objects.equal(getDueDate(), that.getDueDate()) &&
+                Objects.equal(getCalintf(), that.getCalintf()) &&
+                Objects.equal(getFee(), that.getFee()) &&
+                Objects.equal(getIncalinf(), that.getIncalinf()) &&
+                Objects.equal(getNgbsq(), that.getNgbsq()) &&
+                Objects.equal(getOcalinf(), that.getOcalinf()) &&
+                Objects.equal(getOgbsq(), that.getOgbsq()) &&
+                Objects.equal(getOvcalinf(), that.getOvcalinf()) &&
+                Objects.equal(getUpdbal(), that.getUpdbal()) &&
+                Objects.equal(getUpdbalCNY(), that.getUpdbalCNY()) &&
+                Objects.equal(getUpdbalUSD(), that.getUpdbalUSD()) &&
+                Objects.equal(getAccount(), that.getAccount()) &&
                 Objects.equal(getBankTellName(), that.getBankTellName()) &&
                 Objects.equal(getBizRentalFactoringCode(), that.getBizRentalFactoringCode()) &&
                 Objects.equal(getBusinessTypes(), that.getBusinessTypes()) &&
-                Objects.equal(getCalintf(), that.getCalintf()) &&
                 Objects.equal(getConecn(), that.getConecn()) &&
                 Objects.equal(getConeno(), that.getConeno()) &&
                 Objects.equal(getConeorgnum(), that.getConeorgnum()) &&
@@ -678,25 +818,24 @@ public class InfComprehensive extends BaseModel implements Serializable {
                 Objects.equal(getDebtCode(), that.getDebtCode()) &&
                 Objects.equal(getDeptCode(), that.getDeptCode()) &&
                 Objects.equal(getDeptName(), that.getDeptName()) &&
-                Objects.equal(getDueDate(), that.getDueDate()) &&
-                Objects.equal(getFee(), that.getFee()) &&
                 Objects.equal(getFinancePlatform(), that.getFinancePlatform()) &&
                 Objects.equal(getGrantCode(), that.getGrantCode()) &&
                 Objects.equal(getGrantId(), that.getGrantId()) &&
                 Objects.equal(getGuaranteeMode(), that.getGuaranteeMode()) &&
-                Objects.equal(getIncalinf(), that.getIncalinf()) &&
                 Objects.equal(getIouCode(), that.getIouCode()) &&
                 Objects.equal(getIssueDate(), that.getIssueDate()) &&
                 Objects.equal(getJointTenant(), that.getJointTenant()) &&
                 Objects.equal(getLeasehold(), that.getLeasehold()) &&
                 Objects.equal(getmCurrency(), that.getmCurrency()) &&
                 Objects.equal(getMediumid(), that.getMediumid()) &&
-                Objects.equal(getNgbsq(), that.getNgbsq()) &&
                 Objects.equal(getNloncurrtype(), that.getNloncurrtype()) &&
-                Objects.equal(getOcalinf(), that.getOcalinf()) &&
-                Objects.equal(getOgbsq(), that.getOgbsq()) &&
-                Objects.equal(getOvcalinf(), that.getOvcalinf()) &&
                 Objects.equal(getPolicyAttributreClassify(), that.getPolicyAttributreClassify()) &&
+                Objects.equal(getPolicyAttributreClassify1(), that.getPolicyAttributreClassify1()) &&
+                Objects.equal(getPolicyAttributreClassify2(), that.getPolicyAttributreClassify2()) &&
+                Objects.equal(getPolicyAttributreClassify3(), that.getPolicyAttributreClassify3()) &&
+                Objects.equal(getPolicyAttributreClassify4(), that.getPolicyAttributreClassify4()) &&
+                Objects.equal(getPolicyAttributreClassify5(), that.getPolicyAttributreClassify5()) &&
+                Objects.equal(getPolicyAttributreClassify6(), that.getPolicyAttributreClassify6()) &&
                 Objects.equal(getProductName(), that.getProductName()) &&
                 Objects.equal(getProjectName(), that.getProjectName()) &&
                 Objects.equal(getPropcn(), that.getPropcn()) &&
@@ -718,31 +857,38 @@ public class InfComprehensive extends BaseModel implements Serializable {
                 Objects.equal(getTothkamtCNY(), that.getTothkamtCNY()) &&
                 Objects.equal(getTothkamtUSD(), that.getTothkamtUSD()) &&
                 Objects.equal(getTraneFinanceBusiness(), that.getTraneFinanceBusiness()) &&
-                Objects.equal(getUpdbal(), that.getUpdbal()) &&
-                Objects.equal(getUpdbalcny(), that.getUpdbalcny()) &&
-                Objects.equal(getUpdbalusd(), that.getUpdbalusd()) &&
                 Objects.equal(getValueday(), that.getValueday()) &&
                 Objects.equal(getMatudate(), that.getMatudate()) &&
                 Objects.equal(getNrate(), that.getNrate()) &&
                 Objects.equal(getOvrbal(), that.getOvrbal()) &&
-                Objects.equal(getOvrbalcny(), that.getOvrbalcny()) &&
-                Objects.equal(getOvrbalusd(), that.getOvrbalusd()) &&
+                Objects.equal(getOvrbalCNY(), that.getOvrbalCNY()) &&
+                Objects.equal(getOvrbalUSD(), that.getOvrbalUSD()) &&
                 Objects.equal(getPridays(), that.getPridays());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getAccount(), getBankTellName(), getBizRentalFactoringCode(), getBusinessTypes(), getCalintf(), getConecn(), getConeno(), getConeorgnum(), getConerat(), getConescale(), getCurrency(), getDebtCode(), getDeptCode(), getDeptName(), getDueDate(), getFee(), getFinancePlatform(), getGrantCode(), getGrantId(), getGuaranteeMode(), getIncalinf(), getIouCode(), getIssueDate(), getJointTenant(), getLeasehold(), getmCurrency(), getMediumid(), getNgbsq(), getNloncurrtype(), getOcalinf(), getOgbsq(), getOvcalinf(), getPolicyAttributreClassify(), getProductName(), getProjectName(), getPropcn(), getPropno(), getProporgnum(), getProprat(), getPropscale(), getProtseno(), getRateincm1(), getRecourse(), getScopeBusinPeriod(), getSolutionAmt(), getSyndicateLoan(), getSyndicatedStatus(), getTotffamt(), getTotffamtCNY(), getTotffamtUSD(), getTothkamt(), getTothkamtCNY(), getTothkamtUSD(), getTraneFinanceBusiness(), getUpdbal(), getUpdbalcny(), getUpdbalusd(), getValueday(), getMatudate(), getNrate(), getOvrbal(), getOvrbalcny(), getOvrbalusd(), getPridays());
+        return Objects.hashCode(getDueDate(), getCalintf(), getFee(), getIncalinf(), getNgbsq(), getOcalinf(), getOgbsq(), getOvcalinf(), getUpdbal(), getUpdbalCNY(), getUpdbalUSD(), getAccount(), getBankTellName(), getBizRentalFactoringCode(), getBusinessTypes(), getConecn(), getConeno(), getConeorgnum(), getConerat(), getConescale(), getCurrency(), getDebtCode(), getDeptCode(), getDeptName(), getFinancePlatform(), getGrantCode(), getGrantId(), getGuaranteeMode(), getIouCode(), getIssueDate(), getJointTenant(), getLeasehold(), getmCurrency(), getMediumid(), getNloncurrtype(), getPolicyAttributreClassify(), getPolicyAttributreClassify1(), getPolicyAttributreClassify2(), getPolicyAttributreClassify3(), getPolicyAttributreClassify4(), getPolicyAttributreClassify5(), getPolicyAttributreClassify6(), getProductName(), getProjectName(), getPropcn(), getPropno(), getProporgnum(), getProprat(), getPropscale(), getProtseno(), getRateincm1(), getRecourse(), getScopeBusinPeriod(), getSolutionAmt(), getSyndicateLoan(), getSyndicatedStatus(), getTotffamt(), getTotffamtCNY(), getTotffamtUSD(), getTothkamt(), getTothkamtCNY(), getTothkamtUSD(), getTraneFinanceBusiness(), getValueday(), getMatudate(), getNrate(), getOvrbal(), getOvrbalCNY(), getOvrbalUSD(), getPridays());
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
+                .add("dueDate", dueDate)
+                .add("calintf", calintf)
+                .add("fee", fee)
+                .add("incalinf", incalinf)
+                .add("ngbsq", ngbsq)
+                .add("ocalinf", ocalinf)
+                .add("ogbsq", ogbsq)
+                .add("ovcalinf", ovcalinf)
+                .add("updbal", updbal)
+                .add("updbalCNY", updbalCNY)
+                .add("updbalUSD", updbalUSD)
                 .add("account", account)
                 .add("bankTellName", bankTellName)
                 .add("bizRentalFactoringCode", bizRentalFactoringCode)
                 .add("businessTypes", businessTypes)
-                .add("calintf", calintf)
                 .add("conecn", conecn)
                 .add("coneno", coneno)
                 .add("coneorgnum", coneorgnum)
@@ -752,25 +898,24 @@ public class InfComprehensive extends BaseModel implements Serializable {
                 .add("debtCode", debtCode)
                 .add("deptCode", deptCode)
                 .add("deptName", deptName)
-                .add("dueDate", dueDate)
-                .add("fee", fee)
                 .add("financePlatform", financePlatform)
                 .add("grantCode", grantCode)
                 .add("grantId", grantId)
                 .add("guaranteeMode", guaranteeMode)
-                .add("incalinf", incalinf)
                 .add("iouCode", iouCode)
                 .add("issueDate", issueDate)
                 .add("jointTenant", jointTenant)
                 .add("leasehold", leasehold)
                 .add("mCurrency", mCurrency)
                 .add("mediumid", mediumid)
-                .add("ngbsq", ngbsq)
                 .add("nloncurrtype", nloncurrtype)
-                .add("ocalinf", ocalinf)
-                .add("ogbsq", ogbsq)
-                .add("ovcalinf", ovcalinf)
                 .add("policyAttributreClassify", policyAttributreClassify)
+                .add("policyAttributreClassify1", policyAttributreClassify1)
+                .add("policyAttributreClassify2", policyAttributreClassify2)
+                .add("policyAttributreClassify3", policyAttributreClassify3)
+                .add("policyAttributreClassify4", policyAttributreClassify4)
+                .add("policyAttributreClassify5", policyAttributreClassify5)
+                .add("policyAttributreClassify6", policyAttributreClassify6)
                 .add("productName", productName)
                 .add("projectName", projectName)
                 .add("propcn", propcn)
@@ -792,17 +937,13 @@ public class InfComprehensive extends BaseModel implements Serializable {
                 .add("tothkamtCNY", tothkamtCNY)
                 .add("tothkamtUSD", tothkamtUSD)
                 .add("traneFinanceBusiness", traneFinanceBusiness)
-                .add("updbal", updbal)
-                .add("updbalcny", updbalcny)
-                .add("updbalusd", updbalusd)
                 .add("valueday", valueday)
                 .add("matudate", matudate)
                 .add("nrate", nrate)
                 .add("ovrbal", ovrbal)
-                .add("ovrbalcny", ovrbalcny)
-                .add("ovrbalusd", ovrbalusd)
+                .add("ovrbalCNY", ovrbalCNY)
+                .add("ovrbalUSD", ovrbalUSD)
                 .add("pridays", pridays)
                 .toString();
     }
-
 }
