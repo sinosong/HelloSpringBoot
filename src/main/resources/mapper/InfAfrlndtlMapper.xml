@@ -53,6 +53,7 @@
     </resultMap>
 
     <select id="getAccrualList" resultType="java.util.Map">
+
         SELECT * FROM (
         SELECT
         null as AFWKLFE_CURRTYPE,
@@ -70,7 +71,7 @@
             AND t.institution_code = #{cm.deptCode}
         </if>
         <if test="cm.grantCode != null and cm.grantCode != ''">
-            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
+            AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.iou_code LIKE '%'||#{cm.grantCode}||'%')
         </if>
         ) tmp
         on t.ident_number = tmp.mediumid
@@ -192,7 +193,7 @@
             AND t.institution_code = #{cm.deptCode}
         </if>
         <if test="cm.grantCode != null and cm.grantCode != ''">
-            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
+            AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.iou_code LIKE '%'||#{cm.grantCode}||'%')
         </if>
         <if test="cm.proposer != null and cm.proposer != ''">
             AND cone.cust_no LIKE '%'||#{cm.proposer}||'%'
@@ -225,7 +226,7 @@
         null as trxtime,
         null as timestmp,
         null as postndat,
-        null as postsdat,
+        to_char(lfe.workdate,'YYYY-MM-DD') as postsdat,
         null as posttime,
         null as trxsqnb,
         null as ptrxsqnb,
@@ -243,7 +244,7 @@
         null as revtranf,
         null as updtranf,
         null as posttype,
-        null as listtype,
+        '收费' as listtype,
         null as recipbkn,
         null as recipbka,
         null as recipact,
@@ -254,7 +255,7 @@
         null as foreamt,
         null as vouhtype,
         null as vouhno,
-        null as mediumid,
+        t.ident_number as mediumid,
         null as mediumno,
         null as medseno,
         null as chnltype,
@@ -315,7 +316,7 @@
             AND t.institution_code = #{cm.deptCode}
         </if>
         <if test="cm.grantCode != null and cm.grantCode != ''">
-            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
+            AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.iou_code LIKE '%'||#{cm.grantCode}||'%')
         </if>
         ) tmp
         on t.ident_number = tmp.mediumid
@@ -332,7 +333,7 @@
             AND t.institution_code = #{cm.deptCode}
         </if>
         <if test="cm.grantCode != null and cm.grantCode != ''">
-            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
+            AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.iou_code LIKE '%'||#{cm.grantCode}||'%')
         </if>
         <if test="cm.proposer != null and cm.proposer != ''">
             AND cone.cust_no LIKE '%'||#{cm.proposer}||'%'
@@ -343,14 +344,15 @@
         <if test="cm.endDate != null and cm.endDate != ''">
             AND lfe.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD')
         </if>
-
         )
-        ORDER BY workdate, protseno, listno
 
     </select>
-    <select id="getBaseMessageInfo" resultMap="BaseMessageInfoMap">
+
+
+    <select id="getBaseMessageInfo"   resultMap="BaseMessageInfoMap">
+
         SELECT
-        rownum rownum_,
+        rownum,
         gt.id_ grantid,
         gt.debt_code,
         gt.grant_code,
@@ -363,6 +365,8 @@
         WHEN 'PT0502000000' THEN
         '无追索权'
         END recourse,
+        gt.scope_busin_period,
+        gt.enable_,
         m.m_currency,
         m.solution_amt,
         m.project_name,
@@ -395,20 +399,42 @@
         WHEN 3 THEN
         '非政策性业务'
         END trade_finance_business,
-        CASE interest.policy_attributre_classify
+        CASE interest.policy_attributre_classify1
         WHEN '1' THEN
-        '一带一路'
-        WHEN '2' THEN
-        '国际产能和装备制造合作'
-        WHEN '3' THEN
-        '重大装备出口和高新技术出口'
-        WHEN '4' THEN
-        '对外承包工程和境外投资'
-        WHEN '5' THEN
-        '能源、资源类'
-        WHEN '6' THEN
-        '中国制造2025'
-        END policy_attributre_classify,
+        '是'
+        WHEN '0' THEN
+        '否'
+        END policy_attributre_classify1,
+        CASE interest.policy_attributre_classify2
+        WHEN '1' THEN
+        '是'
+        WHEN '0' THEN
+        '否'
+        END policy_attributre_classify2,
+        CASE interest.policy_attributre_classify3
+        WHEN '1' THEN
+        '是'
+        WHEN '0' THEN
+        '否'
+        END policy_attributre_classify3,
+        CASE interest.policy_attributre_classify4
+        WHEN '1' THEN
+        '是'
+        WHEN '0' THEN
+        '否'
+        END policy_attributre_classify4,
+        CASE interest.policy_attributre_classify5
+        WHEN '1' THEN
+        '是'
+        WHEN '0' THEN
+        '否'
+        END policy_attributre_classify5,
+        CASE interest.policy_attributre_classify6
+        WHEN '1' THEN
+        '是'
+        WHEN '0' THEN
+        '否'
+        END policy_attributre_classify6,
         CASE interest.syndicated_status
         WHEN 1 THEN
         '牵头行'
@@ -432,7 +458,7 @@
         interest.grant_code = gt.grant_code)
         LEFT JOIN BIZ_RENTAL_FACTORING rental
         ON (rental.enable_ = 1 AND rental.debt_code = gt.debt_code AND
-        interest.grant_code = gt.grant_code)
+        rental.grant_code = gt.grant_code)
         LEFT JOIN (SELECT pts.cust_no,
         pts.cust_name_cn,
         renkey.debt_code,
@@ -472,8 +498,8 @@
         <result column="DEBT_CODE" property="debtCode" jdbcType="VARCHAR" />
         <result column="DEPT_NAME" property="deptName" jdbcType="VARCHAR" />
         <result column="GRANT_CODE" property="grantCode" jdbcType="VARCHAR" />
-        <result column="ACCOUNT_" property="account_" jdbcType="VARCHAR" />
-        <result column="USER_NAME" property="banktellName" jdbcType="VARCHAR" />
+        <result column="ACCOUNT_" property="account" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="bankTellName" jdbcType="VARCHAR" />
         <result column="PROJECT_NAME" property="projectName" jdbcType="VARCHAR" />
         <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
         <result column="BIZ_RENTAL_FACTORING_CODE" property="bizRentalFactoringCode" jdbcType="VARCHAR" />
@@ -513,7 +539,6 @@
         <result column="CREATE_TIME" property="createTime" jdbcType="DATE"/>
         <result column="BUSINESS_TYPES" property="businessTypes" jdbcType="VARCHAR"/>
         <result column="NAME_" property="productName" jdbcType="VARCHAR" />
-        <result column="USER_NAME" property="bankTellName" jdbcType="VARCHAR" />
         <result column="CREDIT_RATIO" property="creditRatio" jdbcType="DOUBLE" />
         <result column="CREDIT_LINE_NAME" property="creditLineName" jdbcType="VARCHAR" />
         <result column="CUST_NAME_CN" property="custNameCn" jdbcType="VARCHAR" />
@@ -536,6 +561,12 @@
         <result column="TRADE_FINANCE_BUSINESS" property="tradeFinanceBusiness" jdbcType="VARCHAR" />
         <result column="GUARANTEE_TYPE_TOTAL" property="guaranteeTypeTotal" jdbcType="VARCHAR" />
         <result column="POLICY_ATTRIBUTRE_CLASSIFY" property="policyAttributreClassify" jdbcType="VARCHAR" />
+        <result column="POLICY_ATTRIBUTRE_CLASSIFY1" property="policyAttributreClassify1" jdbcType="VARCHAR" />
+        <result column="POLICY_ATTRIBUTRE_CLASSIFY2" property="policyAttributreClassify2" jdbcType="VARCHAR" />
+        <result column="POLICY_ATTRIBUTRE_CLASSIFY3" property="policyAttributreClassify3" jdbcType="VARCHAR" />
+        <result column="POLICY_ATTRIBUTRE_CLASSIFY4" property="policyAttributreClassify4" jdbcType="VARCHAR" />
+        <result column="POLICY_ATTRIBUTRE_CLASSIFY5" property="policyAttributreClassify5" jdbcType="VARCHAR" />
+        <result column="POLICY_ATTRIBUTRE_CLASSIFY6" property="policyAttributreClassify6" jdbcType="VARCHAR" />
         <result column="BUSINESS_NAME" property="businessName" jdbcType="VARCHAR" />
         <result column="GRANT_AMT" property="grantAmt" jdbcType="VARCHAR" />
         <result column="CODE_NAME" property="codeName" jdbcType="VARCHAR" />
@@ -611,25 +642,21 @@
             AND t.institution_code = #{cm.deptCode}
         </if>
         <if test="cm.grantCode != null and cm.grantCode != ''">
-            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
+            AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.iou_code LIKE '%'||#{cm.grantCode}||'%')
         </if>
         ) tmp
         on t.ident_number = tmp.mediumid
         WHERE EXISTS (SELECT 1 FROM INF_AFRLNDTL lndtl WHERE lndtl.protseno = tmp.protseno
-        <if test="cm.beginDate != null and cm.beginDate != ''">
-            AND lndtl.workdate &gt;= TO_DATE(#{cm.beginDate},'YYYY-MM-DD HH24:MI:SS')
+        <if test="cm.dueDate != null and cm.dueDate != ''">
+            AND lndtl.workdate &lt;= TO_DATE(#{cm.dueDate},'YYYY-MM-DD')
         </if>
-        <if test="cm.endDate != null and cm.endDate != ''">
-            AND lndtl.workdate &lt;= TO_DATE(#{cm.endDate},'YYYY-MM-DD HH24:MI:SS')
-        </if>
-
         )
         AND t.enable_ = 1
         <if test="cm.deptCode != null and cm.deptCode != ''">
             AND t.institution_code = #{cm.deptCode}
         </if>
         <if test="cm.grantCode != null and cm.grantCode != ''">
-            AND t.grant_code LIKE '%'||#{cm.grantCode}||'%'
+            AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.iou_code LIKE '%'||#{cm.grantCode}||'%')
         </if>
 
     </select>
@@ -640,5 +667,34 @@
         <result column="DEBT_CODE" property="debtCode" jdbcType="VARCHAR" />
         <result column="GRANT_CODE" property="grantCode" jdbcType="VARCHAR" />
     </resultMap>-->
+
+    <select id="selectIdentList" resultMap="IdentsMap">
+		SELECT t.id_ granttrnid,m.id_ debtid,g.id_ grantid,g.ident_number,g.debt_code,g.grant_code,g.business_types,
+       g.iou_code,g.business_name,g.seqno,g.licedate,g.institution_code,m.single_batch,g.update_by
+        FROM biz_debt_grant g
+        INNER JOIN biz_trn t
+        ON (t.ownref = g.grant_code AND t.vernum_ = g.vernum_)
+        LEFT JOIN
+		Biz_Debt_Main m
+		ON (m.debt_code = g.debt_code)
+        WHERE g.ident_number IS NOT NULL
+        AND t.biz_status in ('4','5')
+	</select>
+    <resultMap id="IdentsMap" type="java.util.HashMap" >
+        <result column="debtid" property="debtid" javaType="Long" jdbcType="NUMERIC" />
+        <result column="grantid" property="grantid"  javaType="Long" jdbcType="NUMERIC" />
+        <result column="granttrnid" property="granttrnid"  javaType="Long" jdbcType="NUMERIC" />
+        <result column="DEBT_CODE" property="debtCode" jdbcType="VARCHAR" />
+        <result column="BUSINESS_NAME" property="businessName" jdbcType="VARCHAR" />
+        <result column="BUSINESS_TYPES" property="businessTypes" jdbcType="VARCHAR" />
+        <result column="GRANT_CODE" property="grantCode" jdbcType="VARCHAR" />
+        <result column="IDENT_NUMBER" property="identNumber" jdbcType="VARCHAR" />
+        <result column="IOU_CODE" property="iouCode" jdbcType="VARCHAR" />
+        <result column="SEQNO" property="seqNo" jdbcType="VARCHAR" />
+        <result column="LICEDATE" property="liceDate" jdbcType="VARCHAR" />
+        <result column="SINGLE_BATCH" property="singleBtch" javaType="String" jdbcType="VARCHAR" />
+        <result column="INSTITUTION_CODE" property="institutionCode" jdbcType="VARCHAR" />
+        <result column="UPDATE_BY" property="updateBy" javaType="Long" jdbcType="NUMERIC" />
+    </resultMap>
 
 </mapper>

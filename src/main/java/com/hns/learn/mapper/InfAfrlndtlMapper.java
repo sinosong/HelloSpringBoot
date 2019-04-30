@@ -39,4 +39,7 @@ public interface InfAfrlndtlMapper extends BaseMapper<InfAfrlndtl> {
     List<Map> getComprehensiveProtsenos(Page page, @Param("cm") Map<String, Object> param);
 
 
+    List<Map> selectIdentList();
+
+
 }
