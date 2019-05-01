@@ -6,8 +6,12 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.hns.learn.entity.InfAccrual;
+import com.hns.learn.entity.InfAfrpolt;
+import com.hns.learn.entity.InfAfrpolt1;
 import com.hns.learn.entity.InfTaskRecord;
 import com.hns.learn.mapper.InfAccrualMapper;
+import com.hns.learn.mapper.InfAfrpoltMapper;
+import com.hns.learn.mapper.InfAfrpoltMapper1;
 import com.hns.learn.mapper.InfTaskRecordMapper;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -44,6 +48,11 @@ public class SqlTest01 {
     private InfTaskRecordMapper infTaskRecordMapper;
     @Autowired
     private InfAccrualMapper infAccrualMapper;
+    @Autowired
+    private InfAfrpoltMapper infAfrpoltMapper;
+    @Autowired
+    private InfAfrpoltMapper1 infAfrpoltMapper1;
+
 
     @Test
     public void fetchAccrual() {
@@ -132,5 +141,50 @@ public class SqlTest01 {
             es.printStackTrace();
             throw new RuntimeException("save debtMain error! reason=="+es.getMessage());
         }
+    }
+
+    @Test
+    public void testYUQI() {
+
+        String lastCurrDateStr = "2019-04-21";
+        Date lastCurrDate = null;
+        Date currDate = null;
+        String currDateStr = null;
+        try {
+            lastCurrDate = DateUtils.parseDate(lastCurrDateStr,"yyyy-MM-dd");
+            //自然日加一，若今天不存在跑批，则停滞等待
+            currDate = DateUtils.addDays(lastCurrDate,2);
+            currDate = DateUtils.addSeconds(currDate,-1);
+            currDateStr = DateFormatUtils.format(currDate,"yyyy-MM-dd");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(currDate);
+
+        List<InfAfrpolt> poltList = infAfrpoltMapper.selectPage(new Page<InfAfrpolt>(1,100),new EntityWrapper<InfAfrpolt>().le("WORKDATE",currDate).orderBy("WORKDATE",false));
+        if(poltList.size() !=1 ){
+            logger.error("查询逾期天数异常...");
+            logger.error("INTERFACE ERROR:required One:table=InfAfrpolt:poltList ="+poltList);
+        }
+
+        System.out.println(poltList);
+
+    }
+
+    @Test
+    public void inserPolt() {
+
+        List<InfAfrpolt1> poltList1 = infAfrpoltMapper1.selectPage(new Page<InfAfrpolt>(1,999999),new EntityWrapper<InfAfrpolt1>());
+        for(InfAfrpolt1 polt1 : poltList1){
+            InfAfrpolt polt = JSON.parseObject(JSON.toJSONString(polt1),InfAfrpolt.class);
+            int i = infAfrpoltMapper.insert(polt);
+            if(i!=1){
+                System.exit(1);
+            }
+        }
+
+//
+
     }
 }
