@@ -1,16 +1,66 @@
 package com.hns.learn;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.hns.learn.common.Context;
 import com.hns.learn.entity.InfAflnrat;
+import com.hns.learn.entity.enums.FetchOccurredEnum;
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class commTest {
 
+    @Test
+    public void testIndex() {
+        String noteType = "012";
+        if("-012-013-997-".indexOf(noteType)>0){
+            System.out.println(noteType);
+            System.out.println("-012-013-997-".contains(noteType));
+        }
+    }
+
+    @Test
+    public void begdecimal() {
+        /*BigDecimal updbalB = new BigDecimal("-1255");
+        updbalB = updbalB.multiply(new BigDecimal(-1));
+        System.out.println(updbalB);*/
+
+        List list1 = FetchOccurredEnum.getNameList();
+        List list2 = new ArrayList<String>();
+//        list1.add("aaa");
+//        list1.add("bbb");
+//        list1.add("ccc");
+        list2.add("aaa");
+        list2.add("OFCURBAL");
+        ListUtils.subtract(list1,list2);
+        System.out.println(ListUtils.subtract(list1,list2));
+
+
+
+
+    }
+
+    @Test
+    public void testLong() {
+
+//        Context c = new Context();
+//        System.out.println(c);
+
+        Date date = new Date();
+        System.out.println(date);
+        date = DateUtils.setHours(date,23);
+        date = DateUtils.setMinutes(date,59);
+        date = DateUtils.setSeconds(date,59);
+
+        System.out.println(date);
+    }
 
     @Test
     public void testChar() {

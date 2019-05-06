@@ -1,5 +1,6 @@
 package com.hns.learn;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.hns.learn.entity.BizCust;
@@ -46,20 +47,31 @@ public class RedisTest {
     @Test
     public void get() {
 //        String value = (String)redisUtils.get("redis_key:demo");
-        List<BizCust> custList = bizCustMapper.selectList(new EntityWrapper<BizCust>().eq("ID_","20"));
+        List<BizCust> custList = bizCustMapper.selectList(new EntityWrapper<BizCust>());
 
         System.out.println(custList.size());
+
         for(BizCust cust : custList){
             String redisKey = pr+cust.getCustNo()+cust.getCustNameCN();
-            String value = (String)redisUtils.get(redisKey);
-            System.out.println(value);
+            boolean res = redisUtils.set(redisKey,JSON.toJSONString(cust),86400L,TimeUnit.SECONDS);
+//            boolean res = redisUtils.delete(redisKey);
+            System.out.println(res);
         }
+
+        /*for(BizCust cust : custList){
+//            System.out.println(cust);
+            String redisKey = pr+cust.getCustNo()+cust.getCustNameCN();
+//            String value = (String)redisUtils.get(redisKey);
+//            System.out.println(value);
+            boolean res = redisUtils.delete(redisKey);
+            System.out.println(res);
+        }*/
 
     }
 
     @Test
     public void del() {
-        boolean res = redisUtils.delete("redis_key");
+        boolean res = redisUtils.delete(pr+"*");
         System.out.println(res);
     }
 
