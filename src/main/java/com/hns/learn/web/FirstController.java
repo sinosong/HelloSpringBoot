@@ -26,11 +26,13 @@ public class FirstController {
         return "当前时间是=="+date;
     }
 
-    @RequestMapping(value="/myWebSocket",method=RequestMethod.POST,consumes = "application/json")
+//    @RequestMapping(value="/myWebSocket",method=RequestMethod.POST,consumes = "application/json")
+    @RequestMapping(value="/myWebSocket")
     public @ResponseBody Map<String,Object> myWebSocket(@RequestBody Map<String,Object> param) {
         //ws://localhost:10336/myWebSocket
         Map<String,Object> result =new HashMap<String,Object>();
         try {
+            System.out.println("******************************************************");
             WebSocketServer.sendInfo("有新客户呼入");
             result.put("operationResult", true);
         }catch (IOException e) {

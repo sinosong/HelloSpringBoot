@@ -64,6 +64,10 @@ server地址 :  <input id ="serveraddress" type="text" /><br/>
      */
     function initSocket() {
         var serveraddress = $("#serveraddress").val();
+        if(serveraddress==""){
+            serveraddress = 'ws://localhost:10336/websocket/myWebSocket';
+            console.log("linked:"+serveraddress);
+        }
         var userId = $("#userId").val();
 
         if (!window.WebSocket) {

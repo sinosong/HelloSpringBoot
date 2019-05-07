@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hns.learn.mapper.InfAfwklfeMapper">
+
+
+    <select id="getLnFeeNOList" resultType="java.lang.String">
+
+     SELECT DISTINCT t.lnfeeno
+     FROM INF_AFWKLFE t
+     WHERE t.protseno = #{protseno}
+     AND (t.workdate &lt;= #{dueDate})
+
+    </select>
+
+</mapper>

@@ -3,6 +3,8 @@ package com.hns.learn;
 import com.hns.learn.util.ExcelUtils;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 public class CommonTest {
 
     @Test
@@ -18,4 +20,13 @@ public class CommonTest {
         ExcelUtils.importExcel("G:/temp/test/test1.xlsx");
     }
 
+    @Test
+    public void testBigdecimal() {
+
+        BigDecimal a = new BigDecimal("159512.52552");
+        System.out.println(a.multiply(new BigDecimal(-1)).setScale(2,BigDecimal.ROUND_HALF_UP).toString());
+        System.out.println(a.multiply(new BigDecimal(-1)));
+        System.out.println(a.toString());
+
+    }
 }
