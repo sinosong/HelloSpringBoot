@@ -14,4 +14,10 @@
         </where>
     </select>
 
+    <select id="selEffectGrant" resultType="java.util.Map">
+        SELECT t.* FROM BIZ_DEBT_GRANT t
+		WHERE t.ident_number=#{mediumid}
+		AND NOT EXISTS (SELECT 1 FROM BIZ_TRN trn WHERE (t.id_ = trn.objinr and trn.objtyp='BIZ_DEBT_GRANT' and trn.biz_status IN ('6','12')))
+    </select>
+
 </mapper>

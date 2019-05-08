@@ -2,6 +2,7 @@ package com.hns.learn;
 
 import static org.junit.Assert.assertTrue;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.hns.learn.common.Context;
@@ -9,6 +10,7 @@ import com.hns.learn.dao.BizCanvasService;
 import com.hns.learn.dao.impl.StartState;
 import com.hns.learn.dao.impl.StopState;
 import com.hns.learn.entity.BizCanvas;
+import com.hns.learn.entity.BizDebtGrant;
 import com.hns.learn.entity.InfAfrlndtl;
 import com.hns.learn.entity.defineAuthor;
 import com.hns.learn.mapper.BizCanvasMapper;
@@ -29,6 +31,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = App.class)
@@ -57,15 +60,19 @@ public class AppTest {
     public void selCanvas() {
 
         System.out.println("***********************");
-        BizCanvas sel = new BizCanvas();
+        /*BizCanvas sel = new BizCanvas();
         sel.setId(1120992891767480321L);
         Wrapper<BizCanvas> queryWrapper = new EntityWrapper<>(sel);
         System.out.println("Mapper=="+bizCanvasMapper.selectList(queryWrapper));
 
-        System.out.println("Service=="+bizCanvasService.selectList(queryWrapper));
+        System.out.println("Service=="+bizCanvasService.selectList(queryWrapper));*/
 //        Wrapper<BizCanvas> queryWrapper = new QueryWrapper<>(sel);
 //        System.out.println("Mapper=="+bizCanvasMapper.selectOne(queryWrapper).toString());
-
+        List<Map> grantMapList =  bizCanvasMapper.selEffectGrant("1360000100001230011");
+        if(grantMapList.size()==1){
+            BizDebtGrant grant = new JSONObject(grantMapList.get(0)).toJavaObject(BizDebtGrant.class);
+            System.out.println(grant.toString());
+        }
     }
 
     @Test

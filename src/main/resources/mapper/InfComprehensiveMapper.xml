@@ -4,8 +4,27 @@
 
 
     <select id="getAll" resultType="com.hns.learn.entity.InfComprehensive">
-
-        select * from Inf_Comprehensive
+        SELECT c.*
+        FROM inf_comprehensive c
+        INNER JOIN (SELECT t.mediumid, MAX(t.duedate) AS duedate
+                    FROM inf_comprehensive t
+                    WHERE t.duedate &lt;= #{cm.dueDate}
+                    <if test="cm.grantCode != null and cm.grantCode != ''">
+                        AND (t.grant_code LIKE '%'||#{cm.grantCode}||'%' or t.IOUCODE LIKE '%'||#{cm.grantCode}||'%' or t.MEDIUMID LIKE '%'||#{cm.grantCode}||'%')
+                    </if>
+                    <if test="cm.beginDate != null and cm.beginDate != ''">
+                        AND t.valueday &gt;= #{cm.duedate}
+                    </if>
+                    <if test="cm.endDate != null and cm.endDate != ''">
+                        AND t.valueday &lt;= #{cm.duedate}
+                    </if>
+                    <if test="cm.coneNo != null and cm.coneNo != ''">
+                        AND t.coneno LIKE '%'||#{cm.coneNo}||'%'
+                    </if>
+                    <if test="cm.deptCode != null and cm.deptCode != ''">
+                        AND t.deptcode LIKE '%'||#{cm.deptCode}||'%'
+                    </if>
+                    GROUP BY t.mediumid) tmp ON (c.mediumid = tmp.mediumid AND c.duedate = tmp.duedate)
 
     </select>
 

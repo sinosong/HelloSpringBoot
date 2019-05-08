@@ -3,10 +3,15 @@ package com.hns.learn;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.hns.learn.entity.BizFile;
 import com.hns.learn.entity.InfAfwklfe;
 import com.hns.learn.entity.InfAfwkpln;
+import com.hns.learn.entity.InfComprehensive;
+import com.hns.learn.mapper.BizFileMapper;
 import com.hns.learn.mapper.InfAfwklfeMapper;
 import com.hns.learn.mapper.InfAfwkplnMapper;
+import com.hns.learn.mapper.InfComprehensiveMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
@@ -17,9 +22,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = App.class)
 public class testsql03 {
@@ -28,6 +32,47 @@ public class testsql03 {
     private InfAfwkplnMapper infAfwkplnMapper;
     @Autowired
     private InfAfwklfeMapper infAfwklfeMapper;
+    @Autowired
+    private BizFileMapper bizFileMapper;
+    @Autowired
+    private InfComprehensiveMapper infComprehensiveMapper;
+
+    @Test
+    public void getAll() {
+
+        System.out.println("getAll***********************************************");
+
+        String beginDate = "";
+        String endDate = "";
+        String coneNo = "";
+        String grantCode = "";
+        String deptCode = "";
+        String dueDate = "2019-05-16";
+        Map<String, Object> param = new HashMap<>();
+        param.put("beginDate",beginDate);
+        param.put("endDate",endDate);
+        param.put("coneNo",coneNo);
+        param.put("grantCode",grantCode);
+        param.put("deptCode",deptCode);
+        param.put("dueDate",dueDate);
+
+        Page page = new Page<>(1,100);
+        page.setOrderByField("WORKDATE,PROTSENO,LISTNO");
+        List list = infComprehensiveMapper.getAll(page,param);
+        System.out.println(list);
+        page.setRecords(list);
+        System.out.println("getTotal=="+page.getTotal());
+
+    }
+
+    @Test
+    public void tesyIssuDate() {
+        BizFile bizFile = new BizFile();
+        bizFile.setFieldName("Meetingupload");
+        bizFile.setBizType("A");
+        List<BizFile> bizFileList = bizFileMapper.selectPage(new Page<BizFile>(1,1), new EntityWrapper<>(bizFile).like("BIZ_CODE","CRP2019060269").orderBy("CREATE_TIME",true));
+        System.out.println(bizFileList);
+    }
 
     @Test
     public void daoqiri() {

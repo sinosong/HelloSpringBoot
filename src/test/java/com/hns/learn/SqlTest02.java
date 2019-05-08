@@ -4,14 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.hns.learn.entity.InfAflnrat;
-import com.hns.learn.entity.InfAfpcmem;
-import com.hns.learn.entity.InfAfwklfe;
-import com.hns.learn.entity.InfTaskRecord;
-import com.hns.learn.mapper.InfAflnratMapper;
-import com.hns.learn.mapper.InfAfpcmemMapper;
-import com.hns.learn.mapper.InfAfrlndtlMapper;
-import com.hns.learn.mapper.InfAfwklfeMapper;
+import com.hns.learn.entity.*;
+import com.hns.learn.mapper.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -48,17 +42,21 @@ public class SqlTest02 {
     private InfAfpcmemMapper infAfpcmemMapper;
     @Autowired
     private InfAfwklfeMapper infAfwklfeMapper;
+    @Autowired
+    private InfAccrualMapper infAccrualMapper;
 
     @Test
     public void sqlTest01() {
 
 
         Map<String, Object> param = new HashMap<>(1);
-        param.put("dueDate","2019-04-20");
+        param.put("dueDate","2019-04-24");
 
         List<Map> protsenosList = infAfrlndtlMapper.getComprehensiveProtsenos(new Page(1,9999),param);
         System.out.println(protsenosList.size());
-        System.out.println(protsenosList);
+        for(Map map : protsenosList){
+            System.out.println(map);
+        }
 
        /* String mediumid = "1360000100001212925";
         String protseno = "136000011020200000584923";
@@ -154,7 +152,7 @@ public class SqlTest02 {
         System.out.println(memList);*/
 
 
-        Wrapper lfeWrapper = new EntityWrapper<InfAfwklfe>();
+        /*Wrapper lfeWrapper = new EntityWrapper<InfAfwklfe>();
         lfeWrapper.le("WORKDATE",currDate).eq("PROTSENO","136000011020200000582644");
         List<InfAfwklfe> lfeList = infAfwklfeMapper.selectList(lfeWrapper);
         BigDecimal fee = new BigDecimal(0);
@@ -162,18 +160,22 @@ public class SqlTest02 {
             fee = fee.add(new BigDecimal(dvi.getFeeamt()));
         }
         System.out.println(fee.toString());
-        System.out.println("*******************************************************");
+        System.out.println("*******************************************************");*/
 
 
         Map<String, Object> param = new HashMap<>(2);
-        param.put("beginDate","2019-04-20");
-        param.put("endDate","2019-04-20");
+        param.put("beginDate","2019-05-07");
+        param.put("endDate","2019-05-07");
 
-        List<Map> accrualList = infAfrlndtlMapper.getAccrualList(new Page(1,9999),param);
+        List<Map> accrualList = infAccrualMapper.getAccrualList(new Page(1,9999),param);
 
         for(Map<String, Object> resMap : accrualList){
 
-            System.out.println(resMap);
+            if(resMap.get("MEDIUMID").equals("1360000100001230011")){
+                System.out.println(resMap);
+            }
+
+
 
         }
 
