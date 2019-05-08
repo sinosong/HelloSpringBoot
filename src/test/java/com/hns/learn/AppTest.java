@@ -70,8 +70,9 @@ public class AppTest {
 //        System.out.println("Mapper=="+bizCanvasMapper.selectOne(queryWrapper).toString());
         List<Map> grantMapList =  bizCanvasMapper.selEffectGrant("1360000100001230011");
         if(grantMapList.size()==1){
+            System.out.println(grantMapList.get(0));
             BizDebtGrant grant = new JSONObject(grantMapList.get(0)).toJavaObject(BizDebtGrant.class);
-            System.out.println(grant.toString());
+            System.out.println(grant.toString().toUpperCase());
         }
     }
 

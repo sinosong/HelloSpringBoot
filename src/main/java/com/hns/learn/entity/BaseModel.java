@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.common.base.MoreObjects;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -129,5 +130,18 @@ public class BaseModel implements Serializable {
 	 */
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(this)
+				.add("id", id)
+				.add("enable", enable)
+				.add("remark", remark)
+				.add("createBy", createBy)
+				.add("createTime", createTime)
+				.add("updateBy", updateBy)
+				.add("updateTime", updateTime)
+				.toString();
 	}
 }

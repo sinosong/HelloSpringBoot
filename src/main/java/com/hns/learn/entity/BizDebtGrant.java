@@ -466,6 +466,13 @@ public class BizDebtGrant extends BaseModel implements Serializable {
 	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
+				.add("id",super.getId())
+				.add("enable", super.getEnable())
+				.add("remark", super.getRemark())
+				.add("createBy", super.getCreateTime())
+				.add("createTime", super.getCreateTime())
+				.add("updateBy", super.getUpdateBy())
+				.add("updateTime", super.getUpdateTime())
 				.add("debtCode", debtCode)
 				.add("businessTypes", businessTypes)
 				.add("grantCode", grantCode)
