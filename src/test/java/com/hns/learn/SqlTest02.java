@@ -46,6 +46,30 @@ public class SqlTest02 {
     private InfAccrualMapper infAccrualMapper;
 
     @Test
+    public void testRat() {
+
+        Date currDate = null;
+        String mediumid = "1360000100001228092";
+        String protseno = "136000011020200000600125";
+        try {
+            Date date = DateUtils.parseDate("2019-05-05","yyyy-MM-dd");
+            currDate = DateUtils.addDays(date,2);
+            currDate = DateUtils.addSeconds(currDate,-1);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        List<InfAflnrat> ratList = infAflnratMapper.selectPage(new Page<InfAflnrat>(1,1),new EntityWrapper<InfAflnrat>().le("WORKDATE",currDate).eq("PROTSENO",protseno).eq("MEDIUMID",mediumid).orderBy("WORKDATE",false));
+        if(ratList.size() !=1 ){
+            System.err.print("查询利率异常...");
+            System.err.print("INTERFACE ERROR:required One:table=InfAflnrat:ratList ="+ratList+" protseno="+protseno);
+        }else{
+            System.out.println(ratList.get(0).getNrate());
+        }
+
+    }
+
+    @Test
     public void sqlTest01() {
 
 
