@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hns.learn.mapper.BizDebtGrantMapper">
+
+	<select id="selEffectGrant" resultType="java.util.Map">
+		SELECT t.* FROM BIZ_DEBT_GRANT t
+		WHERE t.ident_number=#{mediumid}
+		AND EXISTS (SELECT 1 FROM BIZ_TRN trn WHERE (t.id_ = trn.objinr and trn.objtyp='BIZ_DEBT_GRANT' and trn.biz_status NOT IN ('6','12','13') and trn.relflg='Y'))
+	</select>
+
+</mapper>

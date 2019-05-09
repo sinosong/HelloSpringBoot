@@ -29,4 +29,22 @@ public class CommonTest {
         System.out.println(a.toString());
 
     }
+
+    @Test
+    public void testdvi() {
+        BigDecimal repaymentAmt = new BigDecimal(15);
+        BigDecimal sumLimit = new BigDecimal(30);
+        BigDecimal xrfAmt = new BigDecimal(5);
+        BigDecimal resGrant = new BigDecimal(10);
+        repaymentAmt = sumLimit.multiply(xrfAmt).divide(resGrant);
+
+        System.out.println(repaymentAmt);
+
+    }
+
+    @Test
+    public void testtrim() {
+        String a = "";
+        System.out.println(a.trim());
+    }
 }
