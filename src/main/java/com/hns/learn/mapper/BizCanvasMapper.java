@@ -22,4 +22,7 @@ public interface BizCanvasMapper extends BaseMapper<BizCanvas> {
 
     List<Map> selEffectGrant(String mediumid);
 
+
+    List<Map> selTables(String tableName);
+
 }

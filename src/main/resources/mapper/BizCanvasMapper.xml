@@ -19,5 +19,77 @@
 		WHERE t.ident_number=#{mediumid}
 		AND NOT EXISTS (SELECT 1 FROM BIZ_TRN trn WHERE (t.id_ = trn.objinr and trn.objtyp='BIZ_DEBT_GRANT' and trn.biz_status IN ('6','12')))
     </select>
+    <select id="selTables" resultType="java.util.Map">
+
+        select
+         t1.table_name  as "表名",
+         t3.comments    as "表说明",
+         t1.column_name as "字段名称",
+         --t1.data_type || '(' || t1.data_length || ')'  as "数据类型",
+         t1.DATA_SCALE ,
+         t1.data_type   as "类型",
+         t1.data_length as "长度",
+         t1.nullable    as "为空",
+         t2.comments    as "描述",
+        CASE inx.isInx
+        WHEN 1 THEN '是'
+        ELSE '否'
+        END "索引",
+         t1.TABLE_NAME,
+         t1.COLUMN_NAME,
+         t1.DATA_TYPE,
+         t1.DATA_TYPE_MOD,
+         t1.DATA_TYPE_OWNER,
+         t1.DATA_LENGTH,
+         t1.DATA_PRECISION,
+         t1.DATA_SCALE,
+         t1.NULLABLE,
+         t1.COLUMN_ID,
+         t1.DEFAULT_LENGTH,
+         t1.NUM_DISTINCT,
+         t1.LOW_VALUE,
+         t1.HIGH_VALUE,
+         t1.DENSITY,
+         t1.NUM_NULLS,
+         t1.NUM_BUCKETS,
+         t1.LAST_ANALYZED,
+         t1.SAMPLE_SIZE,
+         t1.CHARACTER_SET_NAME,
+         t1.CHAR_COL_DECL_LENGTH,
+         t1.GLOBAL_STATS,
+         t1.USER_STATS,
+         t1.AVG_COL_LEN,
+         t1.CHAR_LENGTH,
+         t1.CHAR_USED,
+         t1.V80_FMT_IMAGE,
+         t1.DATA_UPGRADED,
+         t1.HISTOGRAM,t2.*
+          from cols t1
+          left join user_col_comments t2
+            on t1.table_name = t2.table_name
+           and t1.column_name = t2.column_name
+          left join user_tab_comments t3
+            on t1.table_name = t3.table_name
+          left join user_objects t4
+            on t1.table_name = t4.object_name
+        left join (select 1 as isInx,column_name,table_name
+                    from user_ind_columns
+                    where index_name in (select distinct ui.INDEX_NAME
+                    from user_indexes ui --where ui.table_name = 'BIZ_DEBT_MAIN'
+                  )
+        ) inx
+        on inx.COLUMN_NAME=t1.column_name and inx.table_name=t1.table_name
+         where not exists (select t4.object_name
+                  from user_objects t4
+                 where t4.object_type = 'TABLE'
+                   and t4.temporary = 'Y'
+                   and t4.object_name = t1.table_name)
+        <!--<if test="tableName != null and tableName != ''">
+            AND t1.table_name = #{tableName}
+        </if>-->
+         order by t1.table_name, t1.column_id
+
+
+    </select>
 
 </mapper>

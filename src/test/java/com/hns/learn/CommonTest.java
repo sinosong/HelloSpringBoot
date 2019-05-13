@@ -10,13 +10,15 @@ public class CommonTest {
     @Test
     public void testPoi(){
 
-        /*String[] titles = {"序号","债项方案编号"};
-        String[][] centerVal = new String[2][2];
+        String[] titles = {"序号","债项方案编号","hh"};
+        String[][] centerVal = new String[3][2];
         centerVal[0][0] = "1";
         centerVal[0][1] = "no.1";
         centerVal[1][0] = "2";
         centerVal[1][1] = "no.2";
-        ExcelUtils.exportExcel(false,titles,centerVal,null,"测试01");*/
+        centerVal[2][0] = "3";
+        centerVal[2][1] = "no.3";
+        ExcelUtils.exportExcel(false,titles,centerVal,null,"测试01");
         ExcelUtils.importExcel("G:/temp/test/test1.xlsx");
     }
 
