@@ -12,4 +12,15 @@
 
     </select>
 
+
+    <select id="getTermnumList" resultType="java.lang.String">
+
+     SELECT DISTINCT t.termnum
+     FROM INF_AFWKLFE t
+     WHERE t.protseno = #{protseno}
+     AND t.lnfeeno = #{lnfeeno}
+     AND (t.workdate &lt;= #{dueDate})
+
+    </select>
+
 </mapper>

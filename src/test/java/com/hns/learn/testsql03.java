@@ -21,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
+import java.text.Bidi;
 import java.text.ParseException;
 import java.util.*;
 
@@ -104,12 +105,49 @@ public class testsql03 {
             fee = fee.add(new BigDecimal(dvi.getFeeamt()));
         }
         System.out.println(fee);*/
-        String dateStr = "2019-04-19 23:59:59";
+//        String dateStr = "2019-04-19 23:59:59";
+        String lastCurrDateStr = "2019-05-07";
+        Date lastCurrDate = null;
+        Date currDate = null;
+        String currDateStr = null;
         try {
-            Date dat = DateUtils.parseDate(dateStr,"yyyy-MM-dd HH:mm:ss");
-            List<String> list = infAfwklfeMapper.getLnFeeNOList("136000011020200000582929",dat);
-            System.out.println(list);
+            lastCurrDate = DateUtils.parseDate(lastCurrDateStr,"yyyy-MM-dd");
+            //自然日加一，若今天不存在跑批，则停滞等待
+            currDate = DateUtils.addDays(lastCurrDate,2);
+            currDate = DateUtils.addSeconds(currDate,-1);
+            currDateStr = DateFormatUtils.format(currDate,"yyyy-MM-dd");
         } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+//            Date dat = DateUtils.parseDate(dateStr,"yyyy-MM-dd HH:mm:ss");
+//            List<String> list = infAfwklfeMapper.getLnFeeNOList("136000011020200000582929",dat);
+//            System.out.println(list);
+            String protseno = "136000011020200000608293";
+
+            BigDecimal fee = new BigDecimal(0);
+            List<String> feeNoList = infAfwklfeMapper.getLnFeeNOList(protseno,currDate);
+            System.out.println("--------------------------------------------------------");
+
+            for(String feeNo : feeNoList){
+                List<String> feeNumList = infAfwklfeMapper.getTermnumList(protseno,feeNo,currDate);
+                for(String termNum : feeNumList){
+                    Wrapper lfeWrapper = new EntityWrapper<InfAfwklfe>();
+                    lfeWrapper.le("WORKDATE",currDate).eq("PROTSENO",protseno).eq("LNFEENO",feeNo).eq("TERMNUM",termNum).orderBy("WORKDATE DESC,RECCRDAT DESC");
+                    List<InfAfwklfe> tempFeeList = infAfwklfeMapper.selectPage(new Page<InfAfwklfe>(1,1),lfeWrapper);
+                    if(tempFeeList.size()>0){
+                        InfAfwklfe lfe = tempFeeList.get(0);
+                        if("-1-2-3-4-".contains(lfe.getStatus())){
+                            BigDecimal temp = new BigDecimal(tempFeeList.get(0).getFeeamt()).subtract(new BigDecimal(tempFeeList.get(0).getFeebal()));
+                            System.out.println(temp.toString());
+                            fee = fee.add(temp);
+                        }
+                    }
+                }
+            }
+            System.out.println(fee);
+            System.out.println("--------------------------------------------------------");
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

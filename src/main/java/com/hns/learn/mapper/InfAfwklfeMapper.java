@@ -13,4 +13,6 @@ public interface InfAfwklfeMapper extends BaseMapper<InfAfwklfe> {
 
     List<String> getLnFeeNOList(@Param("protseno") String endDate,@Param("dueDate") Date dueDate);
 
+    List<String> getTermnumList(@Param("protseno") String protseno,@Param("lnfeeno") String lnfeeno,@Param("dueDate") Date dueDate);
+
 }
