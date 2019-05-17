@@ -36,7 +36,7 @@ public class RedisTest {
         redisUtils.set("redis_key:testJO", testJO);
         redisUtils.set("redis_key_ttl", "hello ttl",5L, TimeUnit.SECONDS);*/
 
-
+        redisUtils.set("redis_key:demo", "hello world1",5L, TimeUnit.SECONDS);
 
 
 

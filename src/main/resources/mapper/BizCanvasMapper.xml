@@ -92,4 +92,78 @@
 
     </select>
 
+    <select id="selectGrantInfo"  resultType="java.util.Map">
+        SELECT
+        TO_CHAR (t.objinr) ID_,
+        t.ownref || replace(lpad(to_char(t.vernum_),3),' ','0') as GRANT_CODE,
+        appr.PROPOSER as PROPOSER,
+        appr.BUSINESS_NAME,
+        appr.GRANT_CURRENCY as CURRENCY,
+        t.CREATE_BY as CREATE_BY,
+        appr.GRANT_AMT as GRANT_AMT,
+        appr.GRANT_SCOPE_B_PERIOD as SCOPE_BUSIN_PERIOD,
+        t.biz_status as GRANT_STATUS,
+        appr.IDENT_NUMBER as IDENT_NUMBER,
+        t.CREATE_TIME,
+        t.UPDATE_TIME,
+        appr.INSTITUTION_CODE as INSTITUTION_CODE,
+        t.vernum_
+        FROM
+        BIZ_TRN t
+        LEFT JOIN BIZ_APPRSUMMARY_INFO appr
+        ON (t.ownref = appr.GRANT_CODE and t.vernum_ = appr.vernum_ and t.ENABLE_ !=0)
+        LEFT JOIN
+        SYS_DEPT AA
+        ON
+        (t.bchkeyinr = AA.CODE_)
+
+        <where>
+            <if test="cm.deptCode != null and cm.deptCode != ''">
+                AND (appr.INSTITUTION_CODE like '%'||#{cm.deptCode}||'%')
+            </if>
+            <if test="cm.schemeNum != null and cm.schemeNum != ''">
+                AND (t.ownref || replace(lpad(to_char(t.vernum_),3),' ','0') like '%'||#{cm.schemeNum}||'%')
+            </if>
+            <if test="cm.grantStatus != null and cm.grantStatus != ''">
+                AND (t.biz_status = #{cm.grantStatus})
+            </if>
+            <if test="cm.grantLoseState9 != null and cm.grantLoseState9 != ''">
+                AND (t.biz_status &lt;&gt; #{cm.grantLoseState9})
+            </if>
+            <if test="cm.grantLoseState11 != null and cm.grantLoseState11 != ''">
+                AND (t.biz_status &lt;&gt; #{cm.grantLoseState11})
+            </if>
+            <if test="cm.grantLoseState12 != null and cm.grantLoseState12 != ''">
+                AND (t.biz_status &lt;&gt; #{cm.grantLoseState12})
+            </if>
+            <if test="cm.businessName != null and cm.businessName != ''">
+                AND (appr.BUSINESS_NAME like '%'||#{cm.businessName}||'%')
+            </if>
+            <if test="cm.applicant != null and cm.applicant != ''">
+                AND (appr.PROPOSER like '%'||#{cm.applicant}||'%')
+            </if>
+            <if test="cm.grantcode != null and cm.grantcode != ''">
+                AND (t.OWNREF like '%'||#{cm.grantcode}||'%')
+            </if>
+            <if test="cm.projectNam != null and cm.remark_ != ''">
+                AND (t.OBJNAM like '%'||#{cm.remark_}||'%')
+            </if>
+            <if test="cm.deptCode != null and cm.deptCode != ''">
+                AND (AA.CODE_ like '%'||#{cm.deptCode}||'%')
+            </if>
+            <if test="cm.stateTime != null and cm.stateTime != ''">
+                AND (t.CREATE_TIME &gt;= TO_DATE(#{cm.stateTime}||'00:00:00','yyyy-mm-dd hh24:mi:ss'))
+            </if>
+            <if test="cm.endTime != null and cm.endTime != ''">
+                AND (t.CREATE_TIME &lt;= TO_DATE(#{cm.endTime}||'23:59:59','yyyy-mm-dd hh24:mi:ss'))
+            </if>
+            <if test="cm.relflg != null and cm.relflg != ''">
+                AND t.RELFLG = #{cm.relflg}
+            </if>
+            <if test="cm.relres != null and cm.relres != ''">
+                AND t.RELRES = #{cm.relres}
+            </if>
+        </where>
+    </select>
+
 </mapper>

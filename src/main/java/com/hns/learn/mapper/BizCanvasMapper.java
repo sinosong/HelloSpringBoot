@@ -1,5 +1,6 @@
 package com.hns.learn.mapper;
 
+import com.baomidou.mybatisplus.plugins.pagination.Pagination;
 import com.hns.learn.entity.BizCanvas;
 import com.hns.learn.entity.BizDebtGrant;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,5 +25,7 @@ public interface BizCanvasMapper extends BaseMapper<BizCanvas> {
 
 
     List<Map> selTables(String tableName);
+
+    List<Map> selectGrantInfo(@Param("cm") Map<String, Object> params);
 
 }

@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +22,26 @@ public class getTabls {
     private BizCanvasMapper bizCanvasMapper;
 
     @Test
+    public void testTrn() {
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("grantStatus",1);
+        params.put("grantLoseState9",2L);
+        params.put("grantLoseState11",3);
+        params.put("grantLoseState12",4);
+        params.put("schemeNum",4);
+        params.put("deptCode",4);
+        bizCanvasMapper.selectGrantInfo(params);
+
+    }
+
+    @Test
     public void getTable() {
 
         List<Map> tableList =  bizCanvasMapper.selTables("BIZ_DEBT_MAIN");
         String dateStr = DateFormatUtils.format(new Date(),"yyyyMMdd-HHmmSS-SSS");
 
-        String[] titles = {"表名","列名","类型","长度","为空","索引","主键","描述"};
+        String[] titles = {"表中文名","表名","列名","类型","长度","为空","索引","主键","描述"};
         String[][] centerVal = new String[tableList.size()][titles.length];
 
         for (int i = 0; i < tableList.size(); i++) {
@@ -36,25 +51,26 @@ public class getTabls {
             /*if(!(tableName.startsWith("BIZ") || tableName.startsWith("INF"))){
                 continue;
             }*/
-            centerVal[i][0] = tableName;
+            centerVal[i][0] = (String) map.get("表说明");
+            centerVal[i][1] = tableName;
             String columnName = (String) map.get("COLUMN_NAME");
-            centerVal[i][1] = columnName;
-            centerVal[i][2] = (String) map.get("DATA_TYPE");
+            centerVal[i][2] = columnName;
+            centerVal[i][3] = (String) map.get("DATA_TYPE");
             if("VARCHAR2".equals((String) map.get("DATA_TYPE"))){
-                centerVal[i][3] = map.get("DATA_LENGTH").toString();
+                centerVal[i][4] = map.get("DATA_LENGTH").toString();
             }else{
                 String nbrStr = map.get("DATA_PRECISION")==null?"":(map.get("DATA_SCALE")==null)?map.get("DATA_PRECISION").toString():map.get("DATA_PRECISION").toString()+","+map.get("DATA_SCALE").toString();
                 if(nbrStr != null && nbrStr.endsWith(",0")){
                     nbrStr = nbrStr.substring(0,nbrStr.length()-2);
                 }
-                centerVal[i][3] = nbrStr;
+                centerVal[i][4] = nbrStr;
             }
-            centerVal[i][4] = "Y".equals(map.get("NULLABLE"))?"是":"否";
-            centerVal[i][5] = (String) map.get("索引");
+            centerVal[i][5] = "Y".equals(map.get("NULLABLE"))?"是":"否";
+            centerVal[i][6] = (String) map.get("索引");
             if("ID_".equals(columnName)){
-                centerVal[i][6] = "是";
+                centerVal[i][7] = "是";
             }else{
-                centerVal[i][6] = "否";
+                centerVal[i][7] = "否";
             }
             String comments = (String) map.get("COMMENTS");
             switch(columnName){
@@ -80,7 +96,7 @@ public class getTabls {
                     comments="修改时间";
                     break;
             }
-            centerVal[i][7] = comments;
+            centerVal[i][8] = comments;
         }
 
         ExcelUtils.exportExcel(false,titles,centerVal,null,dateStr);
