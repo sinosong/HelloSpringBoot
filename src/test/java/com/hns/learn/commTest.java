@@ -18,6 +18,10 @@ import java.util.List;
 public class commTest {
 
     @Test
+    public void test() {
+    }
+
+    @Test
     public void testIndex() {
         String noteType = "012";
         if("-012-013-997-".indexOf(noteType)>0){

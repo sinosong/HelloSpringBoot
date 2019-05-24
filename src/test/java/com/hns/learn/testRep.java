@@ -58,7 +58,7 @@ public class testRep {
         def.setIsolationLevel(TransactionDefinition.ISOLATION_READ_COMMITTED);
         TransactionStatus status = txManager.getTransaction(def);
         try {
-            String lastCurrDateStr = "2019-05-06";
+            String lastCurrDateStr = "2019-05-15";
             Date lastCurrDate = null;
             Date currDateS = null;
             Date currDateE = null;
