@@ -1,11 +1,28 @@
 package com.hns.learn;
 
 import com.hns.learn.util.ExcelUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class CommonTest {
+
+    @Test
+    public void testDateU() {
+
+        Date curr = new Date();
+
+        DateUtils.setHours(curr,23);
+        DateUtils.setMinutes(curr,59);
+        DateUtils.setSeconds(curr,59);
+
+        String dateStr = DateFormatUtils.format(curr,"yyyy-MM-dd HH:mm:ss SSS");
+
+        System.out.println(dateStr);
+    }
 
     @Test
     public void testPoi(){
