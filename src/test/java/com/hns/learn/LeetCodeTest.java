@@ -242,11 +242,138 @@ public class LeetCodeTest {
         return sb.toString();
     }
 
+    /**
+     * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+     * 有效字符串需满足：
+     * 左括号必须用相同类型的右括号闭合。
+     * 左括号必须以正确的顺序闭合。
+     * 注意空字符串可被认为是有效字符串。
+     */
+    public boolean isValid(String s) {
+
+        Stack<Character> leftS = new Stack();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == '(' || ch == '[' || ch == '{') {
+                leftS.push(ch);
+            } else {
+                if (leftS.empty()) {
+                    return false;
+                }
+                char pop = leftS.pop();
+                if (ch == ')' && pop != '(')
+                    return false;
+                if (ch == ']' && pop != '[')
+                    return false;
+                if (ch == '}' && pop != '{')
+                    return false;
+            }
+        }
+        return leftS.empty();
+    }
+
+    public boolean isValidDemo(String s) {
+        char[] a = s.toCharArray();
+        int f = 0, flag = 0;
+        char[] b = new char[a.length];
+        //只要多一个数组来存储左括号就行了
+        for (int i = 0; i < a.length; i++) {
+
+            if ((a[i] == '(') || (a[i] == '{') || (a[i] == '[')) {
+                b[f] = a[i];
+                f++;
+            } else if (f == 0) {
+                flag = 1;
+                break;
+            } else if ((a[i] - b[f - 1] == 1) || (a[i] - b[f - 1] == 2)) {
+                f--;
+            } else {
+                flag = 1;
+                break;
+            }
+        }
+        if ((flag == 0) && (f == 0)) return (true);
+        else return (false);
+    }
+
+    /**
+     * 将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
+     * 输入：1->2->4, 1->3->4
+     * 输出：1->1->2->3->4->4
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        l1=new ListNode(1,new ListNode(2,new ListNode(4)));
+        l2=new ListNode(1,new ListNode(3,new ListNode(4)));
+        ListNode node = new ListNode(0);
+        ListNode son = new ListNode(0);
+        node.next=son;
+        if(l1==null){
+            return l2;
+        }
+        if(l2==null){
+            return l1;
+        }
+        while(l1!=null||l2!=null){
+
+            if(l1==null){
+                son.next=l2;
+                break;
+            }
+            if(l2==null){
+                son.next=l1;
+                break;
+            }
+            if(l1.val<l2.val){
+                son.val=l1.val;
+                son.next=l2.next;
+                l1=l1.next;
+            }else{
+                son.val=l2.val;
+                son.next=l1.next;
+                l2=l2.next;
+            }
+            son = son.next;
+        }
+        return son;
+
+    }
+
+    /**
+     * 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
+     *
+     * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+     */
+    public int removeDuplicates(int[] nums) {
+        nums = new int[]{1,1};
+        if(nums.length==0){
+            return 0;
+        }
+        int mark=0;
+        int tmp=nums[0];
+        for (int i = 1; i < nums.length-mark; i++) {
+            while(nums.length>i+mark && nums[i-1] == nums[i+mark]){
+                mark++;
+            }
+            if(nums.length>i+mark){
+                nums[i] = nums[i+mark];
+                tmp=nums[i];
+            }else{
+                break;
+            }
+        }
+        return nums.length-mark;
+    }
+
+
     @Test
     public void testMain() {
+        System.out.println(removeDuplicates(null));
 //        System.out.println(this.romanToInt("MCMXCIV"));
-        String [] strs = {"aasbg","aasa","aa"};
-        System.out.println(this.longestCommonPrefixDemo(strs));
+//        String [] strs = {"aasbg","aasa","aa"};
+//        System.out.println(this.longestCommonPrefixDemo(strs));
+//        String s = "([]){[]}";
+//        System.out.println(isValidDemo(s));
+//        System.out.println(mergeTwoLists(null,null));
 
     }
 }
