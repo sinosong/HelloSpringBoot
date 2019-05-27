@@ -344,30 +344,144 @@ public class LeetCodeTest {
      * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
      */
     public int removeDuplicates(int[] nums) {
-        nums = new int[]{1,1};
+        nums = new int[]{1,1,2};
         if(nums.length==0){
             return 0;
         }
         int mark=0;
-        int tmp=nums[0];
         for (int i = 1; i < nums.length-mark; i++) {
             while(nums.length>i+mark && nums[i-1] == nums[i+mark]){
                 mark++;
             }
             if(nums.length>i+mark){
                 nums[i] = nums[i+mark];
-                tmp=nums[i];
             }else{
                 break;
             }
         }
         return nums.length-mark;
     }
+    public int removeDuplicatesDemo(int[] nums) {
+        nums = new int[]{1,1,2,2,2,2,3,4,5,5,6};
+        int count = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[count] != nums[i]) {
+                count++;
+                nums[count] = nums[i];
+            }
+        }
+        return count + 1;
+    }
 
+    /**
+     * 给定一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，返回移除后数组的新长度。
+     * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+     * 元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。
+     */
+    public int removeElement(int[] nums, int val) {
+        nums = new int[]{1,2,3,3,2,2,3,4,5,6};
+        val = 3;
+        int count = 0;
+        for(int i = 0; i < nums.length; i++){
+           if(nums[i]!=val){
+               nums[count] = nums[i];
+               count++;
+           }
+        }
+        return count;
+    }
+
+    public int removeElementDemo(int[] nums, int val) {
+        nums = new int[]{1,2,3,3,2,2,3,4,5,6};
+        val = 3;
+        int len=nums.length;
+        for (int i = 0; i < nums.length; i++) {
+            if(nums[i]==val){
+                nums[i]=Integer.MIN_VALUE;
+                --len;
+            }
+        }
+        int i=0,j=0;
+        for(;j<nums.length;++j){
+            if(nums[j]!=Integer.MIN_VALUE){
+                nums[i++]=nums[j];
+            }
+        }
+        return len;
+    }
+
+    /**
+     * 实现 strStr() 函数。
+     * 给定一个 haystack 字符串和一个 needle 字符串，在 haystack 字符串中找出 needle 字符串出现的第一个位置 (从0开始)。如果不存在，则返回  -1。
+     * haystack = "hello", needle = "ll" --> 2
+     */
+    public int strStr(String haystack, String needle) {
+        int index = -1;
+        int mark = 0;
+        int hlen = haystack.length();
+        int nlen = needle.length();
+        if(nlen==0){
+            return 0;
+        }
+        if(hlen==0 || hlen<nlen){
+            return -1;
+        }
+        char cn = needle.charAt(0);
+        for (int i = 0; i < hlen; i++) {
+            char c = haystack.charAt(i);
+            if((mark==0&&c==cn) || (mark!=0&&c==needle.charAt(mark))){
+                mark++;
+                if(nlen==mark){
+                    return i-nlen+1;
+                }
+            }else{
+                i=i-mark;
+                mark=0;
+            }
+        }
+        return index;
+    }
+    public int strStrDemo(String haystack, String needle) {
+        //如果needle的长度为0或者needle为空,就直接返回0
+        if(needle.length()==0||needle==null){
+            return 0;
+        }
+
+        //如果haystack的长度小于needle,那也就不用找了,直接返回-1
+        if(haystack.length()<needle.length()){
+            return -1;
+        }
+
+        //needle的长度
+        int len = needle.length();
+        /**
+         * 从haystack的首位置开始,以len长度截取字符串haystack的子串
+         * 为什么是haystack.length()-needle.length()+1？
+         * 把needle的尾部和haystack的尾部对齐就知道,如果错位了,没必要比较吧！
+         * hello   ---  haystack
+         *    ll   ---  needle
+         *
+         */
+        for(int i = 0;i<haystack.length()-needle.length()+1;i++){
+
+            String target = haystack.substring(i, i+len);
+
+            //如果子串和needle相同,就返回i
+            if(target.equals(needle)){
+                return i;
+            }
+            System.out.println(i);
+        }
+
+        //循环结束没有找到,就返回-1
+        return -1;
+    }
 
     @Test
     public void testMain() {
-        System.out.println(removeDuplicates(null));
+        System.out.println(strStr("aaa","aaa"));
+//        System.out.println(removeElement(null,0));
+//        System.out.println(removeDuplicatesDemo(null));
 //        System.out.println(this.romanToInt("MCMXCIV"));
 //        String [] strs = {"aasbg","aasa","aa"};
 //        System.out.println(this.longestCommonPrefixDemo(strs));
