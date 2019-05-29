@@ -477,9 +477,115 @@ public class LeetCodeTest {
         return -1;
     }
 
+    /**
+     * 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+     * 你可以假设数组中无重复元素。
+     */
+    public int searchInsertOld(int[] nums, int target) {
+        int len = nums.length;
+        if(len==0 || len>0 && nums[0]>target){
+            return 0;
+        }
+        for (int i = 0; i < len; i++) {
+            if(nums[i] == target){
+                return i;
+            }else if((nums[i] < target) && (len == i+1 || target < nums[i+1])){
+                return i + 1;
+            }
+        }
+        return -1;
+    }
+
+    public int searchInsert(int[] nums, int target) {
+        nums = new int[]{1,3,5,6};
+        int len = nums.length;
+        if(len==0 || len>0 && nums[0]>target){
+            return 0;
+        }
+        int start = 0;
+        int end = len;
+        int mid = len/2;
+        while (start <= end){
+            if(nums[mid] == target){
+                return mid;
+            }else if((nums[mid] < target) && (len == mid+1 || target < nums[mid+1])){
+                return mid + 1;
+            }else{
+                if(nums[mid] < target){
+                    start=mid + 1;
+                }else if(nums[mid] > target){
+                    end=mid - 1;
+                }
+                mid = (start+end)/2;
+            }
+        }
+        return -1;
+    }
+
+    public int searchInsertDemo(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        int mid = (left + right) / 2;
+        return findIndex(left, right, mid, target, nums);
+    }
+
+    public int findIndex(int left, int right, int mid, int target, int[] nums) {
+        // if(left == right){//数组中没有 target 返回它要插入的位置
+        //     return left;
+        // }
+
+        //>用于 处理 索引位置为0 的情况  left一定都是为正的
+        if (left >= right) {//数组中没有 target 返回它要插入的位置
+            if (nums[left] < target) {//覆盖的条件是：目标值一定要小于  原位置对应的值(把它理解成排队)
+                return left + 1;
+            }
+            return left;//= 或者 nums[left]>target
+        }
+        if (nums[mid] == target) {//数组中有 target 返回它要索引
+            return mid;
+        } else if (nums[mid] > target) {//目标值位置在 左边
+            right = mid - 1;
+            return findIndex(left, right, (left + right) / 2, target, nums);
+        } else {//目标值位置在 右边
+            left = mid + 1;
+            return findIndex(left, right, (left + right) / 2, target, nums);
+        }
+    }
+
+    /**
+     * 报数序列是一个整数序列，按照其中的整数的顺序进行报数，得到下一个数。其前五项如下
+     * 1.     1
+     * 2.     11
+     * 3.     21
+     * 4.     1211
+     * 5.     111221
+     * 给定一个正整数 n（1 ≤ n ≤ 30），输出报数序列的第 n 项。
+     * 注意：整数顺序将表示为一个字符串。
+     */
+    public String countAndSay(int n) {
+
+        StringBuffer say = new StringBuffer(1);
+
+        for (int i = 0; i < n; i++) {
+            int count = 0;
+            char tmp = '\0';
+            for (int j = 0; j < say.length(); j++) {
+            //say ==
+                if(tmp==say.charAt(j)){
+
+                }
+
+
+            }
+        }
+        return say.toString();
+    }
+
     @Test
     public void testMain() {
-        System.out.println(strStr("aaa","aaa"));
+//        System.out.println(countAndSay(5));
+        System.out.println(searchInsert(null,2));
+//        System.out.println(strStr("aaa","aaa"));
 //        System.out.println(removeElement(null,0));
 //        System.out.println(removeDuplicatesDemo(null));
 //        System.out.println(this.romanToInt("MCMXCIV"));

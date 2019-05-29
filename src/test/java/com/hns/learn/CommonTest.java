@@ -6,9 +6,45 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Date;
 
 public class CommonTest {
+
+    @Test
+    public void testIp() {
+
+        try {
+            InetAddress addr = InetAddress.getLocalHost();
+            System.out.println("Local HostAddress:"+addr.getHostAddress());
+            String hostname = addr.getHostName();
+            System.out.println("Local host name: "+hostname);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public void testExp() {
+
+        try {
+            System.out.println(this.chu());
+        } catch (Exception e) {
+            System.out.println("Exception****");
+            e.printStackTrace();
+        }
+    }
+    public int chu(){
+        try {
+            int a = 10/0;
+        } catch (ArithmeticException e) {
+            System.out.println("ArithmeticException***");
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     @Test
     public void testDateU() {
