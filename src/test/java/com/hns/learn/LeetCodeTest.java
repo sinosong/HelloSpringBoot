@@ -654,12 +654,52 @@ public class LeetCodeTest {
         return max;
     }
 
+    /**
+     * 给定一个仅包含大小写字母和空格 ' ' 的字符串，返回其最后一个单词的长度。
+     * 如果不存在最后一个单词，请返回 0 。
+     * 说明：一个单词是指由字母组成，但不包含任何空格的字符串。
+     */
+    public int lengthOfLastWord(String s) {
+        s = s.trim();
+        if(s==null || s.length()==0){
+            return 0;
+        }
+        int len = s.length();
+        for (int i = len - 1; i > 0; i--) {
+            if(s.charAt(i)==' '){
+                return len - i - 1;
+            }
+        }
+        return len;
+    }
+
+    public int lengthOfLastWordDemo(String s) {
+        if (s == null || s.length() == 0){
+            return 0;
+        }
+        int i = s.length() - 1;
+        while (i >= 0 && s.charAt(i) == ' ') {
+            i -= 1;
+        }
+        int res = 0;
+        for (; i >= 0; i--) {
+            if (s.charAt(i) != ' '){
+                res += 1;
+            }else{
+                return res;
+            }
+        }
+        return res;
+    }
+
     @Test
     public void testMain() {
         long start = System.currentTimeMillis();
 
-        System.out.println(maxSubArray(null));
 
+
+        System.out.println(lengthOfLastWord("hell    day"));
+//        System.out.println(maxSubArray(null));
 //        System.out.println(countAndSayDemo(5));
 //        System.out.println(searchInsert(null,2));
 //        System.out.println(strStr("aaa","aaa"));
