@@ -563,28 +563,105 @@ public class LeetCodeTest {
      * 注意：整数顺序将表示为一个字符串。
      */
     public String countAndSay(int n) {
-
-        StringBuffer say = new StringBuffer(1);
-
-        for (int i = 0; i < n; i++) {
+        String say = "1";
+        for (int i = 1; i < n; i++) {
             int count = 0;
             char tmp = '\0';
-            for (int j = 0; j < say.length(); j++) {
-            //say ==
-                if(tmp==say.charAt(j)){
-
+            int len = say.length();
+            StringBuffer buffer = new StringBuffer();
+            for (int j = 0; j < len; j++) {
+                if (tmp == '\0') {
+                    tmp = say.charAt(j);
+                    count++;
+                } else if (tmp == say.charAt(j)) {
+                    count++;
+                } else if (tmp != say.charAt(j)) {
+                    buffer.append(count + String.valueOf(tmp));
+                    tmp = say.charAt(j);
+                    count = 1;
                 }
-
-
+                if (j == len - 1) {
+                    buffer.append(count + String.valueOf(tmp));
+                    say = buffer.toString();
+                }
             }
         }
-        return say.toString();
+        return say;
+    }
+    public static String countAndSayDemo(int n) {
+        if (n == 1)
+            return "1";
+        String s = countAndSayDemo(n-1);
+        StringBuilder builder = new StringBuilder();
+        char[] cha = s.toCharArray();
+        int count = 1;
+        for (int i = 0; i < cha.length; i++) {
+            if (i == cha.length-1){ //边界情况
+                builder.append(count).append(cha[i]);
+                break;
+            }
+            if (cha[i] == cha[i+1]){
+                count++;
+                continue;
+            }else {
+                builder.append(count).append(cha[i]);
+                count = 1;
+            }
+        }
+        return builder.toString();
+    }
+
+    /**
+     * 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+     * new int[]{-2,1,-3,4,-1,2,1,-5,4};
+     * 输出: 6
+     * 解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
+     */
+    public int maxSubArray(int[] nums) {
+        nums = new int[]{-2,1,-3,4,-1,2,1,-5,4};
+        if(nums.length==0){
+            return 0;
+        }
+        int maxL = nums[0];
+        int sum = nums[0];
+        int head = 0;
+        for (int i = 1; i < nums.length; i++) {
+            int tmp = sum;
+            sum = Math.max(sum + nums[i],nums[i]);
+            if(tmp<sum){
+                head = i;
+            }
+            if(sum > maxL){
+                maxL = sum;
+            }
+        }
+        return maxL;
+    }
+
+    public int maxSubArrayDemo(int[] nums) {
+        int sum = 0;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            if(sum + nums[i] < nums[i]){
+                sum = nums[i];
+            }else{
+                sum += nums[i];
+            }
+            if(sum > max){
+                max = sum;
+            }
+        }
+        return max;
     }
 
     @Test
     public void testMain() {
-//        System.out.println(countAndSay(5));
-        System.out.println(searchInsert(null,2));
+        long start = System.currentTimeMillis();
+
+        System.out.println(maxSubArray(null));
+
+//        System.out.println(countAndSayDemo(5));
+//        System.out.println(searchInsert(null,2));
 //        System.out.println(strStr("aaa","aaa"));
 //        System.out.println(removeElement(null,0));
 //        System.out.println(removeDuplicatesDemo(null));
@@ -594,6 +671,8 @@ public class LeetCodeTest {
 //        String s = "([]){[]}";
 //        System.out.println(isValidDemo(s));
 //        System.out.println(mergeTwoLists(null,null));
+
+        System.out.println(System.currentTimeMillis()-start+" ms");
 
     }
 }
