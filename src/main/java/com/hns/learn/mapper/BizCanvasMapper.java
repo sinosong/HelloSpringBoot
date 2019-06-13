@@ -24,7 +24,7 @@ public interface BizCanvasMapper extends BaseMapper<BizCanvas> {
     List<Map> selEffectGrant(String mediumid);
 
 
-    List<Map> selTables(String tableName);
+    List<Map> selTables(@Param("tableName") String tableName);
 
     List<Map> selectGrantInfo(@Param("cm") Map<String, Object> params);
 

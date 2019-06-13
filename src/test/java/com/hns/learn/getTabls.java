@@ -41,7 +41,7 @@ public class getTabls {
     @Test
     public void getEntity() {
 
-        List<Map> tableList =  bizCanvasMapper.selTables("BIZ_DEBT_MAIN");
+        List<Map> tableList =  bizCanvasMapper.selTables("GMS_COL_VALUEINFO");
         String dateStr = DateFormatUtils.format(new Date(),"yyyyMMdd-HHmmSS-SSS");
 
         String[] titles = {"表中文名","表名","列名","类型","长度","为空","索引","主键","描述"};
@@ -56,12 +56,12 @@ public class getTabls {
 
             Map<String,Object> map = tableList.get(i);
             String tableName = (String) map.get("TABLE_NAME");
-            if(!(tableName.startsWith("BIZ") || tableName.startsWith("INF"))){
+            /*if(!(tableName.startsWith("BIZ") || tableName.startsWith("INF"))){
                 continue;
-            }
-            if(!tableName.equals("INF_AFWKYSG")){
+            }*/
+            /*if(!"GMS_COL_VALUEINFO".equals(tableName)){
                 continue;
-            }
+            }*/
             centerVal[i][0] = (String) map.get("表说明");
             centerVal[i][1] = tableName;
             String columnName = (String) map.get("COLUMN_NAME");
@@ -151,7 +151,7 @@ public class getTabls {
     @Test
     public void getTable() {
 
-        List<Map> tableList =  bizCanvasMapper.selTables("BIZ_DEBT_MAIN");
+        List<Map> tableList =  bizCanvasMapper.selTables(null);
         String dateStr = DateFormatUtils.format(new Date(),"yyyyMMdd-HHmmSS-SSS");
 
         String[] titles = {"表中文名","表名","列名","类型","长度","为空","索引","主键","描述"};
@@ -164,6 +164,9 @@ public class getTabls {
             /*if(!(tableName.startsWith("BIZ") || tableName.startsWith("INF"))){
                 continue;
             }*/
+            if(!("GMS_COL_COLLBASEINFO".equals(tableName) || "GMS_COL_VALUEINFO".equals(tableName))){
+                continue;
+            }
             centerVal[i][0] = (String) map.get("表说明");
             centerVal[i][1] = tableName;
             String columnName = (String) map.get("COLUMN_NAME");

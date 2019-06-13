@@ -2,6 +2,7 @@ package com.hns.learn;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -692,13 +693,278 @@ public class LeetCodeTest {
         return res;
     }
 
+    /**
+     * 给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。
+     * 最高位数字存放在数组的首位， 数组中每个元素只存储一个数字。
+     * 你可以假设除了整数 0 之外，这个整数不会以零开头。
+     */
+    public int[] plusOne(int[] digits) {
+        int len = digits.length;
+        boolean up = false;
+        for (int i = len - 1,j=0; i >= 0; i--,j++) {
+            int temp = digits[i];
+            if(up){
+                temp ++;
+            }else{
+                if(j==0){
+                    temp ++;
+                }
+            }
+            if(temp>9){
+                up = true;
+                digits[i]=0;
+            }else{
+                up = false;
+                digits[i]=temp;
+            }
+            if(i==0 && up){
+                int[] news = new int [len+1];
+                news[0]=1;
+                System.arraycopy(digits, 0, news, 1, len);
+                return news;
+            }
+        }
+        return digits;
+    }
+    public int[] plusOneDemo(int[] digits) {
+        int up=1;
+        for(int i=digits.length-1;i>=0;--i){
+            int temp=digits[i];
+            digits[i]=(digits[i]+up)%10;
+            up=(temp+up)/10;
+        }
+        if(up==1){
+            int[] arr=new int[digits.length+1];
+            arr[0]=1;
+            for(int i=1;i<arr.length;++i){
+                arr[i]=digits[i-1];
+            }
+            return arr;
+        }
+        else return  digits;
+    }
+
+    /**
+     * 给定两个二进制字符串，返回他们的和（用二进制表示）。
+     * 输入为非空字符串且只包含数字 1 和 0。
+     */
+    public String addBinary(String a, String b) {
+
+        StringBuffer res = new StringBuffer();
+        int lena = a.length();
+        int lenb = b.length();
+        int lenMax = 0;
+        int lenMin = 0;
+        String minS = null;
+        String maxS = null;
+
+        if(lena>lenb){
+            lenMax = lena;
+            lenMin = lenb;
+            minS = b;
+            maxS = a;
+        }else{
+            lenMax = lenb;
+            lenMin = lena;
+            minS = a;
+            maxS = b;
+        }
+        int lenD = lenMax - lenMin;
+        int up = 0;
+        for (int i=lenMax-1;i>=0;--i) {
+            int t1 = 0;
+            if(i-lenD>=0){
+                t1 = minS.charAt(i-lenD) - '0';
+            }
+            int t0 = maxS.charAt(i) - '0';
+            int sum = t0 + t1 + up;
+            t0 = sum%2;
+            up=sum/2;
+            res.append(t0);
+        }
+        if(up==1){
+            res.append(up);
+        }
+        return res.reverse().toString();
+    }
+
+    public String addBinaryDemo(String a, String b) {
+        if (a.length() == b.length()) {
+
+        } else if (a.length() > b.length()) {
+            while (a.length() > b.length()) {
+                b = "0" + b;
+            }
+        } else {
+            while (a.length() < b.length()) {
+                a = "0" + a;
+            }
+        }
+        boolean shouldPlus = false;
+        char[] chars = a.toCharArray();
+        for (int i = a.length() - 1; i >= 0; i--) {
+            if (chars[i] == '1' && b.charAt(i) == '1') {
+                chars[i] = shouldPlus ? '1' : '0';
+                shouldPlus = true;
+            } else if (chars[i] == '0' && b.charAt(i) == '0') {
+                chars[i] = shouldPlus ? '1' : '0';
+                shouldPlus = false;
+            } else {
+                chars[i] = shouldPlus ? '0' : '1';
+                shouldPlus = shouldPlus ? true : false;
+            }
+        }
+        return (shouldPlus ? "1" : "") + new String(chars);
+    }
+
+    /**
+     * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
+     * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+     * 注意：给定 n 是一个正整数。
+     * 输入： 3
+     * 输出： 3
+     * 解释： 有三种方法可以爬到楼顶。
+     * 1.  1 阶 + 1 阶 + 1 阶
+     * 2.  1 阶 + 2 阶
+     * 3.  2 阶 + 1 阶
+     * f(1)=1;f(2)=2;f(3)=2;f(4)=5;f(5)=8;
+     * f(n) = f(n-1)+f(n-2)
+     */
+    public int climbStairs(int n) {
+
+        if(n==0){
+            return 0;
+        }
+        if(n==1){
+            return 1;
+        }
+        if(n==2){
+            return 2;
+        }
+        /*int[] f = new int[n+1];
+        f[0] = 0;
+        f[1] = 1;
+        f[2] = 2;
+
+        for (int i = 3; i <= n; i++) {
+            f[i]=f[i-1]+f[i-2];
+        }*/
+        int x = 2;
+        int y = 1;
+        for (int i = 3; i <= n; i++) {
+            x += y;
+            y = x - y;
+        }
+
+        return x;
+    }
+    public int climbStairsDemo(int n) {
+        if(n == 1){
+            return 1;
+        }
+        int[] arr = new int[n+1];
+        arr[0] = 1;
+        arr[1] = 1;
+        for(int i = 2; i <= n; i++){
+            arr[i] = arr[i-1] + arr[i-2];
+            if( i == n){
+                return arr[i];
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
+     * 如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。
+     * 注意你不能在买入股票前卖出股票。
+     * 输入: [7,1,5,3,6,4]
+     * 输出: 5
+     * 解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     *      注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。
+     */
+    public int maxProfit(int[] prices) {
+
+        int idx0 = 0;
+        int MaxV = 0;
+        for (int i = 0; i < prices.length-1; i++) {
+            if(prices[idx0] > prices[i+1]){
+                idx0 = i + 1;
+            }
+            if(prices[i+1] - prices[idx0] > MaxV){
+                MaxV = prices[i+1] - prices[idx0];
+            }
+        }
+        return MaxV;
+    }
+    public int maxProfitDemo(int[] prices) {
+        // 每个数，记住左边最小的值
+        if( prices == null || prices.length == 0){
+            return 0;
+        }
+        int min = prices[0];
+        int maxProfit = 0;
+        for( int price : prices){
+            if (min > price){
+                min = price;
+            }
+            if( price - min > maxProfit){
+                maxProfit =  price - min;
+            }
+        }
+        return maxProfit;
+    }
+
+    /**
+     * 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
+     * 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。
+     */
+    public int rob(int[] nums) {
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+        if(nums.length == 1){
+            return nums[0];
+        }
+        int t1 = 0;
+        int t2 = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int tmp = t1;
+            if(t2+nums[i] > t1){
+                t1 = t2+nums[i];
+            }
+            t2 = tmp;
+        }
+        return t1;
+    }
+    public int robDemo(int[] nums) {
+        if (nums.length==0){
+            return 0;
+        }
+        int[] dp = new int[nums.length];// dp[i]表示打劫至第i家时，所获得的最大钱财数
+        dp[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            if (i - 2 >= 0) {
+                dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);
+            } else {
+                dp[i] = Math.max(dp[i - 1], nums[i]);
+            }
+
+        }
+        return dp[nums.length-1];
+    }
+
+
     @Test
     public void testMain() {
         long start = System.currentTimeMillis();
+//        int [] nums = new int[]{2,1};
+        int [] nums = new int[]{2,7,9,3,1};
 
-
-
-        System.out.println(lengthOfLastWord("hell    day"));
+        System.out.println("res="+robDemo(nums));
+//        System.out.println(addBinaryDemo("110010110","1000110"));
+//        System.out.println(Arrays.toString(plusOneDemo(nums)));
+//        System.out.println(lengthOfLastWord("hell    day"));
 //        System.out.println(maxSubArray(null));
 //        System.out.println(countAndSayDemo(5));
 //        System.out.println(searchInsert(null,2));
@@ -712,7 +978,7 @@ public class LeetCodeTest {
 //        System.out.println(isValidDemo(s));
 //        System.out.println(mergeTwoLists(null,null));
 
-        System.out.println(System.currentTimeMillis()-start+" ms");
+        System.out.println("run as "+ (System.currentTimeMillis()-start) +" ms");
 
     }
 }

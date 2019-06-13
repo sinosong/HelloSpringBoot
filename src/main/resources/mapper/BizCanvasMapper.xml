@@ -84,9 +84,9 @@
                  where t4.object_type = 'TABLE'
                    and t4.temporary = 'Y'
                    and t4.object_name = t1.table_name)
-        <!--<if test="tableName != null and tableName != ''">
+        <if test="tableName != null and tableName != ''">
             AND t1.table_name = #{tableName}
-        </if>-->
+        </if>
          order by t1.table_name, t1.column_id
 
 
