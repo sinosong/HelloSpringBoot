@@ -38,10 +38,10 @@ public class SysInfTest {
     @Test
     public void run() {
         Map<String, String> reqMap = new HashMap<String, String>(5);
-        reqMap.put("deptCode","deptCode");
-        reqMap.put("account","account");
-        reqMap.put("userName","userName");
-        this.requestGmsPushUser(reqMap);
+        reqMap.put("deptCode","2120002");
+        reqMap.put("account","beijing01");
+        reqMap.put("userName","北京经办");
+        System.out.println(this.requestGmsPushUser(reqMap));
     }
 
     public Map<String, String> requestGmsPushUser(Map params) {
@@ -76,7 +76,7 @@ public class SysInfTest {
             infMsg = "此柜员的账户异常！" + tmpStr + " [机构号:" + deptCode + "]" + " [柜员账号:" + account + "]" + " [柜员姓名:" + userName + "]";
         } else {
             SysUser user = userList.get(0);
-            if (user.getGmsState() == 1) {
+            if (user.getGmsState()!=null && user.getGmsState()==1) {
                 logger.error("用户的\"担保推送状态\"已更新。无需再次触发接口。");
                 infMsg = "用户的\"担保推送状态\"已更新。无需再次触发接口。";
             } else {
@@ -113,14 +113,19 @@ public class SysInfTest {
                         infRec.setResponseStatus("1");
                         infRec.setResponseInfo(results);
                     }
-                    int insRes = this.saveInterfaceResult(infRec);
-                    if (insRes != 1) {
-                        logger.error("INTERFACE ERROR(requestGmsPushUser):insert BizInterfaceResult error:table=BizInterfaceResult:infRec Res=" + infRec.toString());
-                        infMsg = "保存接口日志记录失败！";
-                    } else {
-                        if ("200".equals(code)) {
-                            success = true;
+                    try {
+                        int insRes = this.saveInterfaceResult(infRec);
+                        if (insRes != 1) {
+                            logger.error("INTERFACE ERROR(requestGmsPushUser):insert BizInterfaceResult error:table=BizInterfaceResult:infRec Res=" + infRec.toString());
+                            infMsg = "保存接口日志记录失败！insert rows:"+insRes;
+                        } else {
+                            if ("200".equals(code)) {
+                                success = true;
+                            }
                         }
+                    } catch (Exception infResE) {
+                        logger.error("INTERFACE ERROR(requestGmsPushUser):insert BizInterfaceResult error:table=BizInterfaceResult:infRec Res=" + infRec.toString());
+                        infMsg = "保存接口日志记录失败！Error Msg ["+infResE.getMessage()+"]";
                     }
                 } else {
                     logger.error("INTERFACE ERROR(requestGmsPushUser):update SysUser error:table=SYS_USER:update one,update Res=" + upres);
@@ -147,7 +152,7 @@ public class SysInfTest {
      * @param infRec
      * @return
      */
-    private int saveInterfaceResult(BizInterfaceResult infRec) {
+    private int saveInterfaceResult(BizInterfaceResult infRec) throws Exception{
         return bizInterfaceResultMapper.insert(infRec);
     }
 

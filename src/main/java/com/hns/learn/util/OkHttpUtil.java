@@ -22,7 +22,7 @@ public class OkHttpUtil{
     private static final Logger logger = LoggerFactory.getLogger(OkHttpUtil.class);
     private static final MediaType CONTENT_TYPE_FORM = MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8");
     private static final String DEFAULT_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36";
-    private static final String PINTERFACE_URL = "http://192.168.202.81:8085/eximbank1";
+    private static final String PINTERFACE_URL = "http://192.168.202.81:8085/eximbank";
     private static final int CONNECT_TIME_OUT = 10;
     private static final int READ_TIME_OUT = 120;
 
@@ -59,6 +59,9 @@ public class OkHttpUtil{
             String json = call.execute().body().string();
 //            System.out.println("res=" + json);
             JSONObject object = JSON.parseObject(json.replaceAll("0\\(", "").replaceAll("\\)", "").replaceAll("\n", ""));
+            System.out.println("-----------------------------------------------------------------------");
+            System.out.println(object.getString("errorcode"));
+            System.out.println("-----------------------------------------------------------------------");
             results = object.getString("data");
         } catch (Exception ex) {
             logger.error(ex.getMessage());
