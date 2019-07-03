@@ -41,7 +41,7 @@ public class getTabls {
     @Test
     public void getEntity() {
 
-        List<Map> tableList =  bizCanvasMapper.selTables("GMS_COL_VALUEINFO");
+        List<Map> tableList =  bizCanvasMapper.selTables("BIZ_V_SETTLEMENT");
         String dateStr = DateFormatUtils.format(new Date(),"yyyyMMdd-HHmmSS-SSS");
 
         String[] titles = {"表中文名","表名","列名","类型","长度","为空","索引","主键","描述"};
@@ -139,11 +139,13 @@ public class getTabls {
             }
 
 
-            String pri = "/** "+comments+" */\n" +
-                    "@TableField(\""+columnName+"\")\n" +
-                    "private "+typ+" "+key+";";
+//            String pri = "/** "+comments+" */\n" +
+//                    "@TableField(\""+columnName+"\")\n" +
+//                    "private "+typ+" "+key+";";
+            String pri = "bizFields.add(new QueryBizField(\""+columnName+"\",\""+key+"\",QueryBizField.STRING_TYPE));";
             System.out.print(pri);
             System.out.println();
+
         }
 
     }

@@ -12,10 +12,15 @@ public class InterfaceTest {
     public static void main(String[] args) {
 
         List list = new ArrayList();
-        for (int i = 0; i < 5; i++) {
+        /*for (int i = 0; i < 5; i++) {
 
             list.add((i+Math.random()+"").substring(0,10));
-        }
+        }*/
+        list.add("1");
+        list.add("1");
+        list.add("04");
+        list.add("1360040");
+        list.add("1360040");
 
         String str = OkHttpUtil.joinInterfaceParams(list);
 

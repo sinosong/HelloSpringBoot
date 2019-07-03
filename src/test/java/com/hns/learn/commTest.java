@@ -1,5 +1,9 @@
 package com.hns.learn;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.hns.learn.common.Context;
 import com.hns.learn.entity.InfAflnrat;
@@ -149,5 +153,29 @@ public class commTest {
             wrapper.andNew().like("GRANT_CODE", grantCode).or().like("IOUCODE", grantCode).or().like("MEDIUMID", grantCode);
         }
         System.out.println(wrapper.getSqlSegment());
+    }
+
+    @Test
+    public void pasreJSON() {
+
+        String results = "[{\"SvcSeqNo\":\"20190621180449296\",\"ErrorInfo\":\"交易成功\",\"ErrorNo\":\"000000\"}]";
+
+        try {
+            JSONObject resJN = null;
+            try {
+                resJN = JSONObject.parseObject(results);
+            } catch (JSONException e) {
+                JSONArray jsArr = JSON.parseArray(results);
+                resJN = jsArr.getJSONObject(0);
+                System.out.println("e0="+e.getMessage());
+            }
+            System.out.println("------------------------");
+            System.out.println(resJN.getString("ErrorInfo"));
+
+        } catch (JSONException e1) {
+            System.out.println("e1="+e1.getMessage());
+        }
+
+
     }
 }
