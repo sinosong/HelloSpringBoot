@@ -9,7 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = App.class)
@@ -19,16 +23,57 @@ public class asyncTest {
     private AsynTaskServiceImpl service;
 
     @Test
-    public void testAsync() {
+    public void testAsync() throws InterruptedException {
 
-        for (int i = 0; i < 10; i++) {
-            service.f1(i+""); // 执行异步任务
+        List<Future<String>> futureList = new ArrayList<>();
+
+        long startTime = System.currentTimeMillis();
+
+        List <String> resList = new ArrayList<>();
+
+        int ri = 10;
+
+        for (int i = 0; i < ri; i++) {
+            futureList.add(service.f1(i+"")); // 执行异步任务
+
 //            service.f2(i+"");
         }
 
-//        Math.max()
 
-//        Objects.requireNonNull();
+        for (int i = 0; i < futureList.size(); i++) {
+
+            try {
+                Future<String> future = futureList.get(i);
+                System.out.println(future.get());
+                resList.add(future.get());
+                if(future.isDone()){
+                    ri --;
+//                    System.out.println("----------------------------------"+future.get());
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        int cir = 0;
+
+        while (true){
+
+            if(cir > 120){
+                throw new RuntimeException("调用接口超时！");
+            }
+            if(ri==0){
+                break;
+            }
+            Thread.sleep(1000);
+            cir ++;
+        }
+
+        System.out.println("end time--------------------------- " + (System.currentTimeMillis() - startTime) +"ms");
+
 
     }
 }
