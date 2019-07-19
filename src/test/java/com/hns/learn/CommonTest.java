@@ -1,5 +1,9 @@
 package com.hns.learn;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.hns.learn.entity.BizFile;
 import com.hns.learn.util.ExcelUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -9,6 +13,7 @@ import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.List;
 
 public class CommonTest {
 
@@ -102,4 +107,18 @@ public class CommonTest {
         String a = "";
         System.out.println(a.trim());
     }
+
+    @Test
+    public void tesyIssuDate() {
+
+        Wrapper wrapper = new EntityWrapper<BizFile>().eq("aa","val").in("BIZ_CODE",new String[]{"\'CRP2019060269\'","\'SOV2019060269\'"})
+                .orderBy("CREATE_TIME",true);
+
+
+        System.out.println(wrapper.getSqlSegment());
+
+
+    }
+
+
 }

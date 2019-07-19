@@ -224,6 +224,71 @@ public class ExcelUtils {
         }
     }
 
+    public static void readExcel(String filePath) {
+
+        // 创建文件对象
+        File excelFile = new File(filePath);
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(excelFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        checkExcelVaild(excelFile);
+        Workbook workbook = getWorkbok(in, excelFile);
+
+        // Sheet的数量
+        int sheetCount = workbook.getNumberOfSheets();
+        // 遍历第一个Sheet
+        Sheet sheet = workbook.getSheetAt(0);
+
+        int count = 0;
+        for (Row row : sheet) {
+            // 跳过第一行
+            if (count < 1) {
+                count++;
+                continue;
+            }
+            // 如果当前行没有数据，跳出循环
+            if (null==row.getCell(0)) {
+                return;
+            }
+            int end = row.getLastCellNum();
+            Object col0 = null;
+            String col1 = null;
+            String col2 = null;
+            String col3 = null;
+
+
+            for (int i = 0; i < end; i++) {
+                Cell cell = row.getCell(i);
+                if (cell == null) {
+                    continue;
+                }
+                if(i==0){
+                    col0 = getValue(cell);
+
+                }else if(i==1){
+                    if(StringUtils.isBlank((String)getValue(cell))){
+                        continue;
+                    }
+                    col1 = (String)getValue(cell);
+                }else if(i==2){
+                    col2 = (String)getValue(cell);
+                }else if(i==3){
+                    col3 = (String)getValue(cell);
+                }else{
+                    Object obj = getValue(cell);
+                    System.out.print("啥========================="+obj + "\t");
+                }
+            }
+            String pri = "select ";
+            pri += "\'"+(((Double)col0).intValue() + 5500000000L +"\',\'007\',")+ "\'" + col1 + "\',\'" + col2+ "\',\'" + col3+ "\'"+ ",sysdate,1";
+            System.out.print(pri + " from dual union all");
+            System.out.println();
+        }
+    }
+
     public static void checkExcelVaild(File file){
         if (!file.exists()) {
             throw new RuntimeException("文件不存在");
