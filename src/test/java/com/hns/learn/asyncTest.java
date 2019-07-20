@@ -39,7 +39,6 @@ public class asyncTest {
 //            service.f2(i+"");
         }
 
-
         for (int i = 0; i < futureList.size(); i++) {
 
             try {
@@ -58,19 +57,6 @@ public class asyncTest {
 
         }
 
-        int cir = 0;
-
-        while (true){
-
-            if(cir > 120){
-                throw new RuntimeException("调用接口超时！");
-            }
-            if(ri==0){
-                break;
-            }
-            Thread.sleep(1000);
-            cir ++;
-        }
 
         System.out.println("end time--------------------------- " + (System.currentTimeMillis() - startTime) +"ms");
 
