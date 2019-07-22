@@ -2,6 +2,7 @@ package com.hns.learn.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 import java.io.Serializable;
@@ -49,7 +50,7 @@ public class BizFile extends BaseModel implements Serializable {
     }
 
     public String getBizCode() {
-        return bizCode == "" ? null : bizCode;
+        return bizCode;
     }
 
     public void setBizCode(String bizCode) {
@@ -57,7 +58,7 @@ public class BizFile extends BaseModel implements Serializable {
     }
 
     public String getBizType() {
-        return bizType == "" ? null : bizType;
+        return bizType;
     }
 
     public void setBizType(String bizType) {
@@ -65,7 +66,7 @@ public class BizFile extends BaseModel implements Serializable {
     }
 
     public String getProduct() {
-        return product == "" ? null : product;
+        return product;
     }
 
     public void setProduct(String product) {
@@ -73,7 +74,7 @@ public class BizFile extends BaseModel implements Serializable {
     }
 
     public String getFieldName() {
-        return fieldName == "" ? null : fieldName;
+        return fieldName;
     }
 
     public void setFieldName(String fieldName) {
@@ -81,7 +82,7 @@ public class BizFile extends BaseModel implements Serializable {
     }
 
     public String getFileName() {
-        return fileName == "" ? null : fileName;
+        return fileName;
     }
 
     public void setFileName(String fileName) {
@@ -89,27 +90,31 @@ public class BizFile extends BaseModel implements Serializable {
     }
 
     public String getRealName() {
-        return realName == "" ? null : realName;
+        return realName;
     }
 
     public void setRealName(String realName) {
         this.realName = realName;
     }
 
-    public Date getIssueDate() { return issueDate; }
-
-    public void setIssueDate(Date issueDate) { this.issueDate = issueDate; }
-
     public String getFileType() {
-        return fileType == "" ? null : fileType;
+        return fileType;
     }
 
     public void setFileType(String fileType) {
         this.fileType = fileType;
     }
 
+    public Date getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(Date issueDate) {
+        this.issueDate = issueDate;
+    }
+
     public String getURL() {
-        return URL == "" ? null : URL;
+        return URL;
     }
 
     public void setURL(String URL) {
@@ -125,7 +130,7 @@ public class BizFile extends BaseModel implements Serializable {
     }
 
     public String getExt() {
-        return ext == "" ? null : ext;
+        return ext;
     }
 
     public void setExt(String ext) {
@@ -133,8 +138,32 @@ public class BizFile extends BaseModel implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return com.google.common.base.MoreObjects.toStringHelper(this)
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BizFile bizFile = (BizFile) o;
+        return Objects.equal(bizCode, bizFile.bizCode) &&
+                Objects.equal(bizType, bizFile.bizType) &&
+                Objects.equal(product, bizFile.product) &&
+                Objects.equal(fieldName, bizFile.fieldName) &&
+                Objects.equal(fileName, bizFile.fileName) &&
+                Objects.equal(realName, bizFile.realName) &&
+                Objects.equal(fileType, bizFile.fileType) &&
+                Objects.equal(issueDate, bizFile.issueDate) &&
+                Objects.equal(URL, bizFile.URL) &&
+                Objects.equal(size_, bizFile.size_) &&
+                Objects.equal(ext, bizFile.ext);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(bizCode, bizType, product, fieldName, fileName, realName, fileType, issueDate, URL, size_, ext);
+    }
+
+    @Override
+    public String
+    toString() {
+        return MoreObjects.toStringHelper(this)
                 .add("bizCode", bizCode)
                 .add("bizType", bizType)
                 .add("product", product)
@@ -147,29 +176,6 @@ public class BizFile extends BaseModel implements Serializable {
                 .add("size_", size_)
                 .add("ext", ext)
                 .toString();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof BizFile)) return false;
-        BizFile bizFile = (BizFile) o;
-        return Objects.equal(getBizCode(), bizFile.getBizCode()) &&
-                Objects.equal(getBizType(), bizFile.getBizType()) &&
-                Objects.equal(getProduct(), bizFile.getProduct()) &&
-                Objects.equal(getFieldName(), bizFile.getFieldName()) &&
-                Objects.equal(getFileName(), bizFile.getFileName()) &&
-                Objects.equal(getRealName(), bizFile.getRealName()) &&
-                Objects.equal(getFileType(), bizFile.getFileType()) &&
-                Objects.equal(getIssueDate(), bizFile.getIssueDate()) &&
-                Objects.equal(getURL(), bizFile.getURL()) &&
-                Objects.equal(getSize_(), bizFile.getSize_()) &&
-                Objects.equal(getExt(), bizFile.getExt());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getBizCode(), getBizType(), getProduct(), getFieldName(), getFileName(), getRealName(), getFileType(),getIssueDate(), getURL(), getSize_(), getExt());
     }
 }
 
