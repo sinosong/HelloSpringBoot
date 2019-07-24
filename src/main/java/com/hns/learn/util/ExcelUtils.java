@@ -103,7 +103,7 @@ public class ExcelUtils {
                         bos.write(buff, 0, bytesRead);
                     }
                 } else {
-                    FileOutputStream fout = new FileOutputStream("G:/temp/test/"+expName+".xlsx");
+                    FileOutputStream fout = new FileOutputStream("/Users/sinosong/Documents/dmp/"+expName+".xlsx");
                     wb.write(fout);
                     fout.close();
                     return null;

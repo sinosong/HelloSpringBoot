@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 
 @RunWith(SpringRunner.class)
@@ -26,6 +27,8 @@ public class RedisLockTest {
 
     });
 
+    private CountDownLatch countDownLatcher = new CountDownLatch(100);
+
 
 
     @Test
@@ -33,19 +36,20 @@ public class RedisLockTest {
         for (int i = 0; i < 110; i++) {
             new Thread(() -> {
                 System.out.println(Thread.currentThread().getName()+"begin...");
-                try {
+                //try {
                     bizFileService.subtract(1120936852971950081L);
                     System.out.println(Thread.currentThread().getName() + "  end...");
-                    cyclicBarrier.await();
-                } catch (InterruptedException | BrokenBarrierException e) {
+//                    cyclicBarrier.await();
+                    countDownLatcher.countDown();
+               /* } catch (InterruptedException | BrokenBarrierException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
             ).start();
         }
 
         try {
-            Thread.sleep(6000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
