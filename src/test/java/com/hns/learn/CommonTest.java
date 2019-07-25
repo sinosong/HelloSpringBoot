@@ -12,6 +12,8 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -120,5 +122,17 @@ public class CommonTest {
 
     }
 
+    @Test
+    public void testListToarr() {
+        List<Long> rolIdList = new ArrayList<>();
+        rolIdList.add(451117558506979333L);
+        rolIdList.add(1137970775441092609L);
 
+        Long [] ids = rolIdList.toArray(new Long[rolIdList.size()]);
+        System.out.println(ids);
+
+        List<Long> list = new ArrayList<Long>(Arrays.asList(ids));
+
+        System.out.println(list);
+    }
 }
