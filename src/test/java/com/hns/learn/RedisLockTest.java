@@ -36,23 +36,29 @@ public class RedisLockTest {
         for (int i = 0; i < 110; i++) {
             new Thread(() -> {
                 System.out.println(Thread.currentThread().getName()+"begin...");
-                //try {
-                    bizFileService.subtract(1120936852971950081L);
+//                try {
+                    bizFileService.subtract(1120936852971950081L,countDownLatcher);
                     System.out.println(Thread.currentThread().getName() + "  end...");
 //                    cyclicBarrier.await();
-                    countDownLatcher.countDown();
                /* } catch (InterruptedException | BrokenBarrierException e) {
                     e.printStackTrace();
                 }*/
+
             }
             ).start();
         }
 
         try {
-            Thread.sleep(1000);
+            countDownLatcher.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.out.println("all is done...");
+        /*try {
+            Thread.sleep(100000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
 
     }
 

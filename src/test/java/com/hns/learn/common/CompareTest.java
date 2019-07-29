@@ -3,9 +3,7 @@ package com.hns.learn.common;
 import com.google.common.collect.Ordering;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class CompareTest {
 
@@ -29,6 +27,33 @@ public class CompareTest {
         List<String> sortedCopy = Ordering.from(byCode).sortedCopy(strList);
 
         System.out.println(sortedCopy);
+
+    }
+
+    @Test
+    public void testSort() {
+
+        List<String> list = new ArrayList<>();
+        list.add("b");
+        list.add("a");
+        list.add("d");
+        list.add("c");
+        list.add(null);
+
+        list.sort(new Comparator<String>() {
+            @Override
+            public int compare(String s1, String s2) {
+                if(null==s1 || null==s2){
+                    return -1;
+                }
+                return s1.compareTo(s2);
+            }
+        });
+
+        Collections.sort(list);
+
+        System.out.println(list);
+
 
     }
 }

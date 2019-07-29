@@ -1,4 +1,4 @@
-package com.hns.learn;
+package com.hns.learn.leetcode;
 
 import java.util.StringJoiner;
 
@@ -7,8 +7,11 @@ public class ListNode {
     int val;
     ListNode next;
 
-    ListNode(int x) {
+    public ListNode(int x) {
         val = x;
+    }
+
+    public ListNode() {
     }
 
     public ListNode(int val, ListNode next) {
@@ -28,8 +31,9 @@ public class ListNode {
         return next;
     }
 
-    public void setNext(ListNode next) {
+    public ListNode setNext(ListNode next) {
         this.next = next;
+        return this;
     }
 
     @Override

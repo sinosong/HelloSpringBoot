@@ -1,8 +1,7 @@
-package com.hns.learn;
+package com.hns.learn.leetcode;
 
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 /**
