@@ -1,21 +1,17 @@
-/**
- * 
- */
 package com.hns.learn.entity;
-
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Date;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
 
 /**
  * 功能：债项发放申请
- * @author czm 
+ * @author czm
  * 日期：2018/7/6
  */
 @TableName("BIZ_DEBT_GRANT")
@@ -65,7 +61,7 @@ public class BizDebtGrant extends BaseModel implements Serializable {
 	 */
 	@TableField("PROPER_INFO")
 	private Long properInfo;
-	
+
 	/**
 	 * 产品种类名称
 	 */
@@ -87,7 +83,7 @@ public class BizDebtGrant extends BaseModel implements Serializable {
 	 */
 	@TableField("DESCRIPTION_RATE_RULES")
 	private String descriptionRateRules;
-	
+
 	/**
 	 * 变更之前的流水号
 	 */
@@ -187,17 +183,29 @@ public class BizDebtGrant extends BaseModel implements Serializable {
 	@TableField(exist=false)
 	private String grantAmtStr;
 
-    /**
-     * 版本号：记录方案变更版本;
-     */
-    @TableField("VERNUM_")
-    private Integer verNum;
+	/**
+	 * 版本号：记录方案变更版本;
+	 */
+	@TableField("VERNUM_")
+	private Integer verNum;
 
 	/**
 	 * 修改次数：记录发放条件修改次数（实际修改次数，修订驳回重提不会增加）;
 	 */
 	@TableField("CHANGE_NUM")
 	private Integer changeNum;
+
+	/**
+	 * 结清状态 1.待结清-未全部还款 2.待结清-已全部还款 3.已结清-已全部还款
+	 */
+	@TableField("SETTLE_STATUS")
+	private Integer settleStatus;
+
+	/**
+	 * 影像日期 ,一笔业务影像相关的所有日期都使用这个值
+	 */
+	@TableField("IMAGE_DATE")
+	private String imageDate;
 
 	public String getDebtCode() {
 		return debtCode == "" ? null : debtCode;
@@ -459,20 +467,75 @@ public class BizDebtGrant extends BaseModel implements Serializable {
 
 	public void setChangeNum(Integer changeNum) { this.changeNum = changeNum; }
 
+	public Integer getSettleStatus() {
+		return settleStatus;
+	}
+
+	public void setSettleStatus(Integer settleStatus) {
+		this.settleStatus = settleStatus;
+	}
+
+	public String getImageDate() {
+		return imageDate == "" ? null : imageDate;
+	}
+
+	public void setImageDate(String imageDate) {
+		this.imageDate = imageDate;
+	}
+
 	public BizDebtGrant() {
 	}
 
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		BizDebtGrant grant = (BizDebtGrant) o;
+		return Objects.equal(debtCode, grant.debtCode) &&
+				Objects.equal(businessTypes, grant.businessTypes) &&
+				Objects.equal(grantCode, grant.grantCode) &&
+				Objects.equal(sendDate, grant.sendDate) &&
+				Objects.equal(scopeBusinPeriod, grant.scopeBusinPeriod) &&
+				Objects.equal(gracePeriod, grant.gracePeriod) &&
+				Objects.equal(toierancePeriod, grant.toierancePeriod) &&
+				Objects.equal(grantStatus, grant.grantStatus) &&
+				Objects.equal(properInfo, grant.properInfo) &&
+				Objects.equal(businessTypeName, grant.businessTypeName) &&
+				Objects.equal(institutionCode, grant.institutionCode) &&
+				Objects.equal(descriptionProgramQuoqate, grant.descriptionProgramQuoqate) &&
+				Objects.equal(descriptionRateRules, grant.descriptionRateRules) &&
+				Objects.equal(originalGrantCode, grant.originalGrantCode) &&
+				Objects.equal(proposer, grant.proposer) &&
+				Objects.equal(currency, grant.currency) &&
+				Objects.equal(grantAmt, grant.grantAmt) &&
+				Objects.equal(businessName, grant.businessName) &&
+				Objects.equal(iouCode, grant.iouCode) &&
+				Objects.equal(identNumber, grant.identNumber) &&
+				Objects.equal(liceDate, grant.liceDate) &&
+				Objects.equal(seqNo, grant.seqNo) &&
+				Objects.equal(processStatus, grant.processStatus) &&
+				Objects.equal(historyState, grant.historyState) &&
+				Objects.equal(endDate, grant.endDate) &&
+				Objects.equal(passDate, grant.passDate) &&
+				Objects.equal(deptName, grant.deptName) &&
+				Objects.equal(createByName, grant.createByName) &&
+				Objects.equal(currencyName, grant.currencyName) &&
+				Objects.equal(grantAmtStr, grant.grantAmtStr) &&
+				Objects.equal(verNum, grant.verNum) &&
+				Objects.equal(changeNum, grant.changeNum) &&
+				Objects.equal(settleStatus, grant.settleStatus)&&
+				Objects.equal(imageDate, grant.imageDate);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(debtCode, businessTypes, grantCode, sendDate, scopeBusinPeriod, gracePeriod, toierancePeriod, grantStatus, properInfo, businessTypeName, institutionCode, descriptionProgramQuoqate, descriptionRateRules, originalGrantCode, proposer, currency, grantAmt, businessName, iouCode, identNumber, liceDate, seqNo, processStatus, historyState, endDate, passDate, deptName, createByName, currencyName, grantAmtStr, verNum, changeNum, settleStatus, imageDate);
+	}
+
+	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(this)
-				.add("id",super.getId())
-				.add("enable", super.getEnable())
-				.add("remark", super.getRemark())
-				.add("createBy", super.getCreateTime())
-				.add("createTime", super.getCreateTime())
-				.add("updateBy", super.getUpdateBy())
-				.add("updateTime", super.getUpdateTime())
 				.add("debtCode", debtCode)
 				.add("businessTypes", businessTypes)
 				.add("grantCode", grantCode)
@@ -505,49 +568,8 @@ public class BizDebtGrant extends BaseModel implements Serializable {
 				.add("grantAmtStr", grantAmtStr)
 				.add("verNum", verNum)
 				.add("changeNum", changeNum)
+				.add("settleStatus", settleStatus)
+				.add("imageDate", imageDate)
 				.toString();
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof BizDebtGrant)) return false;
-		BizDebtGrant that = (BizDebtGrant) o;
-		return Objects.equal(getDebtCode(), that.getDebtCode()) &&
-				Objects.equal(getBusinessTypes(), that.getBusinessTypes()) &&
-				Objects.equal(getGrantCode(), that.getGrantCode()) &&
-				Objects.equal(getSendDate(), that.getSendDate()) &&
-				Objects.equal(getScopeBusinPeriod(), that.getScopeBusinPeriod()) &&
-				Objects.equal(getGracePeriod(), that.getGracePeriod()) &&
-				Objects.equal(getToierancePeriod(), that.getToierancePeriod()) &&
-				Objects.equal(getGrantStatus(), that.getGrantStatus()) &&
-				Objects.equal(getProperInfo(), that.getProperInfo()) &&
-				Objects.equal(getBusinessTypeName(), that.getBusinessTypeName()) &&
-				Objects.equal(getInstitutionCode(), that.getInstitutionCode()) &&
-				Objects.equal(getDescriptionProgramQuoqate(), that.getDescriptionProgramQuoqate()) &&
-				Objects.equal(getDescriptionRateRules(), that.getDescriptionRateRules()) &&
-				Objects.equal(getOriginalGrantCode(), that.getOriginalGrantCode()) &&
-				Objects.equal(getProposer(), that.getProposer()) &&
-				Objects.equal(getCurrency(), that.getCurrency()) &&
-				Objects.equal(getGrantAmt(), that.getGrantAmt()) &&
-				Objects.equal(getBusinessName(), that.getBusinessName()) &&
-				Objects.equal(getIouCode(), that.getIouCode()) &&
-				Objects.equal(getIdentNumber(), that.getIdentNumber()) &&
-				Objects.equal(getLiceDate(), that.getLiceDate()) &&
-				Objects.equal(getSeqNo(), that.getSeqNo()) &&
-				Objects.equal(getProcessStatus(), that.getProcessStatus()) &&
-				Objects.equal(getHistoryState(), that.getHistoryState()) &&
-				Objects.equal(getEndDate(), that.getEndDate()) &&
-				Objects.equal(getPassDate(), that.getPassDate()) &&
-				Objects.equal(getDeptName(), that.getDeptName()) &&
-				Objects.equal(getCreateByName(), that.getCreateByName()) &&
-				Objects.equal(getCurrencyName(), that.getCurrencyName()) &&
-				Objects.equal(getVerNum(), that.getVerNum()) &&
-				Objects.equal(getChangeNum(), that.getChangeNum());
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(getDebtCode(), getBusinessTypes(), getGrantCode(), getSendDate(), getScopeBusinPeriod(), getGracePeriod(), getToierancePeriod(), getGrantStatus(), getProperInfo(), getBusinessTypeName(), getInstitutionCode(), getDescriptionProgramQuoqate(), getDescriptionRateRules(), getOriginalGrantCode(), getProposer(), getCurrency(), getGrantAmt(), getBusinessName(), getIouCode(), getIdentNumber(), getLiceDate(), getSeqNo(), getProcessStatus(), getHistoryState(), getEndDate(), getPassDate(), getDeptName(), getCreateByName(), getCurrencyName(), getVerNum(), getChangeNum());
 	}
 }

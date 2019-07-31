@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hns.learn.mapper.BizCommonMapper">
+
+
+    <select id="selBizCustomer" resultType="java.util.LinkedHashMap">
+
+        select
+           distinct
+           CUST_NO,
+           ORGANIZATION_CODE,
+           GOVERNMENT_PLATFORM,
+           CUST_NAME_CN,
+           CUST_NAME_EN,
+           CUST_ADDRESS_CN,
+           CUST_ADDRESS_EN,
+           CUST_BUSINESS_UNIT,
+           CUST_REG_TYPE,
+           CUST_RCREDIT_TYPE,
+           CUST_SCALE,
+           GROUP_NO,
+           GROUP_NAME,
+           MAIN_BUSINESS,
+           CUST_COUNTRY,
+           CREDIT_RATING,
+           RATING_TIME,
+           CUST_MANAGER
+        from BIZ_CUSTOMER order by CUST_NO asc
+
+    </select>
+
+</mapper>
