@@ -42,7 +42,7 @@ public class RedissonLockAspect {
 
         //多久会自动释放，默认10秒
         int leaseTime = redissonLock.leaseTime();
-        leaseTime = 60;
+
         int waitTime = 5;
 
         RLock rLock = redisson.getLock(key);

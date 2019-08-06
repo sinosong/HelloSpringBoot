@@ -2,12 +2,10 @@ package com.hns.learn.debtmain;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.hns.learn.App;
-import com.hns.learn.entity.BizApprSummaryInfo;
-import com.hns.learn.entity.BizDebtGrant;
-import com.hns.learn.entity.BizDebtSummary;
-import com.hns.learn.entity.BizTRN;
+import com.hns.learn.entity.*;
 import com.hns.learn.mapper.*;
 import com.hns.learn.util.ExcelUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -39,6 +37,10 @@ public class DebtMainTest {
     private BizTRNMapper bizTRNMapper;
     @Autowired
     private BizCommonMapper bizCommonMapper;
+    @Autowired
+    private BizCustTeMapper bizCustTeMapper;
+    @Autowired
+    private BizCustMapper bizCustMapper;
     @Autowired
     private PlatformTransactionManager txManager;
 
@@ -377,6 +379,8 @@ public class DebtMainTest {
                 trnList.add(bizTRN);
                 apprList.add(bizApprSummaryInfo);
             }
+            System.out.println(trnList);
+            System.out.println(apprList);
 
             txManager.commit(status);
 
@@ -401,7 +405,7 @@ public class DebtMainTest {
 
         for (int i = 0; i < customerList.size(); i++) {
 
-            Map<String,Object> map = customerList.get(i);
+            LinkedHashMap map = customerList.get(i);
 //            System.out.println(JSON.toJSON(map).toString());
             String key = (String) map.get("CUST_NO");
             String name = (String) map.get("CUST_NAME_CN");
@@ -413,14 +417,13 @@ public class DebtMainTest {
             }else {
                 okList.add(key);
             }
-            if(null == keyMap.get(key)){
-                keyMap.put(key,map);
-            }
+            keyMap.putIfAbsent(key, map);
         }
 
         for (int i = 0; i < errList.size(); i++){
             errMapList.add((Map)keyMap.get(errList.get(i)));
         }
+
         errMapList.sort(new Comparator<Map>() {
             @Override
             public int compare(Map s1, Map s2) {
@@ -446,6 +449,51 @@ public class DebtMainTest {
 
 //        System.out.println(JSON.toJSON(customerList));
 
+
+    }
+
+    @Test
+    public void getCustMessage() {
+
+        List<LinkedHashMap> customerList = bizCommonMapper.selBizCustomer(new HashMap<>());
+        Set<String> custNoSet = new HashSet<>();
+        Set<String> custNoErrSet = new HashSet<>();
+        List<BizCustTe> bizCustTeList = new ArrayList<>();
+        for (Map<String,Object> map  : customerList){
+            String no = (String)map.get("CUST_NO");
+            custNoSet.add(no==null?null:no.trim());
+        }
+        System.out.println(custNoSet);
+        for (String custNo : custNoSet) {
+            if(StringUtils.isBlank(custNo)){
+                throw new RuntimeException("custNo error=="+custNo);
+            }
+            BizCustTe selTe = bizCustTeMapper.selectOne(new BizCustTe(custNo.trim()));
+            if(selTe==null){
+                custNoErrSet.add(custNo);
+//                continue;
+            }else{
+//                System.out.println(JSON.toJSON(selTe));
+                BizCust cust = JSON.parseObject(JSON.toJSON(selTe).toString(),BizCust.class);
+                cust.setId(Long.parseLong(cust.getCustNo()));
+                bizCustMapper.insert(cust);
+            }
+
+//            System.out.println(cust.toString());
+//            System.out.println("---------------");
+//            System.out.println(cust.toString());
+//            System.exit(0);
+//            bizCustTeList.add(bizCustTeMapper.selectOne(new BizCustTe(custNo)));
+        }
+//        System.out.println(JSON.toJSON(bizCustTeList));
+
+        System.out.println("error set ---------->");
+        StringBuffer bf = new StringBuffer("(");
+        for(String str:custNoErrSet){
+            bf.append("'"+str+"',");
+        }
+        String str = bf.substring(0,bf.length()-1)+")";
+        System.out.println(str);
 
     }
 }

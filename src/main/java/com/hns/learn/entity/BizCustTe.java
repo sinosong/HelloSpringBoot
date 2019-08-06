@@ -14,8 +14,8 @@ import java.util.List;
  * @date 2018/05/26
  */
 
-@TableName("BIZ_CUST")
-public class BizCust extends BaseModel implements Serializable {
+@TableName("BIZ_CUST_TE")
+public class BizCustTe extends BaseModel implements Serializable {
 
 	/**
 	 * 债项方案id
@@ -176,6 +176,13 @@ public class BizCust extends BaseModel implements Serializable {
 	 */
 	@TableField(exist = false)
 	private String creditRatio;
+
+	public BizCustTe() {
+	}
+
+	public BizCustTe(String custNo) {
+		this.custNo = custNo;
+	}
 
 	public String getCreditLinesId() {
 		return creditLinesId;
@@ -425,14 +432,7 @@ public class BizCust extends BaseModel implements Serializable {
         this.productLinesTypeId = productLinesTypeId;
     }
 
-	public BizCust(String custNo) {
-		this.custNo = custNo;
-	}
-
-	public BizCust() {
-	}
-
-	@Override
+    @Override
     public String toString() {
         return "BizCust{" +
                 "debtCode='" + debtCode + '\'' +
