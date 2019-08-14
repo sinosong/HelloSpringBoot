@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hns.learn.mapper.BizGuaranteeInfoMapper">
+
+
+    <select id="queryBizGuaranteeInfos" resultType="java.util.Map">
+        select distinct t.WARRANTY_CONTRACT_NUMBER,t.DEBT_CODE
+        from BIZ_GUARANTEE_INFO t
+        where  WARRANTY_CONTRACT_NUMBER is not null
+--         where t.TYPE_POINT in('C102','C103')
+--         AND GUARANTEE_CONTRACT_TYPE NOT IN ('UE06','UE14','UE15','MJMCC102','MJM1C103','MJM2C103')
+    </select>
+
+    <select id="queryBizGuaranteeInfoWarrantyContractNumber" resultType="java.lang.String">
+        select distinct t.WARRANTY_CONTRACT_NUMBER
+        from BIZ_GUARANTEE_INFO t
+        where  WARRANTY_CONTRACT_NUMBER is not null
+--         where t.TYPE_POINT in('C102','C103')
+--         AND GUARANTEE_CONTRACT_TYPE NOT IN ('UE06','UE14','UE15','MJMCC102','MJM1C103','MJM2C103')
+    </select>
+
+    <select id="findByDebtCode" resultType="com.hns.learn.entity.BizGuaranteeInfo">
+        select *
+        from BIZ_GUARANTEE_INFO t
+        where t.DEBT_CODE=#{debtCode}
+    </select>
+
+    <select id="getGuarInfoCount" resultType="java.lang.Integer">
+        select count(*) from BIZ_GUARANTEE_INFO t where t.DEBT_CODE=#{debtCode}
+    </select>
+
+    <select id="findByDebtCodeAndGuarNo" resultType="com.hns.learn.entity.BizGuaranteeInfo">
+        select *
+        from BIZ_GUARANTEE_INFO t
+        where t.DEBT_CODE=#{debtCode}
+        and t.WARRANTY_CONTRACT_NUMBER=#{guarNo}
+    </select>
+
+
+</mapper>

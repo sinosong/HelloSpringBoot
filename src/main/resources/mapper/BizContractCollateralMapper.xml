@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hns.learn.mapper.BizContractCollateralMapper">
+
+    <select id="findByDebtCode" resultType="com.hns.learn.entity.BizContractCollateral">
+        select *
+        from BIZ_CONTRACT_COLLATERAL t
+        where t.DEBT_CODE=#{debtCode}
+    </select>
+
+</mapper>

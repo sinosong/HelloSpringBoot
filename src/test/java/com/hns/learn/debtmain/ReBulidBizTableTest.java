@@ -2,14 +2,8 @@ package com.hns.learn.debtmain;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.hns.learn.App;
-import com.hns.learn.entity.BizCust;
-import com.hns.learn.entity.BizDebtSummary;
-import com.hns.learn.entity.BizGuaranteeInfo;
-import com.hns.learn.entity.BizTheRentFactoring;
-import com.hns.learn.mapper.BizCustMapper;
-import com.hns.learn.mapper.BizDebtMainMapper;
-import com.hns.learn.mapper.BizGuaranteeInfoMapper;
-import com.hns.learn.mapper.BizTheRentFactoringMapper;
+import com.hns.learn.entity.*;
+import com.hns.learn.mapper.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +28,8 @@ public class ReBulidBizTableTest {
 
     @Autowired
     private BizCustMapper bizCustMapper;
+    @Autowired
+    private BizPTSMapper bizPtsMapper;
     @Autowired
     private BizDebtMainMapper bizDebtMainMapper;
     @Autowired

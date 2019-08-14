@@ -744,6 +744,10 @@ public class BizDebtSummary extends BaseModel implements Serializable {
 	public BizDebtSummary() {
     }
 
+	public BizDebtSummary(String debtCode) {
+		this.debtCode = debtCode;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

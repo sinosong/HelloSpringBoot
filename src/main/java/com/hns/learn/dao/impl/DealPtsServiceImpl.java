@@ -31,17 +31,21 @@ public class DealPtsServiceImpl {
     @Autowired
     private BizDebtGrantMapper bizDebtGrantMapper;
     @Autowired
+    private BizCustMapper bizCustMapper;
+    @Autowired
     private BizCustTeMapper bizCustTeMapper;
     @Autowired
     private BizCustomerMapper bizCustomerMapper;
+    @Autowired
+    private BizGuaranteeInfoMapper bizGuaranteeInfoMapper;
+    @Autowired
+    private BizTheRentFactoringMapper bizTheRentFactoringMapper;
     @Autowired
     private BizSingleProductRuleMapper bizSingleProductRuleMapper;
 
     /**
      * INSERT INTO BIZ_PTS (ROL) VALUES ('APPT'); 方案申请人
      * INSERT INTO BIZ_PTS (ROL) VALUES ('LETS'); 用信主体
-     * INSERT INTO BIZ_PTS (ROL) VALUES ('CONE'); 承租人
-     * INSERT INTO BIZ_PTS (ROL) VALUES ('GUAR'); 担保人
      */
     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor = Exception.class)
     public void addDebtPts(){
@@ -51,7 +55,7 @@ public class DealPtsServiceImpl {
 
         Date date = new Date();
 
-        List<BizDebtSummary> bizDebtSummaryList = bizDebtMainMapper.selectList(new EntityWrapper<BizDebtSummary>().isNull("VERNUM_"));
+        List<BizDebtSummary> bizDebtSummaryList = bizDebtMainMapper.selectList(new EntityWrapper<BizDebtSummary>());
 
 //        List<BizDebtSummary> debtList = new ArrayList<>();
 
@@ -119,17 +123,108 @@ public class DealPtsServiceImpl {
                         throw new RuntimeException("fetch BizCustomer error!");
                     }
                 }
+            }
+        }
+    }
 
+    /**
+     * INSERT INTO BIZ_PTS (ROL) VALUES ('CONE'); 承租人
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor = Exception.class)
+    public void addBizTheRentFactoringPts(){
 
+        Date date = new Date();
+        List<BizTheRentFactoring> bizTheRentFactoringList = bizTheRentFactoringMapper.selectList(new EntityWrapper<BizTheRentFactoring>());
+
+        for(BizTheRentFactoring bizTheRentFactoring : bizTheRentFactoringList){
+            if(bizTheRentFactoring.getDebtCode().length()==13){
+                BizCust cust = bizCustMapper.selectOne(new BizCust(bizTheRentFactoring.getCustNo()));
+                if(cust!=null){
+
+                    BizDebtSummary bizDebtSummary = bizDebtMainMapper.selectOne(new BizDebtSummary(bizTheRentFactoring.getDebtCode()));
+                    if(bizDebtSummary!=null){
+                        //添加承租人 PTS
+                        BizPTS bizPts = new BizPTS();
+                        bizPts.setId(IdWorker.getId());
+                        bizPts.setBizId(bizDebtSummary.getId_());
+                        bizPts.setCustNo(bizTheRentFactoring.getCustNo());
+                        bizPts.setCustNameCN(bizTheRentFactoring.getCustName());
+                        bizPts.setDebtCode(bizDebtSummary.getDebtCode());
+                        bizPts.setObjtyp("BIZ_RENTAL_FACTORING_KEY");
+                        bizPts.setObjinr(bizTheRentFactoring.getId_());
+                        bizPts.setRole("CONE");
+                        bizPts.setPtyinr(bizTheRentFactoring.getCustNo());
+                        bizPts.setCreateTime(date);
+                        bizPts.setUpdateTime(date);
+                        bizPts.setCreateBy(bizDebtSummary.getBankTellerId());
+                        bizPts.setUpdateBy(bizDebtSummary.getBankTellerId());
+                        bizPts.setEnable(1);
+                        bizPts.setRemark("sinosong");
+                        System.out.println(bizPts.toString());
+                        /*int ip = bizPtsMapper.insert(bizPts);
+                        if(ip!=1){
+                            throw new RuntimeException("insert bizPts error!bizPts="+bizPts.toString());
+                        }*/
+                    }else {
+                        throw new RuntimeException("fetch bizDebtSummary error! debtCode="+bizTheRentFactoring.getDebtCode());
+                    }
+                }else {
+                    throw new RuntimeException("BizCust err! table= BizCust,BizCustNo="+bizTheRentFactoring.getCustNo());
+                }
+            }else{
+                throw new RuntimeException("BizTheRentFactoring err! table= BIZ_RENTAL_FACTORING_KEY,bizTheRentFactoring="+bizTheRentFactoring.toString());
+            }
+        }
+    }
+
+    /**
+     * INSERT INTO BIZ_PTS (ROL) VALUES ('GUAR'); 担保人
+     */
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT, timeout = 36000, rollbackFor = Exception.class)
+    public void addBizGuaranteeInfoPts(){
+
+        Date date = new Date();
+        List<BizGuaranteeInfo> bizGuaranteeInfoRuleList = bizGuaranteeInfoMapper.selectList(new EntityWrapper<BizGuaranteeInfo>());
+        for(BizGuaranteeInfo bizGuaranteeInfo : bizGuaranteeInfoRuleList) {
+            if (bizGuaranteeInfo.getDebtCode().length() == 13) {
+                BizCust cust = bizCustMapper.selectOne(new BizCust(bizGuaranteeInfo.getGuarantorCustId()));
+                if (cust != null) {
+                    BizDebtSummary bizDebtSummary = bizDebtMainMapper.selectOne(new BizDebtSummary(bizGuaranteeInfo.getDebtCode()));
+                    if (bizDebtSummary != null) {
+                        //添加担保人 PTS
+                        BizPTS bizPts = new BizPTS();
+                        bizPts.setId(IdWorker.getId());
+                        bizPts.setBizId(bizDebtSummary.getId_());
+                        bizPts.setCustNo(bizGuaranteeInfo.getGuarantorCustId());
+                        bizPts.setCustNameCN(bizGuaranteeInfo.getGuarantor());
+                        bizPts.setDebtCode(bizDebtSummary.getDebtCode());
+                        bizPts.setObjtyp("BIZ_GUARANTEE_INFO");
+                        bizPts.setObjinr(bizGuaranteeInfo.getId_());
+                        bizPts.setRole("GUAR");
+                        bizPts.setPtyinr(bizGuaranteeInfo.getGuarantorCustId());
+                        bizPts.setCreateTime(date);
+                        bizPts.setUpdateTime(date);
+                        bizPts.setCreateBy(bizDebtSummary.getBankTellerId());
+                        bizPts.setUpdateBy(bizDebtSummary.getBankTellerId());
+                        bizPts.setEnable(1);
+                        bizPts.setRemark("sinosong");
+                        System.out.println(bizPts.toString());
+                        /*int ip = bizPtsMapper.insert(bizPts);
+                        if(ip!=1){
+                            throw new RuntimeException("insert bizPts error!bizPts="+bizPts.toString());
+                        }*/
+
+                    } else {
+                        throw new RuntimeException("BizDebtSummary err! table= BizDebtSummary,bizGuaranteeInfo.getDebtCode()=" + bizGuaranteeInfo.getDebtCode());
+                    }
+                } else {
+                    throw new RuntimeException("BizCust err! table= BizCust,bizGuaranteeInfo.getGuarantorCustId()=" + bizGuaranteeInfo.getGuarantorCustId());
+                }
+            } else {
+                throw new RuntimeException("BizGuaranteeInfo debtCode err! table= BIZ_GUARANTEE_INFO,bizGuaranteeInfo=" + bizGuaranteeInfo.toString());
             }
 
-
-
         }
-//        System.out.println(" debtList size()=="+debtList.size()+" list detail==");
-//        System.out.println(JSON.toJSON(debtList));
-
-
     }
 
 }

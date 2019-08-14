@@ -151,6 +151,7 @@ public class BizPTS extends BaseModel implements Serializable {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
+                .add("super", super.toString())
                 .add("objtyp", objtyp)
                 .add("objinr", objinr)
                 .add("role", role)

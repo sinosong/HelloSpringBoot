@@ -231,28 +231,6 @@ public class BizContractCollateral extends BaseModel implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("debtCode", debtCode)
-                .add("guarNo", guarNo)
-                .add("cltNO", cltNO)
-                .add("productInformation", productInformation)
-                .add("guarId", guarId)
-                .add("guarContractId", guarContractId)
-                .add("collateralID", collateralID)
-                .add("oldUseAmount", oldUseAmount)
-                .add("changeType", changeType)
-                .add("isLoanFirst", isLoanFirst)
-                .add("changeAmount", changeAmount)
-                .add("useAmount", useAmount)
-                .add("isCcyCd", isCcyCd)
-                .add("approvalLtvRt", approvalLtvRt)
-                .add("gmsColcollBaseinfo", gmsColcollBaseinfo)
-                .add("gmsColValueinfo", gmsColValueinfo)
-                .toString();
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof BizContractCollateral)) return false;
@@ -275,5 +253,28 @@ public class BizContractCollateral extends BaseModel implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hashCode(getDebtCode(), getGuarNo(), getCltNO(), getProductInformation(), getGuarId(), getGuarContractId(), getCollateralID(), getChangeType(), getChangeAmount(),getIsCcyCd(),getIsLoanFirst(),getApprovalLtvRt(), getUseAmount());
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("super",super.toString())
+                .add("debtCode", debtCode)
+                .add("guarNo", guarNo)
+                .add("cltNO", cltNO)
+                .add("productInformation", productInformation)
+                .add("guarId", guarId)
+                .add("guarContractId", guarContractId)
+                .add("collateralID", collateralID)
+                .add("oldUseAmount", oldUseAmount)
+                .add("changeType", changeType)
+                .add("changeAmount", changeAmount)
+                .add("useAmount", useAmount)
+                .add("isCcyCd", isCcyCd)
+                .add("approvalLtvRt", approvalLtvRt)
+                .add("isLoanFirst", isLoanFirst)
+                .add("gmsColcollBaseinfo", gmsColcollBaseinfo)
+                .add("gmsColValueinfo", gmsColValueinfo)
+                .toString();
     }
 }
