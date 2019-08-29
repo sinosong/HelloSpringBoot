@@ -30,6 +30,7 @@ public class LeetCode02Test {
                     return res;
                 }
             }else{
+
                 if(l1 == null && l2 == null){
                     return null;
                 }else{
@@ -52,10 +53,8 @@ public class LeetCode02Test {
                         res = new ListNode(val,res);
                     }
                 }
-
             }
         }
-
     }
 
     @Test
