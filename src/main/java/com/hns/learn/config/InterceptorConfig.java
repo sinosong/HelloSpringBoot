@@ -18,9 +18,14 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
+        //1.加入的顺序就是拦截器执行的顺序，
+        //2.按顺序执行所有拦截器的preHandle
+        //3.所有的preHandle 执行完再执行全部postHandle 最后是postHandle
+        //preHandle return true 才到下个拦截器
+
         // 拦截所有请求，通过判断是否有 @LoginRequired 注解 决定是否需要登录
         registry.addInterceptor(AuthorityInterceptor()).addPathPatterns("/**");
-
         registry.addInterceptor(MyInterceptor()).addPathPatterns("/**");
     }
 

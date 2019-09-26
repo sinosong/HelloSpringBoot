@@ -1,5 +1,6 @@
 package com.hns.learn.web;
 
+import com.hns.learn.annotation.LoginRequired;
 import com.hns.learn.dao.WebSocketServer;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ public class FirstController {
     }
 
     @RequestMapping(value={"/hello","/hi"})
+    @LoginRequired
     public String say(){
         //http://localhost:10336/hi
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
