@@ -1,8 +1,5 @@
 package com.hns.learn;
 
-import com.hns.learn.dao.IExecuteService;
-import com.hns.learn.dao.impl.ExecuteServiceImpl;
-import com.hns.learn.util.SpringContextUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +22,7 @@ public class App
         app.setBannerMode(Banner.Mode.OFF);
         app.run(args);
 
-        IExecuteService executeService = (IExecuteService) SpringContextUtils.getBean("defaultExecuteService", ExecuteServiceImpl.class);
-        executeService.execute();
+//        IExecuteService executeService = (IExecuteService) SpringContextUtils.getBean("defaultExecuteService", ExecuteServiceImpl.class);
+//        executeService.execute();
     }
 }

@@ -1,7 +1,6 @@
 package com.hns.learn.web;
 
 import com.hns.learn.dao.WebSocketServer;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -10,7 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-@Controller
+@RestController
 public class FirstController {
 
     //http://localhost:10336/index
