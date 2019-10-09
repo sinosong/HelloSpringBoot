@@ -1,12 +1,13 @@
 package com.hns.learn.mapper;
 
 import com.hns.learn.entity.InfAfpcmem;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 /**
  * 功能：贷款合同文件表
  * @author hannasong
  */
+@Component
 public interface InfAfpcmemMapper extends BaseMapper<InfAfpcmem>{
 
 
@@ -15,6 +16,6 @@ public interface InfAfpcmemMapper extends BaseMapper<InfAfpcmem>{
      * @param endDate
      * @return
      */
-    String getMaxWorkDate(@Param("endDate") String endDate);
+//    String getMaxWorkDate(@Param("endDate") String endDate);
 
 }
