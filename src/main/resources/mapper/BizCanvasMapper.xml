@@ -165,5 +165,25 @@
             </if>
         </where>
     </select>
+    <select id="selEffectFileName" resultType="java.util.Map">
+        select t.id_,
+        t.biz_code,
+        t.type_,
+        t.extra_,
+        t.num_,
+        t.filename_,
+        t.create_by,
+        t.create_time,
+        t.update_by,
+        t.update_time,
+        t.remark_,
+        t.enable_,
+        t.VERNUM_ from biz_canvas t,
+        (select num_, biz_code, max(update_time) as updatetime from biz_canvas group by num_, biz_code) t2
+        where t.num_ = t2.num_
+        and t.biz_code = t2.biz_code
+        and t.update_time = t2.updatetime
+        order by t.TYPE_,t.BIZ_CODE,t.num_
+    </select>
 
 </mapper>

@@ -207,6 +207,33 @@ public class IOTest {
         }
     }
 
+    /**
+     * 2G是否会截断
+     */
+    @Test
+    public void test07() {
+
+        String bathPath = "/Users/sinosong/share/temp/";
+        long sTime = System.currentTimeMillis();
+        long fileSize = 0;
+        try(
+                FileChannel inChannel = FileChannel.open(Paths.get(bathPath + "tmp1.big"),
+                        StandardOpenOption.READ);
+                FileChannel outChannel = FileChannel.open(Paths.get(bathPath + "tmp2-copy.big"),
+                        StandardOpenOption.READ,StandardOpenOption.WRITE,StandardOpenOption.CREATE_NEW);
+        ) {
+            fileSize = inChannel.size() / 1024 / 1024;
+            inChannel.transferTo(0,inChannel.size(),outChannel);
+//            outChannel.transferFrom(inChannel,0,inChannel.size());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        long ms = System.currentTimeMillis() - sTime;
+        System.out.println("exec  " + ms + " ms");
+        System.out.println("speed " + fileSize/(ms/1000) + " M/S");
+    }
+
     @Test
     public void testBuffer() {
         CharBuffer charBuffer = CharBuffer.allocate(100);
